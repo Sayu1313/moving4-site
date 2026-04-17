@@ -131,6 +131,9 @@
               }
               .m4-btn-gold:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(175, 142, 93, 0.6); }
 
+              .m4-btn-faq { display: inline-block; border: 2px solid rgba(175, 142, 93, 0.5); color: #AF8E5D !important; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-top: 10px; background: transparent; }
+              .m4-btn-faq:hover { background: rgba(175, 142, 93, 0.1); border-color: #AF8E5D; }
+
               .m4-progress-container { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0; }
               .m4-progress-bar { width: 0%; height: 100%; background: #AF8E5D; transition: width 0.4s ease; box-shadow: 0 0 10px #AF8E5D; }
               .m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; align-items: center; }
@@ -181,8 +184,7 @@
                 .m4-footnote { padding: 15px; font-size: 11px; }
                 .m4-btn-gold { padding: 16px 30px; font-size: 15px; width: 100%; text-align: center; box-sizing: border-box; }
               }
-            </style>
-            <script>
+            </style><script>
               document.addEventListener("DOMContentLoaded", function () {
                 "use strict";
 
@@ -200,6 +202,7 @@
                 const nextM = months[(d.getMonth() + 1) % 12];
 
                 const steps = [
+                  { id: "type_of_work", q: "First, what type of service do you need?", type: "choice", choices: ["Moving", "Packing", "Labor only"] },
                   { id: "timeline", q: "When is your move planned?", type: "choice", choices: ["ASAP", `This month (${curMonth})`, `Next month (${nextM})`, "Just checking prices"] },
                   { id: "name", q: "Got it! Before we continue, what is your **first name**?", type: "text" },
                   { id: "promo_offer", q: "", type: "choice", choices: ["Claim my discount 🎁", "I don't need a discount"] },
@@ -219,8 +222,9 @@
                   { id: "dropoff_stairs", q: "Drop-off — any stairs?", type: "choice", choices: ["None", "1 Flight", "2+ Flights"] },
                   { id: "heavy_items", q: "Any very heavy items (>250lbs)? Select below or type your own.\n*(Our crews are specially trained for heavy lifting)*", type: "choice", choices: ["None", "Safe", "Treadmill", "Piano"], allowText: true, ph: "E.g., Large Marble Table..." },
                   { id: "crew", q: "How many movers do you prefer?", type: "choice", choices: [] },
+                  { id: "service_level", q: "Almost there! Select your preferred level of service:\n\n**Basic Service:** Standard move. Basic protection included.\n**White Glove Premium:** Elite standard. Full packing, crating, and on-site supervisor.", type: "choice", choices: ["Basic Service", "White Glove Premium"] },
                   { id: "payment_type", q: "How would you like to pay?", type: "choice", choices: ["Cash ($20 off/hr)", "50/50 (Cash & Card)", "Credit Card"] },
-                  { id: "notes", q: "Almost done! Is there anything else I should know? (Extra stops, specific packing needs, etc.) Feel free to write it here, or use your microphone to dictate.", type: "text", ph: "Notes or type 'No'..." },
+                  { id: "notes", q: "Is there anything else I should know? (Extra stops, specific packing needs, etc.) Feel free to write it here, or use your microphone to dictate.", type: "text", ph: "Notes or type 'No'..." },
                   { id: "email", q: "Last step! What's your **email** to send the copy of this quote?", type: "text", ph: "your@email.com" },
                   { id: "final", type: "final" }
                 ];
@@ -324,13 +328,17 @@
 
                   let step = steps[stepIndex];
 
-                  // SMART SKIP LOGIC (House, Elevators)
+                  // SMART SKIP LOGIC (House, Elevators, Ground Floor)
                   const isHouse = memory.property_type === "House";
                   const pElevator = memory.pickup_elevator === "Yes";
                   const dElevator = memory.dropoff_elevator === "Yes";
+                  const pGround = memory.pickup_floor === "Ground";
+                  const dGround = memory.dropoff_floor === "Ground";
                   let skip = false;
 
                   if (isHouse && ["pickup_floor", "pickup_elevator", "pickup_stairs", "dropoff_floor", "dropoff_elevator", "dropoff_stairs"].includes(step.id)) skip = true;
+                  if (pGround && step.id === "pickup_elevator") skip = true;
+                  if (dGround && step.id === "dropoff_elevator") skip = true;
                   if (pElevator && step.id === "pickup_stairs") skip = true;
                   if (dElevator && step.id === "dropoff_stairs") skip = true;
 
@@ -357,9 +365,15 @@
                     }
                   }
 
+                  // DYNAMIC CREW CALCULATION (Piano/Safe rules)
                   if (step.id === "crew") {
                     let roomType = memory.rooms || "";
-                    if (roomType.includes("2 Bed")) {
+                    let hasHeavy = memory.heavy_items && (memory.heavy_items.includes("Piano") || memory.heavy_items.includes("Safe"));
+
+                    if (hasHeavy) {
+                      step.q = "Because you have extremely heavy items (Piano/Safe), for safety and efficiency we require at least 3 movers.";
+                      step.choices = ["3 movers", "4+ movers"];
+                    } else if (roomType.includes("2 Bed")) {
                       step.q = "How many movers do you prefer? (For 2BR, we highly recommend 3 movers for speed)";
                       step.choices = ["2 movers", "3 movers", "4 movers"];
                     } else if (roomType.includes("3+")) {
@@ -467,12 +481,16 @@
                   const isHouse = memory.property_type === "House";
                   const pElevator = memory.pickup_elevator === "Yes";
                   const dElevator = memory.dropoff_elevator === "Yes";
+                  const pGround = memory.pickup_floor === "Ground";
+                  const dGround = memory.dropoff_floor === "Ground";
 
                   // Reverse skip logic
                   while (targetStep > 0) {
                     let sId = steps[targetStep].id;
                     let shouldSkip = false;
                     if (isHouse && ["pickup_floor", "pickup_elevator", "pickup_stairs", "dropoff_floor", "dropoff_elevator", "dropoff_stairs"].includes(sId)) shouldSkip = true;
+                    if (pGround && sId === "pickup_elevator") shouldSkip = true;
+                    if (dGround && sId === "dropoff_elevator") shouldSkip = true;
                     if (pElevator && sId === "pickup_stairs") shouldSkip = true;
                     if (dElevator && sId === "dropoff_stairs") shouldSkip = true;
                     if (!shouldSkip) break;
@@ -507,14 +525,13 @@
                   await say("I’m calculating your quote... We use thick blankets and shrink wrap for every piece of furniture. No hidden fees, guaranteed. 🛡️", "bot");
                   await new Promise(r => setTimeout(r, 1500));
 
-                  // MATH V1.9 
                   // Base Hours Setup
                   let baseHours = 3; // Default (Studio)
-                  if (memory.rooms.includes("1 Bed")) baseHours = 3.5;
-                  if (memory.rooms.includes("2 Bed")) baseHours = 4.5;
-                  if (memory.rooms.includes("3+")) baseHours = 6;
+                  if (memory.rooms && memory.rooms.includes("1 Bed")) baseHours = 3.5;
+                  if (memory.rooms && memory.rooms.includes("2 Bed")) baseHours = 4.5;
+                  if (memory.rooms && memory.rooms.includes("3+")) baseHours = 6;
 
-                  // Mild complexity modifiers (House no longer subtracts, stairs add minimal time)
+                  // Mild complexity modifiers
                   if (memory.pickup_floor === "2nd" || memory.dropoff_floor === "2nd") baseHours += 0.5;
                   if (memory.pickup_floor === "3rd" || memory.dropoff_floor === "3rd") baseHours += 0.5;
                   if (memory.pickup_floor === "4+" || memory.dropoff_floor === "4+") baseHours += 1.0;
@@ -546,7 +563,14 @@
                     else hourlyRate = 149;
                   }
 
-                  let gasFee = 60; // Fixed gas fee per requirements
+                  // White Glove Upsell Math
+                  if (memory.service_level === "White Glove Premium") {
+                      hourlyRate += 50;
+                  }
+
+                  // Gas Fee - Skip if Labor only
+                  let gasFee = memory.type_of_work === "Labor only" ? 0 : 60;
+                  
                   let heavyFee = 0;
                   let heavyTextHTML = "";
                   if (memory.heavy_items && memory.heavy_items !== "None") {
@@ -562,6 +586,14 @@
                   let maxTotal = Math.round((displayMaxHours * hourlyRate) + gasFee + heavyFee) - discountApplied;
                   
                   let discountHTML = discountApplied ? `<tr><td style="padding: 4px 0;"><strong style="color:#2ecc71;">Promo Applied:</strong></td><td style="padding: 4px 0; text-align:right; color:#2ecc71;">-$50</td></tr>` : "";
+                  let truckText = memory.type_of_work === "Labor only" ? "" : " + Truck";
+                  let gasRow = memory.type_of_work === "Labor only" ? "" : `<tr><td style="padding: 4px 0;"><strong>Gas Fee:</strong></td><td style="padding: 4px 0; text-align:right;">$60</td></tr>`;
+
+                  let svcLevelDisplay = memory.service_level || "Basic Service";
+                  let svcRow = `<tr><td style="padding: 4px 0;"><strong>Service Level:</strong></td><td style="padding: 4px 0; text-align:right;">${svcLevelDisplay}</td></tr>`;
+                  if (memory.service_level === "White Glove Premium") {
+                      svcRow += `<tr><td style="padding: 4px 0;"><strong>Supervisor:</strong></td><td style="padding: 4px 0; text-align:right;">Included</td></tr>`;
+                  }
 
                   // Construct Receipt
                   const summaryHtml = `
@@ -581,7 +613,7 @@
                       <div style="margin-bottom: 10px;">
                         <strong>Date:</strong> ${memory.date}<br>
                         <strong>Origin:</strong> ${memory.pickup} <br>
-                        <span style="font-size:12px; opacity:0.8;">(${memory.property_type} | Floor: ${memory.pickup_floor || "N/A"} | Elevator: ${memory.pickup_elevator || "N/A"})</span>
+                        <span style="font-size:12px; opacity:0.8;">(${memory.property_type || "N/A"} | Floor: ${memory.pickup_floor || "N/A"} | Elevator: ${memory.pickup_elevator || "N/A"})</span>
                       </div>
                       <div>
                         <strong>Destination:</strong> ${memory.dropoff} <br>
@@ -589,11 +621,13 @@
                       </div>
                       <hr>
                       <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
-                        <tr><td style="padding: 4px 0;"><strong>Crew:</strong></td><td style="padding: 4px 0; text-align:right;">${memory.crew || "2 movers"} + Truck</td></tr>
+                        <tr><td style="padding: 4px 0;"><strong>Work Type:</strong></td><td style="padding: 4px 0; text-align:right;">${memory.type_of_work || "Moving"}</td></tr>
+                        ${svcRow}
+                        <tr><td style="padding: 4px 0;"><strong>Crew:</strong></td><td style="padding: 4px 0; text-align:right;">${memory.crew || "2 movers"}${truckText}</td></tr>
                         <tr><td style="padding: 4px 0;"><strong>Payment:</strong></td><td style="padding: 4px 0; text-align:right;">${rateType}</td></tr>
                         <tr><td style="padding: 4px 0;"><strong>Est. Time:</strong></td><td style="padding: 4px 0; text-align:right;">${displayMinHours} - ${displayMaxHours} hrs <em>(3h min)</em></td></tr>
                         <tr><td style="padding: 4px 0;"><strong>Hourly Rate:</strong></td><td style="padding: 4px 0; text-align:right;">$${hourlyRate}/hr</td></tr>
-                        <tr><td style="padding: 4px 0;"><strong>Gas Fee:</strong></td><td style="padding: 4px 0; text-align:right;">$60</td></tr>
+                        ${gasRow}
                         ${heavyTextHTML}
                         ${discountHTML}
                       </table>
@@ -608,10 +642,12 @@
                       ${ddtNote}
                     </div>
 
-                    <a href="#payment-link-placeholder" class="m4-btn-gold">💳 Pay $100 Deposit & Book</a>
+                    <a href="#payment-link-placeholder" class="m4-btn-gold">💳 Secure your spot & Book ($100 Deposit)</a>
+                    <br>
+                    <a href="#faq" class="m4-btn-faq">❓ Have questions?</a>
                     <br><br>
                     <span style='font-size:13px; opacity:0.8; line-height: 1.5; display: block;'>
-                      Deposit is fully refundable. Secures your date, truck, and applied discounts.
+                      Deposit is fully refundable. Secures your date, crew, and applied discounts.
                     </span>
                   </div>`;
 
@@ -624,6 +660,7 @@
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
                         _subject: `🔥 FINAL LEAD: ${memory.name} (${memory.rooms})`,
+                        Type: memory.type_of_work, ServiceLevel: memory.service_level,
                         Name: memory.name, Phone: memory.phone, Email: memory.email, Date: memory.date,
                         Promo: memory.promo_offer, Timeline: memory.timeline, Family: memory.family,
                         Route: `${memory.pickup} -> ${memory.dropoff}`, Distance: memory.approx_distance,
