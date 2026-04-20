@@ -67,151 +67,186 @@
           <div class="t-width t-width_100 ">
             <div id="m4-agent-wrapper">
               <div id="m4-agent" class="m4-agent">
-                <div class="m4-progress-container"><div id="m4-progress-bar" class="m4-progress-bar"></div></div>
                 <div class="m4-header">
                   <div class="m4-title">Alex — Moving4 Assistant</div>
                   <div class="m4-subtitle">Fast estimate • LA Certified • No calls required</div> 
-                  <button id="m4-back-btn" class="m4-back-btn" type="button" style="display:none;" aria-label="Go back one step">⬅ Back</button>
                   <div id="m4-start-wrapper" class="m4-startwrap"> <button id="m4-start" class="m4-btn primary" type="button">Start Quote</button> </div>
                 </div>
                 <div id="m4-chat" class="m4-chat" aria-live="polite" aria-atomic="false"></div>
                 <div id="m4-typing" class="m4-typing" style="display:none;" aria-hidden="true"> 
                   <span class="m4-dot"></span><span class="m4-dot"></span><span class="m4-dot"></span> 
-                  <span class="m4-typing-text">Alex is typing...</span> 
+                  <span class="m4-typing-text">Alex is analyzing...</span> 
                 </div>
                 <div id="m4-controls" class="m4-controls" style="display:none;">
                   <div class="m4-input-wrapper">
-                    <input id="m4-input" class="m4-input" type="text" placeholder="Type your answer..." autocomplete="off" aria-label="Chat input" />
+                    <input id="m4-input" class="m4-input" type="text" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
                   </div>
                   <button id="m4-send" class="m4-send primary" type="button" aria-label="Send message">Send</button>
                 </div>
                 <div class="m4-footnote">
                   <div class="m4-footnote-item">Cash is usually <strong>$20 off</strong> vs card.</div>
-                  <div class="m4-footnote-item">Tape + wrap included. Gift: <strong>1 free TV Box</strong>.</div>
                   <div class="m4-invoice-ref">SYSTEM REF: AI-NEO-2.0</div>
                 </div>
               </div>
             </div>
+            
             <style>
-              @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-              body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-              input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-              #m4-agent-wrapper { padding: 40px 20px; display: flex; justify-content: center; width: 100%; box-sizing: border-box; position: relative; }
-              .m4-agent { width: 100%; max-width: 850px; background: #031e20; border-radius: 28px; font-family: 'Montserrat', sans-serif; color: #fff; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; max-height: 90vh; }
-              .m4-header { position: relative; padding: 40px 30px 30px 30px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; }
+              /* CHAT STYLES */
+              #m4-agent-wrapper { padding: 40px 20px; display: flex; justify-content: center; width: 100%; box-sizing: border-box; }
+              .m4-agent { width: 100%; max-width: 850px; background: #031e20; border-radius: 28px; font-family: 'Montserrat', sans-serif; color: #fff; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; height: 75vh; }
+              .m4-header { padding: 40px 30px 30px 30px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; }
               .m4-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
-              .m4-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 0; }
+              .m4-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.6); }
               .m4-startwrap { margin-top: 25px; }
-              .m4-back-btn { position: absolute; top: 40px; right: 30px; background: transparent; border: 1px solid rgba(175, 142, 93, 0.5); color: #AF8E5D; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; transition: 0.3s; }
-              .m4-back-btn:hover { background: #AF8E5D; color: #000; border-color: #AF8E5D; }
-              .m4-chat { height: 440px; overflow-y: auto; padding: 20px 30px; display: none; background: rgba(0, 0, 0, 0.15); flex-direction: column; scroll-behavior: smooth; flex-grow: 1; }
+              .m4-chat { overflow-y: auto; padding: 20px 30px; display: none; background: rgba(0, 0, 0, 0.15); flex-direction: column; flex-grow: 1; }
               .m4-row { display: flex; margin-bottom: 15px; width: 100%; }
               .m4-row.bot { justify-content: flex-start; }
               .m4-row.user { justify-content: flex-end; }
-              .m4-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); animation: m4fade 0.3s ease-out; white-space: pre-wrap; }
+              .m4-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); white-space: pre-wrap; }
               .m4-row.user .m4-bubble { background: rgba(175, 142, 93, 0.25); border-color: #AF8E5D; }
-              @keyframes m4fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-              .m4-footnote { padding: 25px 30px; background: rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; text-align: left; flex-shrink: 0; }
-              .m4-invoice-ref { font-size: 10px; opacity: 0.3; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
-              .m4-btn.primary, .m4-send.primary { background: linear-gradient(180deg, #C7A26A, #AF8E5D); color: #042529 !important; border: none; padding: 14px 35px; font-weight: 800; border-radius: 50px; cursor: pointer; transition: 0.3s; font-family: 'Montserrat', sans-serif; font-size: 16px; display: inline-block; white-space: nowrap; }
-              .m4-btn.primary:hover, .m4-send.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(175, 142, 93, 0.3); }
-              .m4-btn-gold { background: linear-gradient(90deg, #AF8E5D 0%, #DBC08C 25%, #FFF0C8 50%, #DBC08C 75%, #AF8E5D 100%); background-size: 200% auto; color: #042529 !important; font-weight: 900; animation: shimmerBtn 3.5s linear infinite; border: none; padding: 18px 40px; border-radius: 50px; font-size: 16px; cursor: pointer; display: inline-block; text-decoration: none; box-shadow: 0 10px 25px rgba(175, 142, 93, 0.4); margin-top: 20px; transition: transform 0.2s; }
-              @keyframes shimmerBtn { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-              .m4-progress-container { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0; }
-              .m4-progress-bar { width: 0%; height: 100%; background: #AF8E5D; transition: width 0.4s ease; box-shadow: 0 0 10px #AF8E5D; }
-              .m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; align-items: center; }
-              .m4-input-wrapper { position: relative; flex: 1; display: flex; min-width: 0; }
-              .m4-input { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 15px; outline: none; transition: 0.3s; width: 100%; box-sizing: border-box; }
+              .m4-btn.primary, .m4-send.primary { background: linear-gradient(180deg, #C7A26A, #AF8E5D); color: #042529 !important; border: none; padding: 14px 35px; font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 16px; font-family: 'Montserrat', sans-serif;}
+              .m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); align-items: center; background: #031e20;}
+              .m4-input-wrapper { flex: 1; }
+              .m4-input { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-size: 15px; outline: none; width: 100%; box-sizing: border-box; font-family: inherit;}
               .m4-input:focus { border-color: #AF8E5D; }
-              .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-              .m4-choice-btn { background: rgba(175, 142, 93, 0.15); border: 1px solid #AF8E5D; color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; transition: 0.2s; }
-              .m4-choice-btn:hover { background: #AF8E5D; color: #000; }
-              .m4-typing { display: flex; align-items: center; gap: 6px; padding: 10px 30px; background: rgba(0, 0, 0, 0.15); flex-shrink: 0; }
+              .m4-typing { display: flex; align-items: center; gap: 6px; padding: 10px 30px; background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255,255,255,0.05);}
               .m4-dot { width: 6px; height: 6px; background: #AF8E5D; border-radius: 50%; animation: blink 1.4s infinite; }
               .m4-dot:nth-child(2) { animation-delay: 0.2s; }
               .m4-dot:nth-child(3) { animation-delay: 0.4s; }
               .m4-typing-text { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-left: 8px; }
               @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-              @media (max-width: 768px) { #m4-agent-wrapper { padding: 20px 10px 60px 10px !important; } .m4-agent { border-radius: 18px; max-height: 85vh; } .m4-header { padding: 20px; } .m4-title { font-size: 18px; } .m4-subtitle { font-size: 12px; } .m4-chat { height: auto; max-height: 45vh; padding: 15px; } .m4-controls { padding: 15px; gap: 10px; flex-direction: column; } .m4-input { height: 50px; } .m4-send.primary { width: 100%; height: 50px; } }
+              .m4-footnote { padding: 20px 30px; background: rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+              .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+              .m4-choice-btn { background: rgba(175, 142, 93, 0.15); border: 1px solid #AF8E5D; color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: inherit; font-size:14px;}
+              .m4-choice-btn:hover { background: #AF8E5D; color: #000; }
+
+              @media (max-width: 768px) {
+                  .m4-agent { border-radius: 18px; height: 85vh; }
+                  .m4-header { padding: 20px; }
+                  .m4-chat { padding: 15px; }
+                  .m4-controls { padding: 15px; gap: 10px; flex-direction: column;}
+                  .m4-input { height: 50px; }
+                  .m4-send.primary { width: 100%; height: 50px;}
+              }
             </style>
+
             <script>
               document.addEventListener("DOMContentLoaded", function () {
-                const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/gs9tue91htud3kd477o9gt8arzyu2kwr';
+                
+                // ======================================================================
+                // ВСТАВЬ СВОЙ ВЕБХУК MAKE.COM СЮДА
+                // ======================================================================
+                const MAKE_WEBHOOK_URL = 'ВСТАВЬ_ССЫЛКУ_ИЗ_MAKE_COM_СЮДА'; 
+                // ======================================================================
+                
                 const chat = document.getElementById('m4-chat');
                 const controls = document.getElementById('m4-controls');
                 const inputEl = document.getElementById('m4-input');
                 const sendBtn = document.getElementById('m4-send');
                 const typingIndicator = document.getElementById('m4-typing');
                 const startBtn = document.getElementById('m4-start');
-                const startWrapper = document.getElementById('m4-start-wrapper');
-                let sessionId = sessionStorage.getItem('m4_session_id') || 'sess_' + Math.random().toString(36).substr(2, 9);
-                sessionStorage.setItem('m4_session_id', sessionId);
+
+                let sessionId = sessionStorage.getItem('m4_session_id');
+                if (!sessionId) {
+                    sessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+                    sessionStorage.setItem('m4_session_id', sessionId);
+                }
+
+                let isAITyping = false;
+
                 function appendMessage(text, role) {
-                  const row = document.createElement('div');
-                  row.className = `m4-row ${role}`;
-                  let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                  row.innerHTML = `<div class="m4-bubble">${formattedText}</div>`;
-                  chat.appendChild(row);
-                  chat.scrollTop = chat.scrollHeight;
+                    const row = document.createElement('div');
+                    row.className = `m4-row ${role}`;
+                    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    row.innerHTML = `<div class="m4-bubble">${formattedText}</div>`;
+                    chat.appendChild(row);
+                    chat.scrollTop = chat.scrollHeight;
                 }
+
                 function showChoices(choices) {
-                  const row = document.createElement("div");
-                  row.className = "m4-row bot m4-active-choices";
-                  const container = document.createElement("div");
-                  container.className = "m4-choice-container";
-                  choices.forEach(c => {
-                    const btn = document.createElement("button");
-                    btn.className = "m4-choice-btn";
-                    btn.textContent = c;
-                    btn.onclick = () => {
-                      document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-                      handleUserSubmit(c);
-                    };
-                    container.appendChild(btn);
-                  });
-                  row.appendChild(container);
-                  chat.appendChild(row);
-                  chat.scrollTop = chat.scrollHeight;
-                }
-                async function sendMessageToAI(message) {
-                  typingIndicator.style.display = "flex";
-                  controls.style.display = "none";
-                  try {
-                    const response = await fetch(MAKE_WEBHOOK_URL, {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ sessionId, message })
+                    const row = document.createElement("div");
+                    row.className = "m4-row bot m4-active-choices";
+                    const container = document.createElement("div");
+                    container.className = "m4-choice-container";
+
+                    choices.forEach(c => {
+                        const btn = document.createElement("button");
+                        btn.className = "m4-choice-btn";
+                        btn.textContent = c;
+                        btn.onclick = () => {
+                            document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+                            handleUserSubmit(c);
+                        };
+                        container.appendChild(btn);
                     });
-                    const data = await response.text();
-                    typingIndicator.style.display = "none";
+                    row.appendChild(container);
+                    chat.appendChild(row);
+                    chat.scrollTop = chat.scrollHeight;
+                }
+
+                async function sendMessageToAI(message) {
+                    isAITyping = true;
+                    typingIndicator.style.display = "flex";
+                    controls.style.display = "none";
+
                     try {
-                      const json = JSON.parse(data);
-                      appendMessage(json.text, 'bot');
-                      if (json.choices && Array.isArray(json.choices)) showChoices(json.choices);
-                      else controls.style.display = "flex";
-                    } catch (e) {
-                      appendMessage(data, 'bot');
-                      controls.style.display = "flex";
+                        const response = await fetch(MAKE_WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                sessionId: sessionId,
+                                message: message 
+                            })
+                        });
+
+                        if (!response.ok) throw new Error('Network response error');
+                        
+                        const data = await response.text(); 
+                        
+                        isAITyping = false;
+                        typingIndicator.style.display = "none";
+                        
+                        try {
+                            const jsonResponse = JSON.parse(data);
+                            appendMessage(jsonResponse.text, 'bot');
+                            if(jsonResponse.choices && Array.isArray(jsonResponse.choices)) {
+                                showChoices(jsonResponse.choices);
+                            } else {
+                                controls.style.display = "flex";
+                                inputEl.focus();
+                            }
+                        } catch(e) {
+                            appendMessage(data, 'bot');
+                            controls.style.display = "flex";
+                            inputEl.focus();
+                        }
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        isAITyping = false;
+                        typingIndicator.style.display = "none";
+                        appendMessage("Sorry, I'm having trouble connecting to the server. Please try again.", 'bot');
+                        controls.style.display = "flex";
                     }
-                    inputEl.focus();
-                  } catch (error) {
-                    typingIndicator.style.display = "none";
-                    controls.style.display = "flex";
-                    appendMessage("Connection error. Please try again.", 'bot');
-                  }
                 }
-                function handleUserSubmit(overrideText = null) {
-                  const text = overrideText || inputEl.value.trim();
-                  if (!text) return;
-                  appendMessage(text, 'user');
-                  inputEl.value = '';
-                  sendMessageToAI(text);
+
+                function handleUserSubmit(textOverride = null) {
+                    if (isAITyping) return;
+                    const text = textOverride || inputEl.value.trim();
+                    if (!text) return;
+
+                    document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+                    appendMessage(text, 'user');
+                    inputEl.value = '';
+                    sendMessageToAI(text);
                 }
+
                 startBtn.addEventListener('click', () => {
-                  startWrapper.style.display = 'none';
-                  chat.style.display = 'flex';
-                  sendMessageToAI("SYSTEM_START_CONVERSATION");
+                    document.getElementById('m4-start-wrapper').style.display = 'none';
+                    chat.style.display = 'flex';
+                    sendMessageToAI("SYSTEM_START_CONVERSATION"); 
                 });
+
                 sendBtn.addEventListener('click', () => handleUserSubmit());
                 inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserSubmit(); });
               });
@@ -232,7 +267,10 @@
                   <p class="m4cf__sub">Prefer the classic form? Leave details — we’ll confirm quickly.</p>
                   <p class="m4cf__micro">No spam. Only move-related updates.</p>
                 </header>
-                <div class="m4cf__togglebar"> <button id="m4cf-open" class="m4cf__openbtn" type="button" aria-expanded="false" aria-controls="m4cf-panel"> Open classic form </button>
+                <div class="m4cf__togglebar"> <button id="m4cf-open" class="m4cf__openbtn" type="button"
+                    aria-expanded="false" aria-controls="m4cf-panel">
+                    Open classic form
+                  </button>
                   <div class="m4cf__hint">If chat is not convenient — use the standard request.</div>
                 </div>
                 <div id="m4cf-panel" class="m4cf__panel" hidden>
@@ -298,26 +336,51 @@
               .m4cf__btn { appearance: none; border: 1px solid rgba(175, 142, 93, .75); background: linear-gradient(180deg, #C7A26A 0%, #AF8E5D 55%, #9E7E4E 100%); color: #042529; font-weight: 800; border-radius: 999px; padding: 12px 18px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -2px 4px rgba(0, 0, 0, .25), 0 10px 22px rgba(0, 0, 0, .32); }
               .m4cf__btn[disabled] { opacity: .6; cursor: not-allowed; }
               .m4cf__fine { font-size: 12px; color: rgba(255, 255, 255, .70); line-height: 1.35; }
+              .m4cf__contact { margin-top: 14px; padding: 0 6px; color: rgba(255, 255, 255, .72); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; } .m4cf__contactline span { color: rgba(255, 255, 255, .62); margin-right: 6px; }
               @media (max-width: 760px) { .m4cf { padding: 40px 0; } .m4cf__title { font-size: 24px; } .m4cf__grid { grid-template-columns: 1fr; } }
+              #m4-classic-form { scroll-margin-top: 110px; }
             </style>
             <script>
               document.addEventListener("DOMContentLoaded", function () {
+                "use strict";
                 const WEBHOOK_URL = "https://formspree.io/f/xojpakpr";
-                const panel = document.getElementById("m4cf-panel");
-                const openBtn = document.getElementById("m4cf-open");
-                const closeBtn = document.getElementById("m4cf-close");
-                if (openBtn) openBtn.onclick = () => { panel.hidden = false; openBtn.setAttribute("aria-expanded", "true"); };
-                if (closeBtn) closeBtn.onclick = () => { panel.hidden = true; openBtn.setAttribute("aria-expanded", "false"); };
-                const form = document.getElementById("m4cf-form");
-                if (form) form.onsubmit = async (e) => {
-                  e.preventDefault();
-                  const btn = document.getElementById("m4cf-submit");
-                  btn.disabled = true; btn.innerText = "Sending...";
-                  await fetch(WEBHOOK_URL, { method: "POST", body: new FormData(form) });
-                  document.getElementById("m4cf-status").style.display = "block";
-                  document.getElementById("m4cf-status").innerText = "Request sent!";
-                  form.reset(); btn.disabled = false; btn.innerText = "Send request";
-                };
+                const $ = (id) => document.getElementById(id);
+                const section = $("m4-classic-form"); const panel = $("m4cf-panel"); const openBtn = $("m4cf-open"); const closeBtn = $("m4cf-close");
+                function openPanel() {
+                  if (!panel) return; panel.hidden = false; if (openBtn) openBtn.setAttribute("aria-expanded", "true");
+                  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                  const target = section || panel;
+                  if (target && typeof target.scrollIntoView === "function") setTimeout(() => target.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" }), 60);
+                }
+                function closePanel() { if (!panel) return; panel.hidden = true; if (openBtn) openBtn.setAttribute("aria-expanded", "false"); }
+                if (openBtn) openBtn.addEventListener("click", () => panel.hidden ? openPanel() : closePanel());
+                if (closeBtn) closeBtn.addEventListener("click", closePanel);
+                document.addEventListener("click", function (e) { const a = e.target && e.target.closest ? e.target.closest('a[href="#m4-classic-form"]') : null; if (!a) return; e.preventDefault(); openPanel(); });
+                function normalizePhone(raw) {
+                  const cleaned = (raw || "").toString().replace(/[^\d\+\-\(\)\s]/g, "").trim(); const digits = cleaned.replace(/\D/g, "");
+                  if (digits.length < 10) return { ok: false, value: cleaned }; let v = cleaned;
+                  if (digits.length === 10) v = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+                  else if (digits.length === 11 && digits.startsWith("1")) v = `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
+                  return { ok: true, value: v };
+                }
+                function showStatus(type, msg) {
+                  const box = $("m4cf-status"); if (!box) return; box.style.display = "block"; box.textContent = msg;
+                  if (type === "ok") { box.style.borderColor = "rgba(175,142,93,.55)"; box.style.background = "rgba(175,142,93,.12)"; box.style.color = "rgba(255,255,255,.92)"; }
+                  else { box.style.borderColor = "rgba(220, 53, 69, 0.5)"; box.style.background = "rgba(220, 53, 69, 0.1)"; box.style.color = "#ff6b6b"; }
+                }
+                const form = $("m4cf-form"); const btn = $("m4cf-submit"); if (!form) return;
+                form.addEventListener("submit", async (e) => {
+                  e.preventDefault(); const payload = Object.fromEntries(new FormData(form).entries());
+                  const p = normalizePhone(payload.phone); if (!p.ok) { showStatus("err", "Please enter a valid phone number (at least 10 digits)."); return; }
+                  payload.phone = p.value; const required = ["name", "phone", "email", "pickup", "dropoff", "move_date", "time_window", "rooms"];
+                  for (const k of required) { if (!String(payload[k] || "").trim()) { showStatus("err", "Please fill in all required fields."); return; } }
+                  try {
+                    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+                    const response = await fetch(WEBHOOK_URL, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+                    if (!response.ok) throw new Error("Network error");
+                    showStatus("ok", "Request sent. We’ll contact you shortly."); form.reset();
+                  } catch (err) { console.error(err); showStatus("err", "Something went wrong. Please refresh the page or enter more accurate details. Thank you."); } finally { if (btn) { btn.disabled = false; btn.textContent = "Send request"; } }
+                });
               });
             </script>
           </div>
@@ -338,14 +401,25 @@
                 <div class="m4faq__grid">
                   <div class="m4faq__col">
                     <div class="m4faq__acc" role="region" aria-label="Frequently asked questions"> <button class="m4faq__q" type="button" aria-expanded="false"> <span>How does pricing work?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
-                      <div class="m4faq__a" hidden>We charge hourly (crew + truck) plus a one-time truck fee. Your final total is based on the actual time worked.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>Is packing material included?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
-                      <div class="m4faq__a" hidden>Tape + shrink wrap are included. Padded blankets used for all items.</div>
+                      <div class="m4faq__a" hidden>We charge hourly (crew + truck) plus a one-time truck fee. Your final total is based on the actual time worked. If your move requires confirmation (e.g., safe/piano, COI, storage, extra stops, outside LA), we confirm details first.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>Is packing material included?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
+                      <div class="m4faq__a" hidden>Tape + shrink wrap are included. If you need full packing (we pack everything) or special packing (TV/art/glass), we’ll confirm the scope and recommend the right materials.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>Do you protect furniture and floors?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
+                      <div class="m4faq__a" hidden>Yes. We use moving blankets, wrap, and careful loading. In tight spaces we slow down to protect walls, corners, and floors. If your building has rules (elevator reservation/COI), we’ll guide you.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>What can change the estimate?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
+                      <div class="m4faq__a" hidden>Common factors: stairs, long carry distance, street parking vs loading zone, elevator availability, extra stops, storage, and very heavy items. Uploading 5–10 photos or a short video helps make the estimate more accurate.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>Do you handle moves over 10 miles?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
+                      <div class="m4faq__a" hidden>Yes. For longer distances, “double-drive” may apply (California rule). We flag it early and confirm before the move.</div> <button class="m4faq__q" type="button" aria-expanded="false"> <span>How do I confirm my time window?</span> <i class="m4faq__chev" aria-hidden="true"></i> </button>
+                      <div class="m4faq__a" hidden>After you submit details (chat or classic form), we contact you to confirm availability and finalize details. You can call/text any time if you prefer a quick confirmation.</div>
                     </div>
+                    <div class="m4faq__note">If you have a specific item list or building rules, send a quick message — we’ll reply with what we need.</div>
                   </div>
                   <aside class="m4rev" aria-label="Customer feedback">
                     <div class="m4rev__head"><div class="m4rev__title">Quick feedback</div><div class="m4rev__sub">Recent short notes from clients</div></div>
                     <div class="m4rev__list">
                       <div class="m4rev__card"><div class="m4rev__stars" aria-hidden="true">★★★★★</div><div class="m4rev__text">“Super careful with furniture. Everything wrapped and protected.”</div><div class="m4rev__meta">Local move • LA</div></div>
+                      <div class="m4rev__card"><div class="m4rev__stars" aria-hidden="true">★★★★★</div><div class="m4rev__text">“On time, fast loading, no damage. Great communication.”</div><div class="m4rev__meta">1BR • Elevator building</div></div>
+                      <div class="m4rev__card"><div class="m4rev__stars" aria-hidden="true">★★★★★</div><div class="m4rev__text">“They handled stairs + long carry without complaints. Very professional.”</div><div class="m4rev__meta">2BR • Stairs</div></div>
+                    </div>
+                    <div class="m4rev__contact">
+                      <div class="m4rev__line"><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
+                      <div class="m4rev__line"><span>Email:</span> <strong>Mail@Moving4.com</strong></div>
                     </div>
                   </aside>
                 </div>
@@ -354,22 +428,24 @@
             <style>
               :root { --m4faq-bg: #031e20; --m4faq-gold: #AF8E5D; --m4faq-white: #FFFFFF; --m4faq-muted: rgba(255, 255, 255, .72); --m4faq-line: rgba(255, 255, 255, .14); --m4faq-panel: rgba(0, 0, 0, .22); --m4faq-card: rgba(255, 255, 255, .06); --m4faq-shadow: 0 22px 60px rgba(0, 0, 0, .45); --m4faq-br: 26px; --m4faq-br2: 16px; }
               .m4faq, .m4faq * { box-sizing: border-box; } .m4faq { background: var(--m4faq-bg); color: var(--m4faq-white); padding: 56px 0; font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif; }
-              .m4faq__wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; } .m4faq__head { margin-bottom: 16px; } .m4faq__title { margin: 0 0 8px; font-size: 28px; font-weight: 800; }
-              .m4faq__grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-top: 18px; }
-              .m4faq__col { background: var(--m4faq-panel); border: 1px solid rgba(255, 255, 255, .12); border-radius: var(--m4faq-br); box-shadow: var(--m4faq-shadow); padding: 18px; }
-              .m4faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px; margin: 0 0 10px; border-radius: var(--m4faq-br2); border: 1px solid rgba(255, 255, 255, .14); background: rgba(255, 255, 255, .06); color: rgba(255, 255, 255, .92); font-size: 14px; font-weight: 800; cursor: pointer; transition: transform .12s ease; }
-              .m4faq__chev { width: 10px; height: 10px; border-right: 2px solid rgba(255, 255, 255, .68); border-bottom: 2px solid rgba(255, 255, 255, .68); transform: rotate(45deg); transition: transform .16s ease; }
-              .m4faq__q[aria-expanded="true"] .m4faq__chev { transform: rotate(-135deg); }
-              .m4faq__a { margin: -2px 0 12px; padding: 0 14px 12px; color: rgba(255, 255, 255, .78); font-size: 13px; line-height: 1.55; }
-              .m4rev { background: var(--m4faq-panel); border: 1px solid rgba(255, 255, 255, .12); border-radius: var(--m4faq-br); box-shadow: var(--m4faq-shadow); padding: 16px; height: fit-content; }
-              .m4rev__stars { color: var(--m4faq-gold); letter-spacing: 1px; font-size: 12px; } .m4rev__text { margin-top: 8px; color: rgba(255, 255, 255, .88); font-size: 13px; }
+              .m4faq__wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; } .m4faq__head { margin-bottom: 16px; } .m4faq__title { margin: 0 0 8px; font-size: 28px; font-weight: 800; letter-spacing: .2px; }
+              .m4faq__sub { margin: 0; color: rgba(255, 255, 255, .82); font-size: 15px; line-height: 1.5; } .m4faq__grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-top: 18px; }
+              .m4faq__col { background: var(--m4faq-panel); border: 1px solid rgba(255, 255, 255, .12); border-radius: var(--m4faq-br); box-shadow: var(--m4faq-shadow); padding: 18px; } .m4faq__acc { display: block; }
+              .m4faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 14px; margin: 0 0 10px; border-radius: var(--m4faq-br2); border: 1px solid rgba(255, 255, 255, .14); background: rgba(255, 255, 255, .06); color: rgba(255, 255, 255, .92); font-size: 14px; font-weight: 800; letter-spacing: .1px; cursor: pointer; transition: transform .12s ease, background .12s ease, border-color .12s ease; }
+              .m4faq__q:hover { background: rgba(255, 255, 255, .10); border-color: rgba(255, 255, 255, .20); } .m4faq__q:active { transform: translateY(1px); }
+              .m4faq__chev { width: 10px; height: 10px; border-right: 2px solid rgba(255, 255, 255, .68); border-bottom: 2px solid rgba(255, 255, 255, .68); transform: rotate(45deg); transition: transform .16s ease; flex: 0 0 auto; } .m4faq__q[aria-expanded="true"] .m4faq__chev { transform: rotate(-135deg); }
+              .m4faq__a { margin: -2px 0 12px; padding: 0 14px 12px; color: rgba(255, 255, 255, .78); font-size: 13px; line-height: 1.55; } .m4faq__note { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--m4faq-line); color: rgba(255, 255, 255, .70); font-size: 12px; line-height: 1.45; }
+              .m4rev { background: var(--m4faq-panel); border: 1px solid rgba(255, 255, 255, .12); border-radius: var(--m4faq-br); box-shadow: var(--m4faq-shadow); padding: 16px; height: fit-content; } .m4rev__head { padding: 2px 2px 10px; } .m4rev__title { font-weight: 800; font-size: 14px; letter-spacing: .1px; } .m4rev__sub { margin-top: 4px; color: rgba(255, 255, 255, .70); font-size: 12px; }
+              .m4rev__list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; } .m4rev__card { background: var(--m4faq-card); border: 1px solid rgba(255, 255, 255, .14); border-radius: var(--m4faq-br2); padding: 12px; }
+              .m4rev__stars { color: var(--m4faq-gold); letter-spacing: 1px; font-size: 12px; } .m4rev__text { margin-top: 8px; color: rgba(255, 255, 255, .88); font-size: 13px; line-height: 1.45; } .m4rev__meta { margin-top: 8px; color: rgba(255, 255, 255, .62); font-size: 12px; }
+              .m4rev__contact { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--m4faq-line); color: rgba(255, 255, 255, .78); font-size: 13px; } .m4rev__line span { color: rgba(255, 255, 255, .62); margin-right: 6px; }
               @media (max-width: 920px) { .m4faq__grid { grid-template-columns: 1fr; } }
             </style>
             <script>
               (function () {
-                "use strict"; 
-                const qs = document.querySelectorAll(".m4faq__q");
-                qs.forEach((btn) => { btn.onclick = () => { const exp = btn.getAttribute("aria-expanded") === "true"; btn.setAttribute("aria-expanded", !exp); btn.nextElementSibling.hidden = exp; }; });
+                "use strict"; const root = document.querySelector("#faq"); if (!root) return;
+                const qs = root.querySelectorAll(".m4faq__q");
+                qs.forEach((btn) => { btn.addEventListener("click", () => { const expanded = btn.getAttribute("aria-expanded") === "true"; qs.forEach(b => { b.setAttribute("aria-expanded", "false"); const a = b.nextElementSibling; if (a && a.classList.contains("m4faq__a")) a.hidden = true; }); if (!expanded) { btn.setAttribute("aria-expanded", "true"); const ans = btn.nextElementSibling; if (ans && ans.classList.contains("m4faq__a")) ans.hidden = false; } }); });
               })();
             </script>
           </div>
@@ -384,22 +460,36 @@
             <footer class="m4-minifoot" id="contact">
               <div class="m4-minifoot__wrap">
                 <div class="m4-minifoot__grid">
-                  <section class="m4-minifoot__col">
+                  <section class="m4-minifoot__col" aria-label="Contact">
                     <div class="m4-minifoot__kicker">Contact</div><h2 class="m4-minifoot__brand">Moving4</h2><p class="m4-minifoot__slogan">We don’t move things. We protect value.</p>
-                    <div class="m4-minifoot__links"> <a class="m4-minifoot__link" href="tel:+17477373444"> <span class="m4-minifoot__label">Call / Text</span> <span class="m4-minifoot__value">+1 (747) 737-3444</span> </a> </div>
+                    <div class="m4-minifoot__links"> <a class="m4-minifoot__link" href="tel:+17477373444"> <span class="m4-minifoot__label">Call / Text</span> <span class="m4-minifoot__value">+1 (747) 737-3444</span> </a> <a class="m4-minifoot__link" href="mailto:Mail@Moving4.com"> <span class="m4-minifoot__label">Email</span> <span class="m4-minifoot__value">Mail@Moving4.com</span> </a> <div class="m4-minifoot__area">Los Angeles &amp; nearby areas</div> </div>
+                  </section>
+                  <section class="m4-minifoot__col" aria-label="Notes">
+                    <div class="m4-minifoot__kicker">Notes</div><h3 class="m4-minifoot__title">What to know</h3><p class="m4-minifoot__lead">Short, practical notes — so there are no surprises.</p>
+                    <ul class="m4-minifoot__list"> <li>Final total is based on actual time worked.</li> <li>Double drive may apply for routes over 10 miles (CA rule).</li> <li>Overtime rate can apply after 8 hours.</li> <li>Stairs, elevators, and parking distance affect timing.</li> <li>COI and building requirements can be confirmed in advance.</li> </ul>
+                    <p class="m4-minifoot__fine"> Cash is usually <strong>$20 off</strong> vs card (processing fees). Tape + shrink wrap included. </p>
+                    <div class="m4-minifoot__endline">Transparent • Calm process • Protected move day</div>
                   </section>
                 </div>
                 <div class="m4-minifoot__bottom">
-                  <div class="m4-minifoot__copy">© 2026 Moving4. All rights reserved.</div>
+                  <div class="m4-minifoot__copy">© <span id="m4-minifoot-year"></span> Moving4. All rights reserved.</div><div class="m4-minifoot__small">Built for clarity. Designed to reduce stress.</div>
                 </div>
               </div>
             </footer>
             <style>
-              .m4-minifoot { --bg: #042529; --bg2: #031e20; --text: #F4F7F7; --muted: rgba(244, 247, 247, .74); --gold: #AF8E5D; font-family: Montserrat, sans-serif; color: var(--text); background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%); padding: 90px 0 50px; }
-              .m4-minifoot__wrap { max-width: 1860px; margin: 0 auto; padding: 0 48px; } .m4-minifoot__grid { display: grid; grid-template-columns: 1fr; gap: 56px; }
-              .m4-minifoot__brand { margin: 0; font-size: 34px; font-weight: 900; } .m4-minifoot__link { text-decoration: none; color: inherit; display: inline-flex; gap: 10px; }
-              .m4-minifoot__value { font-weight: 900; } .m4-minifoot__bottom { margin-top: 34px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .10); }
+              .m4-minifoot { --bg: #042529; --bg2: #031e20; --text: #F4F7F7; --muted: rgba(244, 247, 247, .74); --gold: #AF8E5D; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--text); background: radial-gradient(700px 520px at 30% 45%, rgba(255, 255, 255, .022), transparent 62%), radial-gradient(800px 560px at 70% 55%, rgba(255, 255, 255, .018), transparent 64%), linear-gradient(180deg, var(--bg2) 0%, var(--bg) 45%, var(--bg2) 100%); padding: 90px 0 50px; }
+              .m4-minifoot__wrap { max-width: 1860px; margin: 0 auto; padding: 0 48px; } .m4-minifoot__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+              .m4-minifoot__kicker { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800; color: rgba(175, 142, 93, .92); margin-bottom: 14px; } .m4-minifoot__brand { margin: 0 0 8px; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; font-weight: 900; }
+              .m4-minifoot__slogan { margin: 0 0 22px; font-size: 14px; line-height: 1.8; color: var(--muted); } .m4-minifoot__links { display: flex; flex-direction: column; gap: 12px; }
+              .m4-minifoot__link { text-decoration: none; color: inherit; display: inline-flex; align-items: baseline; gap: 10px; } .m4-minifoot__label { min-width: 92px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; color: rgba(244, 247, 247, .68); }
+              .m4-minifoot__value { font-size: 14px; font-weight: 900; color: rgba(244, 247, 247, .96); } .m4-minifoot__link:hover .m4-minifoot__value { text-decoration: underline; text-decoration-color: rgba(175, 142, 93, .55); text-underline-offset: 4px; }
+              .m4-minifoot__area { margin-top: 6px; font-size: 13px; color: rgba(244, 247, 247, .70); } .m4-minifoot__title { margin: 0 0 8px; font-size: 18px; font-weight: 900; color: rgba(244, 247, 247, .96); }
+              .m4-minifoot__lead { margin: 0 0 16px; font-size: 14px; line-height: 1.8; color: var(--muted); } .m4-minifoot__list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.7; color: rgba(244, 247, 247, .74); }
+              .m4-minifoot__fine { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .10); font-size: 13px; line-height: 1.7; color: rgba(244, 247, 247, .72); } .m4-minifoot__endline { margin-top: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(244, 247, 247, .55); }
+              .m4-minifoot__bottom { margin-top: 34px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .10); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: rgba(244, 247, 247, .60); }
+              @media (max-width: 1100px) { .m4-minifoot__grid { grid-template-columns: 1fr; gap: 34px; } } @media (max-width: 720px) { .m4-minifoot__wrap { padding: 0 18px; } .m4-minifoot__brand { font-size: 28px; } .m4-minifoot__bottom { flex-direction: column; align-items: flex-start; } }
             </style>
+            <script> (function () { var y = document.getElementById('m4-minifoot-year'); if (y) y.textContent = new Date().getFullYear(); })(); </script>
           </div>
         </div>
       </div>
@@ -412,11 +502,16 @@
             <script>
               (function () {
                 var HEADER_OFFSET = 90;
-                function scrollToId(id) { var el = document.getElementById(id); if (!el) return; window.scrollTo({ top: el.offsetTop - HEADER_OFFSET, behavior: 'smooth' }); }
+                function getTop(el) { var r = el.getBoundingClientRect(); return r.top + (window.pageYOffset || document.documentElement.scrollTop); }
+                function scrollToId(id) { var el = document.getElementById(id); if (!el) return false; var y = getTop(el) - HEADER_OFFSET; if (y < 0) y = 0; window.scrollTo({ top: y, behavior: 'smooth' }); return true; }
+                window.m4StartAIQuote = function () { scrollToId('m4-agent-wrapper'); setTimeout(function () { var agent = document.getElementById('m4-agent'); if (!agent) return; var btn = agent.querySelector('#m4-start'); if (btn) btn.click(); }, 350); };
+                window.m4OpenClassicForm = function () { scrollToId('m4-classic-form'); setTimeout(function () { var manual = document.getElementById('m4-classic-form'); if (!manual) return; var btn = manual.querySelector('#m4cf-open'); if (btn) btn.click(); }, 350); };
                 document.addEventListener('click', function (e) {
-                  var a = e.target.closest('a'); if (!a) return;
-                  var href = a.getAttribute('href') || ''; if (href.startsWith('#')) { e.preventDefault(); scrollToId(href.substring(1)); }
-                });
+                  var a = e.target.closest('a, button'); if (!a) return; var act = a.getAttribute('data-m4-action');
+                  if (act === 'start-ai') { e.preventDefault(); window.m4StartAIQuote(); return; } if (act === 'open-classic') { e.preventDefault(); window.m4OpenClassicForm(); return; }
+                  if (a.tagName.toLowerCase() === 'a') { var href = a.getAttribute('href') || ''; if (href.charAt(0) === '#' && href.length > 1) { var id = href.slice(1); if (document.getElementById(id)) { e.preventDefault(); scrollToId(id); history.replaceState(null, '', '#' + id); } } }
+                }, true);
+                if (location.hash && location.hash.length > 1) { var id = location.hash.slice(1); setTimeout(function () { if (document.getElementById(id)) scrollToId(id); }, 250); }
               })();
             </script>
           </div>
@@ -429,15 +524,14 @@
         <div class="t-container_100 ">
           <div class="t-width t-width_100 "> <a href="tel:+17477373444" class="m4-floating-call" aria-label="Call Moving4"> <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.03 21c.73 0 .97-.66.97-1.19v-3.44c0-.54-.45-.99-.99-.99z" fill="#042529" /> </svg> </a>
             <style>
-              .m4-floating-call { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: linear-gradient(180deg, #C7A26A, #AF8E5D); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(175, 142, 93, 0.5); z-index: 999; animation: m4pulse 2s infinite; }
-              @keyframes m4pulse { 0% { box-shadow: 0 0 0 0 rgba(175, 142, 93, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(175, 142, 93, 0); } 100% { box-shadow: 0 0 0 0 rgba(175, 142, 93, 0); } }
-              .m4-floating-call svg { width: 32px; height: 32px; }
+              .m4-floating-call { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: linear-gradient(180deg, #C7A26A, #AF8E5D); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(175, 142, 93, 0.5); z-index: 999999; animation: m4pulse 2s infinite; transition: transform 0.3s ease; }
+              .m4-floating-call svg { width: 32px; height: 32px; } .m4-floating-call:hover { transform: scale(1.1) translateY(-5px); }
+              @media (max-width: 768px) { .m4-floating-call { bottom: 20px; right: 20px; width: 55px; height: 55px; } .m4-floating-call svg { width: 26px; height: 26px; } }
             </style>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </body>
 </html>
