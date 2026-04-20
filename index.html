@@ -209,7 +209,7 @@
                         try {
                             const jsonResponse = JSON.parse(data);
                             appendMessage(jsonResponse.text, 'bot');
-                            if(jsonResponse.choices && Array.isArray(jsonResponse.choices)) {
+                            if(jsonResponse.choices && Array.isArray(jsonResponse.choices) && jsonResponse.choices.length > 0) {
                                 showChoices(jsonResponse.choices);
                             } else {
                                 controls.style.display = "flex";
