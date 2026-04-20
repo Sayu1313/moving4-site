@@ -67,621 +67,188 @@
           <div class="t-width t-width_100 ">
             <div id="m4-agent-wrapper">
               <div id="m4-agent" class="m4-agent">
-                <div class="m4-progress-container"><div id="m4-progress-bar" class="m4-progress-bar"></div></div>
                 <div class="m4-header">
                   <div class="m4-title">Alex — Moving4 Assistant</div>
                   <div class="m4-subtitle">Fast estimate • LA Certified • No calls required</div> 
-                  <button id="m4-back-btn" class="m4-back-btn" type="button" style="display:none;" aria-label="Go back one step">⬅ Back</button>
                   <div id="m4-start-wrapper" class="m4-startwrap"> <button id="m4-start" class="m4-btn primary" type="button">Start Quote</button> </div>
                 </div>
                 <div id="m4-chat" class="m4-chat" aria-live="polite" aria-atomic="false"></div>
                 <div id="m4-typing" class="m4-typing" style="display:none;" aria-hidden="true"> 
                   <span class="m4-dot"></span><span class="m4-dot"></span><span class="m4-dot"></span> 
-                  <span class="m4-typing-text">Alex is typing...</span> 
+                  <span class="m4-typing-text">Alex is analyzing...</span> 
                 </div>
                 <div id="m4-controls" class="m4-controls" style="display:none;">
                   <div class="m4-input-wrapper">
-                    <input id="m4-input" class="m4-input" type="text" placeholder="Type your answer..." autocomplete="off" aria-label="Chat input" />
+                    <input id="m4-input" class="m4-input" type="text" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
                   </div>
                   <button id="m4-send" class="m4-send primary" type="button" aria-label="Send message">Send</button>
                 </div>
                 <div class="m4-footnote">
                   <div class="m4-footnote-item">Cash is usually <strong>$20 off</strong> vs card.</div>
-                  <div class="m4-footnote-item">Tape + wrap included. Gift: <strong>1 free TV Box</strong>.</div>
-                  <div class="m4-invoice-ref">SYSTEM REF: TWEOPU-2026-02</div>
+                  <div class="m4-invoice-ref">SYSTEM REF: AI-NEO-2.0</div>
                 </div>
               </div>
             </div>
+            
             <style>
-              @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-              body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-              input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-              #m4-agent-wrapper { padding: 40px 20px; display: flex; justify-content: center; width: 100%; box-sizing: border-box; position: relative; }
-              .m4-agent { width: 100%; max-width: 850px; background: #031e20; border-radius: 28px; font-family: 'Montserrat', sans-serif; color: #fff; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; max-height: 90vh; }
-              .m4-header { position: relative; padding: 40px 30px 30px 30px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; }
+              /* CHAT STYLES */
+              #m4-agent-wrapper { padding: 40px 20px; display: flex; justify-content: center; width: 100%; box-sizing: border-box; }
+              .m4-agent { width: 100%; max-width: 850px; background: #031e20; border-radius: 28px; font-family: 'Montserrat', sans-serif; color: #fff; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; height: 75vh; }
+              .m4-header { padding: 40px 30px 30px 30px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; }
               .m4-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
-              .m4-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 0; }
+              .m4-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.6); }
               .m4-startwrap { margin-top: 25px; }
-              .m4-back-btn { position: absolute; top: 40px; right: 30px; background: transparent; border: 1px solid rgba(175, 142, 93, 0.5); color: #AF8E5D; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; transition: 0.3s; }
-              .m4-back-btn:hover { background: #AF8E5D; color: #000; border-color: #AF8E5D; }
-              .m4-chat { height: 440px; overflow-y: auto; padding: 20px 30px; display: none; background: rgba(0, 0, 0, 0.15); flex-direction: column; scroll-behavior: smooth; flex-grow: 1; }
+              .m4-chat { overflow-y: auto; padding: 20px 30px; display: none; background: rgba(0, 0, 0, 0.15); flex-direction: column; flex-grow: 1; }
               .m4-row { display: flex; margin-bottom: 15px; width: 100%; }
               .m4-row.bot { justify-content: flex-start; }
               .m4-row.user { justify-content: flex-end; }
-              .m4-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); animation: m4fade 0.3s ease-out; white-space: pre-wrap; }
+              .m4-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); white-space: pre-wrap; }
               .m4-row.user .m4-bubble { background: rgba(175, 142, 93, 0.25); border-color: #AF8E5D; }
-              @keyframes m4fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-              .m4-bubble.is-final { text-align: left; max-width: 100%; margin: 0 auto; width: 100%; background: transparent; border: none; padding: 0; }
-              .m4-footnote { padding: 25px 30px; background: rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; text-align: left; flex-shrink: 0; }
-              .m4-invoice-ref { font-size: 10px; opacity: 0.3; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
-              
-              /* Buttons */
-              .m4-btn.primary, .m4-send.primary { background: linear-gradient(180deg, #C7A26A, #AF8E5D); color: #042529 !important; border: none; padding: 14px 35px; font-weight: 800; border-radius: 50px; cursor: pointer; transition: 0.3s; font-family: 'Montserrat', sans-serif; font-size: 16px; display: inline-block; white-space: nowrap; }
-              .m4-btn.primary:hover, .m4-send.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(175, 142, 93, 0.3); }
-              
-              /* GOLD ANIMATED BUTTON */
-              @keyframes shimmerBtn { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-              .m4-btn-gold {
-                  background: linear-gradient(90deg, #AF8E5D 0%, #DBC08C 25%, #FFF0C8 50%, #DBC08C 75%, #AF8E5D 100%);
-                  background-size: 200% auto; color: #042529 !important; font-weight: 900;
-                  animation: shimmerBtn 3.5s linear infinite; border: none; padding: 18px 40px;
-                  border-radius: 50px; font-size: 16px; cursor: pointer; display: inline-block;
-                  text-decoration: none; box-shadow: 0 10px 25px rgba(175, 142, 93, 0.4);
-                  margin-top: 20px; transition: transform 0.2s;
-              }
-              .m4-btn-gold:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(175, 142, 93, 0.6); }
-
-              .m4-btn-faq { display: inline-block; border: 2px solid rgba(175, 142, 93, 0.5); color: #AF8E5D !important; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-top: 10px; background: transparent; }
-              .m4-btn-faq:hover { background: rgba(175, 142, 93, 0.1); border-color: #AF8E5D; }
-
-              .m4-progress-container { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0; }
-              .m4-progress-bar { width: 0%; height: 100%; background: #AF8E5D; transition: width 0.4s ease; box-shadow: 0 0 10px #AF8E5D; }
-              .m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); flex-shrink: 0; align-items: center; }
-              
-              /* Input & Calendar fix */
-              .m4-input-wrapper { position: relative; flex: 1; display: flex; min-width: 0; }
-              .m4-input { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 15px; outline: none; transition: 0.3s; width: 100%; box-sizing: border-box; }
-              .m4-input:focus { border-color: #AF8E5D; background: rgba(0, 0, 0, 0.8); }
-              .m4-input[type="date"]::-webkit-calendar-picker-indicator { 
-                background: transparent; bottom: 0; color: transparent; cursor: pointer; height: auto; left: 0; position: absolute; right: 0; top: 0; width: auto; 
-              }
-
-              .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-              .m4-choice-btn { background: rgba(175, 142, 93, 0.15); border: 1px solid #AF8E5D; color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; transition: 0.2s; }
-              .m4-choice-btn:hover { background: #AF8E5D; color: #000; }
-              .m4-typing { display: flex; align-items: center; gap: 6px; padding: 10px 30px; background: rgba(0, 0, 0, 0.15); flex-shrink: 0; }
+              .m4-btn.primary, .m4-send.primary { background: linear-gradient(180deg, #C7A26A, #AF8E5D); color: #042529 !important; border: none; padding: 14px 35px; font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 16px; font-family: 'Montserrat', sans-serif;}
+              .m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); align-items: center; background: #031e20;}
+              .m4-input-wrapper { flex: 1; }
+              .m4-input { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-size: 15px; outline: none; width: 100%; box-sizing: border-box; font-family: inherit;}
+              .m4-input:focus { border-color: #AF8E5D; }
+              .m4-typing { display: flex; align-items: center; gap: 6px; padding: 10px 30px; background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255,255,255,0.05);}
               .m4-dot { width: 6px; height: 6px; background: #AF8E5D; border-radius: 50%; animation: blink 1.4s infinite; }
               .m4-dot:nth-child(2) { animation-delay: 0.2s; }
               .m4-dot:nth-child(3) { animation-delay: 0.4s; }
               .m4-typing-text { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-left: 8px; }
-              
-              /* Receipt Styling */
-              .m4-receipt { background: rgba(0,0,0,0.3); border: 1px solid rgba(175,142,93,0.3); border-radius: 16px; padding: 25px; font-size: 14px; line-height: 1.6; }
-              .m4-receipt hr { border: none; border-top: 1px dashed rgba(255,255,255,0.2); margin: 15px 0; }
-              .m4-receipt-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #AF8E5D; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-              .m4-receipt-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 5px; }
-              
               @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-              @keyframes m4rocketFlicker { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1) translateY(-2px); } }
-              .m4-animate-rocket { display: inline-block; animation: m4rocketFlicker 1s infinite alternate ease-in-out; }
-              @keyframes m4confettiFall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(500px) rotate(360deg); opacity: 0; } }
-              .m4-confetti-item { position: absolute; top: -20px; font-size: 22px; opacity: 0; pointer-events: none; z-index: 99; }
-              
+              .m4-footnote { padding: 20px 30px; background: rgba(0, 0, 0, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+              .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+              .m4-choice-btn { background: rgba(175, 142, 93, 0.15); border: 1px solid #AF8E5D; color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: inherit; font-size:14px;}
+              .m4-choice-btn:hover { background: #AF8E5D; color: #000; }
+
               @media (max-width: 768px) {
-                #m4-agent-wrapper { padding: 20px 10px 60px 10px !important; }
-                .m4-agent { border-radius: 18px; max-height: 85vh; }
-                .m4-header { padding: 20px; }
-                .m4-title { font-size: 18px; }
-                .m4-subtitle { font-size: 12px; }
-                .m4-back-btn { top: 15px; right: 15px; font-size: 11px; padding: 6px 12px; }
-                .m4-startwrap { margin-top: 15px; text-align: center; }
-                .m4-chat { height: auto; max-height: 45vh; padding: 15px; }
-                .m4-controls { padding: 15px; gap: 10px; align-items: center; }
-                .m4-input { font-size: 16px; padding: 0 15px; height: 50px; }
-                .m4-send.primary { font-size: 15px; font-weight: 800; padding: 0 25px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; }
-                .m4-bubble { font-size: 14px; padding: 12px 16px; max-width: 90%; }
-                .m4-choice-btn { font-size: 13px; padding: 8px 16px; }
-                .m4-footnote { padding: 15px; font-size: 11px; }
-                .m4-btn-gold { padding: 16px 30px; font-size: 15px; width: 100%; text-align: center; box-sizing: border-box; }
+                  .m4-agent { border-radius: 18px; height: 85vh; }
+                  .m4-header { padding: 20px; }
+                  .m4-chat { padding: 15px; }
+                  .m4-controls { padding: 15px; gap: 10px; flex-direction: column;}
+                  .m4-input { height: 50px; }
+                  .m4-send.primary { width: 100%; height: 50px;}
               }
-            </style><script>
+            </style>
+
+            <script>
               document.addEventListener("DOMContentLoaded", function () {
-                "use strict";
-
-                const FORMSPREE_URL = "https://formspree.io/f/xojpakpr";
-
-                let stepIndex = 0;
-                let memory = {};
-                let activeInput = null;
-                let isTyping = false;
-
-                // Smart Month Calculation
-                const d = new Date();
-                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                const curMonth = months[d.getMonth()];
-                const nextM = months[(d.getMonth() + 1) % 12];
-
-                const steps = [
-                  { id: "type_of_work", q: "First, what type of service do you need?", type: "choice", choices: ["Moving", "Packing", "Labor only"] },
-                  { id: "timeline", q: "When is your move planned?", type: "choice", choices: ["ASAP", `This month (${curMonth})`, `Next month (${nextM})`, "Just checking prices"] },
-                  { id: "name", q: "Got it! Before we continue, what is your **first name**?", type: "text" },
-                  { id: "promo_offer", q: "", type: "choice", choices: ["Claim my discount 🎁", "I don't need a discount"] },
-                  { id: "phone", q: "Awesome! The discount is now locked to your estimate. 🔒\n\nWhat is your **mobile number** to send the final quote to? 📱\n*(Don't worry, no spam)*", type: "text", ph: "(747) 123-4567" },
-                  { id: "pickup", q: "Perfect. What's the **pickup** address? (Please type the full address)", type: "text", ph: "Full pickup address..." },
-                  { id: "dropoff", q: "And what's the **drop-off** address? (Please type the full address)", type: "text", ph: "Full drop-off address..." },
-                  { id: "approx_distance", q: "Approximate driving distance between locations?", type: "choice", choices: ["0-10 miles", "10-20 miles", "20+ miles"] },
-                  { id: "date", q: "What is your target move date?", type: "date", ph: "Tap here to select a date" },
-                  { id: "rooms", q: "Awesome. How many rooms are we moving?", type: "choice", choices: ["Studio / Loft", "1 Bedroom", "2 Bedroom", "3+ Bedroom"] },
-                  { id: "family", q: "Do you have any pets or children moving with you? 🐾", type: "choice", choices: ["Kids only", "Pets only", "Both kids & pets", "None"] },
-                  { id: "property_type", q: "What type of property are we picking up from?", type: "choice", choices: ["Apartment", "House", "Condo", "Townhouse", "Storage"] },
-                  { id: "pickup_floor", q: "Pickup — what floor?", type: "choice", choices: ["Ground", "2nd", "3rd", "4+"] },
-                  { id: "pickup_elevator", q: "Pickup — is there an elevator?", type: "choice", choices: ["Yes", "No"] },
-                  { id: "pickup_stairs", q: "Pickup — any stairs? (Even outside)", type: "choice", choices: ["None", "1 Flight", "2+ Flights"] },
-                  { id: "dropoff_floor", q: "Drop-off — what floor?", type: "choice", choices: ["Ground", "2nd", "3rd", "4+"] },
-                  { id: "dropoff_elevator", q: "Drop-off — is there an elevator?", type: "choice", choices: ["Yes", "No"] },
-                  { id: "dropoff_stairs", q: "Drop-off — any stairs?", type: "choice", choices: ["None", "1 Flight", "2+ Flights"] },
-                  { id: "heavy_items", q: "Any very heavy items (>250lbs)? Select below or type your own.\n*(Our crews are specially trained for heavy lifting)*", type: "choice", choices: ["None", "Safe", "Treadmill", "Piano"], allowText: true, ph: "E.g., Large Marble Table..." },
-                  { id: "crew", q: "How many movers do you prefer?", type: "choice", choices: [] },
-                  { id: "service_level", q: "Almost there! Select your preferred level of service:\n\n**Basic Service:** Standard move. Basic protection included.\n**White Glove Premium:** Elite standard. Full packing, crating, and on-site supervisor.", type: "choice", choices: ["Basic Service", "White Glove Premium"] },
-                  { id: "payment_type", q: "How would you like to pay?", type: "choice", choices: ["Cash ($20 off/hr)", "50/50 (Cash & Card)", "Credit Card"] },
-                  { id: "notes", q: "Is there anything else I should know? (Extra stops, specific packing needs, etc.) Feel free to write it here, or use your microphone to dictate.", type: "text", ph: "Notes or type 'No'..." },
-                  { id: "email", q: "Last step! What's your **email** to send the copy of this quote?", type: "text", ph: "your@email.com" },
-                  { id: "final", type: "final" }
-                ];
-
-                const startBtn = document.getElementById('m4-start');
-                const backBtn = document.getElementById('m4-back-btn');
+                
+                // ======================================================================
+                // ВСТАВЬ СВОЙ ВЕБХУК MAKE.COM СЮДА
+                // ======================================================================
+                const MAKE_WEBHOOK_URL = 'ВСТАВЬ_ССЫЛКУ_ИЗ_MAKE_COM_СЮДА'; 
+                // ======================================================================
+                
                 const chat = document.getElementById('m4-chat');
                 const controls = document.getElementById('m4-controls');
-                const inputNorm = document.getElementById('m4-input');
+                const inputEl = document.getElementById('m4-input');
                 const sendBtn = document.getElementById('m4-send');
-                const typing = document.getElementById('m4-typing');
-                const progressBar = document.getElementById('m4-progress-bar');
-                const typingText = document.querySelector('.m4-typing-text');
-                activeInput = inputNorm;
+                const typingIndicator = document.getElementById('m4-typing');
+                const startBtn = document.getElementById('m4-start');
 
-                // --- SESSION RECOVERY ---
-                function saveChatSession() {
-                  sessionStorage.setItem('m4_chat_html', chat.innerHTML);
-                  sessionStorage.setItem('m4_chat_state', JSON.stringify({ memory, stepIndex }));
+                let sessionId = sessionStorage.getItem('m4_session_id');
+                if (!sessionId) {
+                    sessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+                    sessionStorage.setItem('m4_session_id', sessionId);
                 }
 
-                function restoreChatSession() {
-                  const stateStr = sessionStorage.getItem('m4_chat_state');
-                  if (stateStr) {
-                    const state = JSON.parse(stateStr);
-                    memory = state.memory;
-                    stepIndex = state.stepIndex;
-                    chat.innerHTML = sessionStorage.getItem('m4_chat_html') || "";
-                    document.getElementById('m4-start-wrapper').style.display = 'none';
-                    chat.style.display = 'flex';
-                    document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-                    if (stepIndex < steps.length) nextStep();
-                    return true;
-                  }
-                  return false;
-                }
+                let isAITyping = false;
 
-                async function say(text, role = "bot", isFinal = false, stepOverride = null) {
-                  if (role === "bot") {
-                    isTyping = true;
-                    typing.style.display = "flex";
-                    let delay = 1000 + (text.length * 20);
-                    if (delay > 2500) delay = 2500;
-                    await new Promise(r => setTimeout(r, delay));
-                    typing.style.display = "none";
-                    isTyping = false;
-                  }
-                  const row = document.createElement("div");
-                  row.className = "m4-row " + role;
-                  row.dataset.step = stepOverride !== null ? stepOverride : stepIndex;
-
-                  let bubbleClass = isFinal ? "m4-bubble is-final" : "m4-bubble";
-                  let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                  row.innerHTML = `<div class="${bubbleClass}">${formattedText}</div>`;
-                  chat.appendChild(row);
-                  setTimeout(() => chat.scrollTop = chat.scrollHeight, 50);
-
-                  const percent = Math.min(((stepIndex) / (steps.length - 1)) * 100, 100);
-                  progressBar.style.width = percent + "%";
-                  saveChatSession();
-                }
-
-                async function startConversation() {
-                  typingText.textContent = "Alex is connecting...";
-                  typing.style.display = "flex";
-                  await new Promise(r => setTimeout(r, 1200));
-                  typingText.textContent = "Alex is typing...";
-
-                  await say("👋 Hi there! I'm Alex, the Moving4 AI assistant.", "bot", false, -1);
-                  await say("To give you an accurate estimate, I need to ask a few quick details.\n\nPlease answer **step-by-step** so I can calculate the best price for you. 🚀", "bot", false, -1);
-                  nextStep();
+                function appendMessage(text, role) {
+                    const row = document.createElement('div');
+                    row.className = `m4-row ${role}`;
+                    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    row.innerHTML = `<div class="m4-bubble">${formattedText}</div>`;
+                    chat.appendChild(row);
+                    chat.scrollTop = chat.scrollHeight;
                 }
 
                 function showChoices(choices) {
-                  const row = document.createElement("div");
-                  row.className = "m4-row bot m4-active-choices";
-                  row.dataset.step = stepIndex;
+                    const row = document.createElement("div");
+                    row.className = "m4-row bot m4-active-choices";
+                    const container = document.createElement("div");
+                    container.className = "m4-choice-container";
 
-                  const container = document.createElement("div");
-                  container.className = "m4-choice-container";
-
-                  choices.forEach(c => {
-                    const btn = document.createElement("button");
-                    btn.className = "m4-choice-btn";
-                    btn.textContent = c;
-                    btn.setAttribute("aria-label", c);
-                    btn.onclick = () => {
-                      document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-                      handleUserReply(c);
-                    };
-                    container.appendChild(btn);
-                  });
-                  row.appendChild(container);
-                  chat.appendChild(row);
-                  setTimeout(() => chat.scrollTop = chat.scrollHeight, 50);
-                }
-
-                async function nextStep() {
-                  if (stepIndex >= steps.length) return;
-                  backBtn.style.display = stepIndex > 0 ? "inline-block" : "none";
-
-                  let step = steps[stepIndex];
-
-                  // SMART SKIP LOGIC (House, Elevators, Ground Floor)
-                  const isHouse = memory.property_type === "House";
-                  const pElevator = memory.pickup_elevator === "Yes";
-                  const dElevator = memory.dropoff_elevator === "Yes";
-                  const pGround = memory.pickup_floor === "Ground";
-                  const dGround = memory.dropoff_floor === "Ground";
-                  let skip = false;
-
-                  if (isHouse && ["pickup_floor", "pickup_elevator", "pickup_stairs", "dropoff_floor", "dropoff_elevator", "dropoff_stairs"].includes(step.id)) skip = true;
-                  if (pGround && step.id === "pickup_elevator") skip = true;
-                  if (dGround && step.id === "dropoff_elevator") skip = true;
-                  if (pElevator && step.id === "pickup_stairs") skip = true;
-                  if (dElevator && step.id === "dropoff_stairs") skip = true;
-
-                  if (skip) {
-                    stepIndex++;
-                    nextStep();
-                    return;
-                  }
-
-                  if (step.type === "final") {
-                    backBtn.style.display = "none";
-                    await finishFlow();
-                    return;
-                  }
-
-                  // DYNAMIC PROMO OFFER
-                  if (step.id === "promo_offer") {
-                    const cleanName = (memory.name || "VIP").trim().split(" ")[0].toUpperCase();
-                    const pCode = cleanName + "-MOVE50";
-                    if (memory.timeline === "Just checking prices") {
-                      step.q = `Nice to meet you, ${memory.name}! I completely understand you're just comparing prices right now.\n\nJust in case our numbers look good to you, I went ahead and generated a personal promo code: **${pCode}**.\nIt gives you **$50 OFF + 1 Free TV Box**.\n\nShould I apply this to your estimate?`;
-                    } else {
-                      step.q = `Nice to meet you, ${memory.name}! 🎉\n\nI just generated a personal promo code for you: **${pCode}**.\nIt gives you **$50 OFF + 1 Free TV Box** if you book with us.\n\nWould you like to apply it to this estimate?`;
-                    }
-                  }
-
-                  // DYNAMIC CREW CALCULATION (Piano/Safe rules)
-                  if (step.id === "crew") {
-                    let roomType = memory.rooms || "";
-                    let hasHeavy = memory.heavy_items && (memory.heavy_items.includes("Piano") || memory.heavy_items.includes("Safe"));
-
-                    if (hasHeavy) {
-                      step.q = "Because you have extremely heavy items (Piano/Safe), for safety and efficiency we require at least 3 movers.";
-                      step.choices = ["3 movers", "4+ movers"];
-                    } else if (roomType.includes("2 Bed")) {
-                      step.q = "How many movers do you prefer? (For 2BR, we highly recommend 3 movers for speed)";
-                      step.choices = ["2 movers", "3 movers", "4 movers"];
-                    } else if (roomType.includes("3+")) {
-                      step.q = "How many movers do you prefer? (For 3+ BR, 3-4 movers are required)";
-                      step.choices = ["3 movers", "4+ movers"];
-                    } else {
-                      step.q = "How many movers do you prefer? (Most 1BR moves use 2 movers)";
-                      step.choices = ["2 movers", "3 movers"];
-                    }
-                  }
-
-                  let qText = step.q.replace("{name}", memory.name || "");
-                  await say(qText, "bot");
-
-                  if (step.type === "choice") {
-                    showChoices(step.choices);
-                    if (step.allowText) {
-                      controls.style.display = "flex";
-                      activeInput.placeholder = step.ph || "Type your answer...";
-                      activeInput.type = "text";
-                      activeInput.value = "";
-                      activeInput.focus();
-                    } else {
-                      controls.style.display = "none";
-                    }
-                  } else {
-                    controls.style.display = "flex";
-                    if (step.type === "date") {
-                      activeInput.type = "date";
-                      const tzOffset = (new Date()).getTimezoneOffset() * 60000;
-                      const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
-                      activeInput.min = localISOTime;
-                    } else {
-                      activeInput.type = "text";
-                      activeInput.removeAttribute("min");
-                    }
-                    activeInput.placeholder = step.ph || "Type your answer...";
-                    activeInput.value = "";
-                    activeInput.focus();
-                  }
-                }
-
-                async function handleUserReply(val) {
-                  if (isTyping) return;
-                  const text = val.trim();
-                  if (!text) return;
-
-                  // ANTI-CYRILLIC CHECK (Softened)
-                  if (/[а-яА-ЯёЁ]/.test(text)) {
-                    await say(text, "user");
-                    await say("Oops! I noticed some non-English characters. Could you please switch your keyboard to English so I can process your quote correctly? Thank you! 🙏", "bot");
-                    activeInput.value = "";
-                    activeInput.focus();
-                    return; 
-                  }
-
-                  // DATE VALIDATION 
-                  if (steps[stepIndex].id === "date") {
-                    const inputDate = new Date(text + 'T00:00:00'); 
-                    const today = new Date();
-                    today.setHours(0,0,0,0);
-                    if (inputDate < today) {
-                      await say(text, "user");
-                      await say("Oops! That date is in the past. Please select an upcoming date. 📅", "bot");
-                      activeInput.value = "";
-                      activeInput.focus();
-                      return; 
-                    }
-                  }
-
-                  document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-                  await say(text, "user");
-                  memory[steps[stepIndex].id] = text;
-
-                  // PROMO REPLY LOGIC
-                  if (steps[stepIndex].id === "promo_offer") {
-                    if (text.includes("Claim")) {
-                      await say("Congrats! Your discount and free TV box are officially locked in and will be added to your contract. 📜\n\nI just need a little more info to finalize the quote. Let's keep going!", "bot");
-                    } else {
-                      await say("No problem at all! Let's continue with the standard quote.", "bot");
-                    }
-                  }
-
-                  // FOMO TRIGGER
-                  if (steps[stepIndex].id === "date") {
-                    const d = new Date(text);
-                    if (d.getDay() === 5 || d.getDay() === 6 || d.getDay() === 0 || d.getDate() >= 25 || d.getDate() <= 3) {
-                      await say("Oh, I see you picked a weekend or end of the month! We only have **1 truck left** for that date. Let's finish this quickly to lock it in. ⏳", "bot");
-                    }
-                  }
-
-                  // EARLY LEAD CAPTURE
-                  if (steps[stepIndex].id === "phone") {
-                    try { fetch(FORMSPREE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _subject: `👻 EARLY LEAD: ${memory.name}`, Name: memory.name, Phone: memory.phone, Timeline: memory.timeline }) }); } catch (e) {}
-                  }
-
-                  stepIndex++;
-                  nextStep();
-                }
-
-                backBtn.addEventListener('click', () => {
-                  if (stepIndex === 0 || isTyping) return;
-                  let targetStep = stepIndex - 1;
-
-                  const isHouse = memory.property_type === "House";
-                  const pElevator = memory.pickup_elevator === "Yes";
-                  const dElevator = memory.dropoff_elevator === "Yes";
-                  const pGround = memory.pickup_floor === "Ground";
-                  const dGround = memory.dropoff_floor === "Ground";
-
-                  // Reverse skip logic
-                  while (targetStep > 0) {
-                    let sId = steps[targetStep].id;
-                    let shouldSkip = false;
-                    if (isHouse && ["pickup_floor", "pickup_elevator", "pickup_stairs", "dropoff_floor", "dropoff_elevator", "dropoff_stairs"].includes(sId)) shouldSkip = true;
-                    if (pGround && sId === "pickup_elevator") shouldSkip = true;
-                    if (dGround && sId === "dropoff_elevator") shouldSkip = true;
-                    if (pElevator && sId === "pickup_stairs") shouldSkip = true;
-                    if (dElevator && sId === "dropoff_stairs") shouldSkip = true;
-                    if (!shouldSkip) break;
-                    targetStep--;
-                  }
-
-                  document.querySelectorAll('.m4-row').forEach(row => { if (parseInt(row.dataset.step) >= targetStep) row.remove(); });
-                  document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-                  stepIndex = targetStep;
-                  nextStep();
-                });
-
-                function triggerConfetti() {
-                  const chatEl = document.getElementById('m4-chat');
-                  if(!chatEl) return;
-                  for (let i = 0; i < 40; i++) {
-                    const confetti = document.createElement('span');
-                    confetti.className = 'm4-confetti-item';
-                    confetti.textContent = '🎉';
-                    confetti.style.left = (Math.random() * chatEl.offsetWidth) + 'px';
-                    confetti.style.animation = `m4confettiFall ${Math.random() * 2 + 1.5}s ease-out`;
-                    chatEl.appendChild(confetti);
-                    setTimeout(() => confetti.remove(), 3500);
-                  }
-                }
-
-                async function finishFlow() {
-                  controls.style.display = "none";
-                  progressBar.style.width = "100%";
-                  sessionStorage.removeItem('m4_chat_state'); // Clear session on finish
-
-                  await say("I’m calculating your quote... We use thick blankets and shrink wrap for every piece of furniture. No hidden fees, guaranteed. 🛡️", "bot");
-                  await new Promise(r => setTimeout(r, 1500));
-
-                  // Base Hours Setup
-                  let baseHours = 3; // Default (Studio)
-                  if (memory.rooms && memory.rooms.includes("1 Bed")) baseHours = 3.5;
-                  if (memory.rooms && memory.rooms.includes("2 Bed")) baseHours = 4.5;
-                  if (memory.rooms && memory.rooms.includes("3+")) baseHours = 6;
-
-                  // Mild complexity modifiers
-                  if (memory.pickup_floor === "2nd" || memory.dropoff_floor === "2nd") baseHours += 0.5;
-                  if (memory.pickup_floor === "3rd" || memory.dropoff_floor === "3rd") baseHours += 0.5;
-                  if (memory.pickup_floor === "4+" || memory.dropoff_floor === "4+") baseHours += 1.0;
-                  if (memory.pickup_stairs && memory.pickup_stairs !== "None") baseHours += 0.5;
-                  if (memory.dropoff_stairs && memory.dropoff_stairs !== "None") baseHours += 0.5;
-
-                  let ddtNote = "";
-                  if (memory.approx_distance !== "0-10 miles") {
-                    baseHours += 1;
-                    ddtNote = "<br><span style='font-size:12px; opacity:0.8;'>*Includes Double Drive Time (DDT) as per CA law.</span>";
-                  }
-
-                  // Payment / Rate logic
-                  let hourlyRate = 129; // base 2 movers cash
-                  let rateType = memory.payment_type || "Cash";
-                  
-                  if (memory.crew && memory.crew.includes("3")) {
-                    if (rateType.includes("Cash")) hourlyRate = 159;
-                    else if (rateType.includes("50/50")) hourlyRate = 169;
-                    else hourlyRate = 189;
-                  } else if (memory.crew && memory.crew.includes("4")) {
-                    if (rateType.includes("Cash")) hourlyRate = 199;
-                    else if (rateType.includes("50/50")) hourlyRate = 209;
-                    else hourlyRate = 229;
-                  } else {
-                    // 2 movers
-                    if (rateType.includes("Cash")) hourlyRate = 129;
-                    else if (rateType.includes("50/50")) hourlyRate = 139;
-                    else hourlyRate = 149;
-                  }
-
-                  // White Glove Upsell Math
-                  if (memory.service_level === "White Glove Premium") {
-                      hourlyRate += 50;
-                  }
-
-                  // Gas Fee - Skip if Labor only
-                  let gasFee = memory.type_of_work === "Labor only" ? 0 : 60;
-                  
-                  let heavyFee = 0;
-                  let heavyTextHTML = "";
-                  if (memory.heavy_items && memory.heavy_items !== "None") {
-                    heavyFee = 150;
-                    heavyTextHTML = `<tr><td style="padding: 4px 0;"><strong>Heavy Items:</strong></td><td style="padding: 4px 0; text-align:right;">$150 <em>(${memory.heavy_items})</em></td></tr>`;
-                  }
-
-                  let displayMinHours = Math.max(3, baseHours);
-                  let displayMaxHours = displayMinHours + 1.5;
-
-                  let discountApplied = memory.promo_offer && memory.promo_offer.includes("Claim") ? 50 : 0;
-                  let minTotal = Math.round((displayMinHours * hourlyRate) + gasFee + heavyFee) - discountApplied;
-                  let maxTotal = Math.round((displayMaxHours * hourlyRate) + gasFee + heavyFee) - discountApplied;
-                  
-                  let discountHTML = discountApplied ? `<tr><td style="padding: 4px 0;"><strong style="color:#2ecc71;">Promo Applied:</strong></td><td style="padding: 4px 0; text-align:right; color:#2ecc71;">-$50</td></tr>` : "";
-                  let truckText = memory.type_of_work === "Labor only" ? "" : " + Truck";
-                  let gasRow = memory.type_of_work === "Labor only" ? "" : `<tr><td style="padding: 4px 0;"><strong>Gas Fee:</strong></td><td style="padding: 4px 0; text-align:right;">$60</td></tr>`;
-
-                  let svcLevelDisplay = memory.service_level || "Basic Service";
-                  let svcRow = `<tr><td style="padding: 4px 0;"><strong>Service Level:</strong></td><td style="padding: 4px 0; text-align:right;">${svcLevelDisplay}</td></tr>`;
-                  if (memory.service_level === "White Glove Premium") {
-                      svcRow += `<tr><td style="padding: 4px 0;"><strong>Supervisor:</strong></td><td style="padding: 4px 0; text-align:right;">Included</td></tr>`;
-                  }
-
-                  // Construct Receipt
-                  const summaryHtml = `
-                  <div style="text-align:center;">
-                    <strong style="color:#AF8E5D; font-size:22px;">Estimate Ready! <span class="m4-animate-rocket">🚀</span></strong><br><br>
-                    
-                    <div class="m4-receipt">
-                      <div class="m4-receipt-header">
-                        <span>Branch: LA - MWAT</span>
-                        <span>Non-Binding</span>
-                      </div>
-                      <div class="m4-receipt-title">${memory.rooms || "Moving"}</div>
-                      <div style="color:rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 15px;">
-                        ${memory.name} | ${memory.phone} <br> ${memory.email}
-                      </div>
-                      <hr>
-                      <div style="margin-bottom: 10px;">
-                        <strong>Date:</strong> ${memory.date}<br>
-                        <strong>Origin:</strong> ${memory.pickup} <br>
-                        <span style="font-size:12px; opacity:0.8;">(${memory.property_type || "N/A"} | Floor: ${memory.pickup_floor || "N/A"} | Elevator: ${memory.pickup_elevator || "N/A"})</span>
-                      </div>
-                      <div>
-                        <strong>Destination:</strong> ${memory.dropoff} <br>
-                        <span style="font-size:12px; opacity:0.8;">(Floor: ${memory.dropoff_floor || "N/A"} | Elevator: ${memory.dropoff_elevator || "N/A"})</span>
-                      </div>
-                      <hr>
-                      <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
-                        <tr><td style="padding: 4px 0;"><strong>Work Type:</strong></td><td style="padding: 4px 0; text-align:right;">${memory.type_of_work || "Moving"}</td></tr>
-                        ${svcRow}
-                        <tr><td style="padding: 4px 0;"><strong>Crew:</strong></td><td style="padding: 4px 0; text-align:right;">${memory.crew || "2 movers"}${truckText}</td></tr>
-                        <tr><td style="padding: 4px 0;"><strong>Payment:</strong></td><td style="padding: 4px 0; text-align:right;">${rateType}</td></tr>
-                        <tr><td style="padding: 4px 0;"><strong>Est. Time:</strong></td><td style="padding: 4px 0; text-align:right;">${displayMinHours} - ${displayMaxHours} hrs <em>(3h min)</em></td></tr>
-                        <tr><td style="padding: 4px 0;"><strong>Hourly Rate:</strong></td><td style="padding: 4px 0; text-align:right;">$${hourlyRate}/hr</td></tr>
-                        ${gasRow}
-                        ${heavyTextHTML}
-                        ${discountHTML}
-                      </table>
-                      <hr>
-                      <div style="font-size: 13px; opacity: 0.8; margin-bottom: 10px;">
-                        <strong>Notes:</strong> ${memory.notes && memory.notes.toLowerCase() !== "no" ? memory.notes : "None"}
-                      </div>
-                      <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; color: #AF8E5D;">
-                        <span>Est. Total:</span>
-                        <span>$${minTotal} - $${maxTotal}</span>
-                      </div>
-                      ${ddtNote}
-                    </div>
-
-                    <a href="#payment-link-placeholder" class="m4-btn-gold">💳 Secure your spot & Book ($100 Deposit)</a>
-                    <br>
-                    <a href="#faq" class="m4-btn-faq">❓ Have questions?</a>
-                    <br><br>
-                    <span style='font-size:13px; opacity:0.8; line-height: 1.5; display: block;'>
-                      Deposit is fully refundable. Secures your date, crew, and applied discounts.
-                    </span>
-                  </div>`;
-
-                  triggerConfetti();
-                  await say(summaryHtml, "bot", true);
-
-                  try {
-                    await fetch(FORMSPREE_URL, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        _subject: `🔥 FINAL LEAD: ${memory.name} (${memory.rooms})`,
-                        Type: memory.type_of_work, ServiceLevel: memory.service_level,
-                        Name: memory.name, Phone: memory.phone, Email: memory.email, Date: memory.date,
-                        Promo: memory.promo_offer, Timeline: memory.timeline, Family: memory.family,
-                        Route: `${memory.pickup} -> ${memory.dropoff}`, Distance: memory.approx_distance,
-                        Property: memory.property_type, Rooms: memory.rooms, Crew: memory.crew,
-                        Heavy: memory.heavy_items, Pay: memory.payment_type, Notes: memory.notes,
-                        Total: `$${minTotal} - $${maxTotal}`, Needs_Follow_Up: "YES"
-                      })
+                    choices.forEach(c => {
+                        const btn = document.createElement("button");
+                        btn.className = "m4-choice-btn";
+                        btn.textContent = c;
+                        btn.onclick = () => {
+                            document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+                            handleUserSubmit(c);
+                        };
+                        container.appendChild(btn);
                     });
-                  } catch (e) {}
+                    row.appendChild(container);
+                    chat.appendChild(row);
+                    chat.scrollTop = chat.scrollHeight;
                 }
 
-                if (!restoreChatSession()) {
-                  startBtn.addEventListener('click', () => {
+                async function sendMessageToAI(message) {
+                    isAITyping = true;
+                    typingIndicator.style.display = "flex";
+                    controls.style.display = "none";
+
+                    try {
+                        const response = await fetch(MAKE_WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                sessionId: sessionId,
+                                message: message 
+                            })
+                        });
+
+                        if (!response.ok) throw new Error('Network response error');
+                        
+                        const data = await response.text(); 
+                        
+                        isAITyping = false;
+                        typingIndicator.style.display = "none";
+                        
+                        try {
+                            const jsonResponse = JSON.parse(data);
+                            appendMessage(jsonResponse.text, 'bot');
+                            if(jsonResponse.choices && Array.isArray(jsonResponse.choices)) {
+                                showChoices(jsonResponse.choices);
+                            } else {
+                                controls.style.display = "flex";
+                                inputEl.focus();
+                            }
+                        } catch(e) {
+                            appendMessage(data, 'bot');
+                            controls.style.display = "flex";
+                            inputEl.focus();
+                        }
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        isAITyping = false;
+                        typingIndicator.style.display = "none";
+                        appendMessage("Sorry, I'm having trouble connecting to the server. Please try again.", 'bot');
+                        controls.style.display = "flex";
+                    }
+                }
+
+                function handleUserSubmit(textOverride = null) {
+                    if (isAITyping) return;
+                    const text = textOverride || inputEl.value.trim();
+                    if (!text) return;
+
+                    document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+                    appendMessage(text, 'user');
+                    inputEl.value = '';
+                    sendMessageToAI(text);
+                }
+
+                startBtn.addEventListener('click', () => {
                     document.getElementById('m4-start-wrapper').style.display = 'none';
                     chat.style.display = 'flex';
-                    startConversation();
-                  });
-                }
+                    sendMessageToAI("SYSTEM_START_CONVERSATION"); 
+                });
 
-                sendBtn.addEventListener('click', () => { handleUserReply(activeInput.value); activeInput.value = ''; });
-                activeInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendBtn.click(); });
+                sendBtn.addEventListener('click', () => handleUserSubmit());
+                inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserSubmit(); });
               });
             </script>
           </div>
