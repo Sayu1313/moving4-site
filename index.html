@@ -153,6 +153,7 @@
                 }
 
                 let isAITyping = false;
+                let chatHistory = "";
 
                 function appendMessage(text, role) {
                     const row = document.createElement('div');
@@ -189,13 +190,15 @@
                     typingIndicator.style.display = "flex";
                     controls.style.display = "none";
 
+                    chatHistory += "Client: " + message + "\n";
+
                     try {
                         const response = await fetch(MAKE_WEBHOOK_URL, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ 
                                 sessionId: sessionId,
-                                message: message 
+                                message: chatHistory 
                             })
                         });
 
@@ -209,6 +212,8 @@
                         try {
                             const jsonResponse = JSON.parse(data);
                             appendMessage(jsonResponse.text, 'bot');
+                            chatHistory += "Alex: " + jsonResponse.text + "\n";
+
                             if(jsonResponse.choices && Array.isArray(jsonResponse.choices) && jsonResponse.choices.length > 0) {
                                 showChoices(jsonResponse.choices);
                             } else {
@@ -217,6 +222,7 @@
                             }
                         } catch(e) {
                             appendMessage(data, 'bot');
+                            chatHistory += "Alex: " + data + "\n";
                             controls.style.display = "flex";
                             inputEl.focus();
                         }
