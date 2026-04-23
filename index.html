@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOVING4 — Premium Moving & Furniture Protection</title>
+  <meta name="description" content="White-glove moving service with zero chaos. Fully insured, professional packing, and transparent pricing. Get your free estimate in under 60 seconds. We protect what you value." />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Google Places Autocomplete -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXllfs9JIxWzO_98nG9FIbEvWGlWRLpJM&libraries=places" async defer></script>
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #042529; color: #F4F7F7; font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Variables ── */
+    :root {
+      --bg:       #042529;
+      --bg2:      #031e20;
+      --gold:     #AF8E5D;
+      --gold-lt:  #C7A26A;
+      --text:     #F4F7F7;
+      --muted:    rgba(244,247,247,.72);
+      --line:     rgba(255,255,255,.12);
+      --gold-btn: linear-gradient(180deg, #C7A26A, #AF8E5D);
+      --logo-url: url("https://res.cloudinary.com/dx8ynsfnq/image/upload/f_auto,q_auto/v1767341339/Frame_42_tcvfp5.png");
+      --truck-url:url("https://res.cloudinary.com/dx8ynsfnq/image/upload/f_auto,q_auto/v1767341989/ChatGPT_Image_Dec_26_2025_09_02_08_PM_st7wa9.png");
+    }
+
+    /* ── Navigation ── */
+    .m4-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; max-width: 1320px; margin: 0 auto; padding: 30px 24px 50px; gap: 20px; }
+    .m4-nav__logo { width: 170px; height: 55px; background: var(--logo-url) no-repeat left center / contain; display: block; }
+    .m4-nav__links { display: flex; gap: 32px; justify-content: center; }
+    .m4-nav__link { color: var(--gold); font-size: 14px; font-weight: 700; transition: opacity .2s; }
+    .m4-nav__link:hover { opacity: .7; }
+    .m4-nav__trust { display: flex; align-items: center; gap: 8px; font-size: 14px; justify-content: flex-end; }
+    .m4-nav__stars { color: var(--gold); }
+
+    /* ── Hero ── */
+    .m4-hero { max-width: 1320px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+    .m4-ai-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(175,142,93,.15); padding: 8px 18px; border-radius: 100px; margin-bottom: 30px; }
+    .m4-ai-orb { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 10px var(--gold); animation: m4pulse 2s infinite; }
+    @keyframes m4pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+    .m4-ai-badge__label { font-size: 11px; font-weight: 800; letter-spacing: .1em; opacity: .7; }
+    .m4-ai-badge__sep   { opacity: .2; }
+    .m4-ai-badge__tag   { font-size: 11px; font-weight: 800; color: var(--gold); }
+    .m4-h1 { font-size: 64px; line-height: 1.05; font-weight: 900; letter-spacing: -.02em; margin-bottom: 24px; }
+    .m4-sub { font-size: 19px; line-height: 1.6; opacity: .75; max-width: 620px; margin-bottom: 35px; }
+    .m4-cta-group { display: flex; gap: 16px; align-items: center; margin-bottom: 40px; }
+    .m4-btn { height: 56px; padding: 0 32px; border-radius: 50px; font-weight: 700; font-size: 16px; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; transition: all .3s ease; cursor: pointer; border: none; }
+    .m4-btn--gold { background: var(--gold-btn); color: #042529; box-shadow: 0 8px 20px rgba(175,142,93,.25); animation: m4btnPulse 2.5s infinite; }
+    .m4-btn--gold:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(175,142,93,.4); }
+    @keyframes m4btnPulse { 0%{box-shadow:0 0 0 0 rgba(175,142,93,.5)} 70%{box-shadow:0 0 0 15px rgba(175,142,93,0)} 100%{box-shadow:0 0 0 0 rgba(175,142,93,0)} }
+    .m4-btn--outline { border: 2px solid rgba(175,142,93,.5); color: var(--text); background: transparent; }
+    .m4-btn--outline:hover { background: rgba(175,142,93,.1); border-color: var(--gold); }
+    .m4-meta { display: flex; align-items: center; gap: 14px; font-size: 13px; opacity: .6; font-weight: 600; margin-bottom: 12px; }
+    .m4-meta__dot { width: 3px; height: 3px; background: var(--gold); border-radius: 50%; }
+    .m4-meta__line { width: 120px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: .4; margin-bottom: 24px; }
+    .m4-points { display: grid; gap: 16px; }
+    .m4-point { display: grid; grid-template-columns: 28px 1fr; gap: 16px; font-size: 16px; opacity: .85; }
+    .m4-check { color: var(--gold); font-weight: 900; }
+    .m4-point b { color: #fff; }
+    .m4-slogan { margin-top: 45px; display: flex; gap: 10px; font-weight: 800; padding-bottom: 12px; border-bottom: 1px solid rgba(175,142,93,.2); width: fit-content; opacity: .9; }
+    .m4-slogan__dash { color: var(--gold); }
+    .m4-truck-wrap { min-height: 600px; position: relative; }
+    .m4-truck { position: absolute; inset: 0; background: var(--truck-url) no-repeat right center / contain; transform: scale(1.15); transform-origin: center right; }
+    .m4-truck::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 40%,rgba(175,142,93,.5) 50%,transparent 60%); background-size: 200% 100%; -webkit-mask-image: var(--truck-url); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: right center; mask-image: var(--truck-url); mask-size: contain; mask-repeat: no-repeat; mask-position: right center; animation: m4Shimmer 5s infinite linear; z-index: 2; pointer-events: none; }
+    @keyframes m4Shimmer { 0%{background-position:200% 0} 20%{background-position:-100% 0} 100%{background-position:-100% 0} }
+
+    /* ── AI Chat ── */
+    .m4-chat-section { background: #031f20; }
+    #m4-agent-wrapper { padding: 60px 20px; display: flex; justify-content: center; }
+    .m4-agent { width: 100%; max-width: 850px; background: var(--bg2); border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.15); display: flex; flex-direction: column; height: 75vh; }
+    .m4-agent__head { padding: 40px 30px 30px; border-bottom: 1px solid rgba(255,255,255,.05); flex-shrink: 0; }
+    .m4-agent__title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+    .m4-agent__subtitle { font-size: 14px; color: rgba(255,255,255,.6); }
+    .m4-agent__start { margin-top: 25px; }
+    #m4-chat { overflow-y: auto; padding: 20px 30px; display: none; flex-direction: column; flex-grow: 1; background: rgba(0,0,0,.15); }
+    .m4-row { display: flex; margin-bottom: 15px; width: 100%; }
+    .m4-row.bot  { justify-content: flex-start; }
+    .m4-row.user { justify-content: flex-end; }
+    .m4-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; font-size: 15px; line-height: 1.5; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); white-space: pre-wrap; }
+    .m4-row.user .m4-bubble { background: rgba(175,142,93,.25); border-color: #AF8E5D; }
+    #m4-typing { display: flex; align-items: center; gap: 6px; padding: 10px 30px; background: rgba(0,0,0,.15); border-top: 1px solid rgba(255,255,255,.05); transition: opacity .25s ease; }
+    .m4-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: blink 1.4s infinite; }
+    .m4-dot:nth-child(2) { animation-delay: .2s; }
+    .m4-dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink { 0%,100%{opacity:.3} 50%{opacity:1} }
+    .m4-typing-text { font-size: 12px; color: rgba(255,255,255,.5); margin-left: 8px; }
+    #m4-controls { padding: 20px 30px; display: flex; gap: 15px; border-top: 1px solid rgba(255,255,255,.05); align-items: center; background: var(--bg2); }
+    .m4-input-wrap { flex: 1; }
+    .m4-input { background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-size: 15px; outline: none; width: 100%; font-family: inherit; }
+    .m4-input:focus { border-color: var(--gold); }
+    .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .m4-choice-btn { background: rgba(175,142,93,.15); border: 1px solid var(--gold); color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 14px; transition: .2s; }
+    .m4-choice-btn:hover { background: var(--gold); color: #000; }
+    .m4-footnote { padding: 16px 30px; background: rgba(0,0,0,.3); border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: rgba(255,255,255,.5); display: flex; justify-content: space-between; }
+
+    /* ── Classic Form ── */
+    .m4-form-section { background: var(--bg2); padding: 48px 0; }
+    .m4-form-wrap { max-width: 920px; margin: 0 auto; padding: 0 18px; }
+    .m4-form-head { margin-bottom: 18px; }
+    .m4-form-head h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .m4-form-head p { color: rgba(255,255,255,.82); font-size: 15px; margin-bottom: 4px; }
+    .m4-form-head small { color: var(--muted); font-size: 12px; }
+    .m4-form-togglebar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+    .m4-form-hint { font-size: 12px; color: rgba(255,255,255,.7); }
+    .m4-form-panel { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 26px; box-shadow: 0 22px 60px rgba(0,0,0,.45); padding: 18px; }
+    .m4-form-panel-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .m4-form-panel-title { font-weight: 800; font-size: 14px; }
+    .m4-form-close { border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); border-radius: 999px; width: 36px; height: 36px; cursor: pointer; }
+    .m4-form-close:hover { background: rgba(255,255,255,.1); }
+    .m4-form-status { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); border-radius: 14px; padding: 12px; margin-bottom: 12px; font-size: 13px; }
+    .m4-form-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-bottom: 12px; }
+    .m4-form-field { display: flex; flex-direction: column; gap: 6px; }
+    .m4-form-field--wide { grid-column: 1/-1; }
+    .m4-form-label { font-size: 12px; color: rgba(255,255,255,.75); }
+    .m4-form-input, .m4-form-select, .m4-form-textarea { width: 100%; border-radius: 14px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.28); color: #fff; padding: 12px; font-size: 14px; outline: none; font-family: inherit; min-width: 0; }
+    .m4-form-select { appearance: none; padding-right: 38px; background-image: linear-gradient(45deg,transparent 50%,rgba(255,255,255,.65) 50%),linear-gradient(135deg,rgba(255,255,255,.65) 50%,transparent 50%); background-position: calc(100% - 18px) 50%,calc(100% - 12px) 50%; background-size: 6px 6px,6px 6px; background-repeat: no-repeat; background-color: rgba(0,0,0,.28); }
+    .m4-form-textarea { resize: vertical; min-height: 110px; }
+    .m4-form-actions { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .m4-form-btn { border: 1px solid rgba(175,142,93,.75); background: var(--gold-btn); color: #042529; font-weight: 800; border-radius: 999px; padding: 12px 24px; cursor: pointer; font-family: inherit; font-size: 15px; }
+    .m4-form-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .m4-form-fine { font-size: 12px; color: rgba(255,255,255,.7); }
+    .m4-form-contact { margin-top: 14px; padding: 0 6px; color: rgba(255,255,255,.72); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; }
+    .m4-form-contact span { color: rgba(255,255,255,.62); margin-right: 6px; }
+
+    /* ── FAQ ── */
+    .m4-faq-section { background: var(--bg2); padding: 56px 0; }
+    .m4-faq-wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+    .m4-faq-head { margin-bottom: 16px; }
+    .m4-faq-head h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .m4-faq-head p { color: rgba(255,255,255,.82); font-size: 15px; }
+    .m4-faq-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-top: 18px; }
+    .m4-faq-col { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 26px; box-shadow: 0 22px 60px rgba(0,0,0,.45); padding: 18px; }
+    .m4-faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px; margin-bottom: 10px; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: rgba(255,255,255,.92); font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; transition: background .12s, border-color .12s; }
+    .m4-faq-q:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
+    .m4-faq-chev { width: 10px; height: 10px; flex-shrink: 0; border-right: 2px solid rgba(255,255,255,.68); border-bottom: 2px solid rgba(255,255,255,.68); transform: rotate(45deg); transition: transform .16s; }
+    .m4-faq-q[aria-expanded="true"] .m4-faq-chev { transform: rotate(-135deg); }
+    .m4-faq-a { margin: -2px 0 12px; padding: 0 14px 12px; color: rgba(255,255,255,.78); font-size: 13px; line-height: 1.55; }
+    .m4-faq-note { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); color: rgba(255,255,255,.7); font-size: 12px; }
+    .m4-rev { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 26px; padding: 16px; height: fit-content; }
+    .m4-rev__title { font-weight: 800; font-size: 14px; }
+    .m4-rev__sub { margin-top: 4px; color: rgba(255,255,255,.7); font-size: 12px; }
+    .m4-rev__list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+    .m4-rev__card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 12px; }
+    .m4-rev__stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; }
+    .m4-rev__text { margin-top: 8px; color: rgba(255,255,255,.88); font-size: 13px; line-height: 1.45; }
+    .m4-rev__meta { margin-top: 8px; color: rgba(255,255,255,.62); font-size: 12px; }
+    .m4-rev__contact { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: rgba(255,255,255,.78); }
+    .m4-rev__contact span { color: rgba(255,255,255,.62); margin-right: 6px; }
+
+    /* ── Footer ── */
+    .m4-footer { background: linear-gradient(180deg,var(--bg2) 0%,var(--bg) 45%,var(--bg2) 100%); padding: 90px 0 50px; }
+    .m4-footer-wrap { max-width: 1860px; margin: 0 auto; padding: 0 48px; }
+    .m4-footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .m4-footer-kicker { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800; color: rgba(175,142,93,.92); margin-bottom: 14px; }
+    .m4-footer-brand { font-size: 34px; font-weight: 900; letter-spacing: -.02em; margin-bottom: 8px; }
+    .m4-footer-slogan { font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 22px; }
+    .m4-footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .m4-footer-link { display: inline-flex; align-items: baseline; gap: 10px; }
+    .m4-footer-link:hover .m4-footer-val { text-decoration: underline; text-decoration-color: rgba(175,142,93,.55); text-underline-offset: 4px; }
+    .m4-footer-lbl { min-width: 92px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; color: rgba(244,247,247,.68); }
+    .m4-footer-val { font-size: 14px; font-weight: 900; }
+    .m4-footer-area { margin-top: 6px; font-size: 13px; color: rgba(244,247,247,.7); }
+    .m4-footer-sub-title { font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+    .m4-footer-lead { font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 16px; }
+    .m4-footer-list { padding-left: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.7; color: rgba(244,247,247,.74); }
+    .m4-footer-fine { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); font-size: 13px; line-height: 1.7; color: rgba(244,247,247,.72); }
+    .m4-footer-endline { margin-top: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(244,247,247,.55); }
+    .m4-footer-bottom { margin-top: 34px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: rgba(244,247,247,.6); }
+
+    /* ── Floating call btn ── */
+    .m4-floating-call { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--gold-btn); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(175,142,93,.5); z-index: 9999; animation: m4pulse 2s infinite; transition: transform .3s ease; }
+    .m4-floating-call:hover { transform: scale(1.1) translateY(-5px); }
+    .m4-floating-call svg { width: 32px; height: 32px; }
+
+    /* ── Google Places dropdown ── */
+    .pac-container { background: var(--bg2); border: 1px solid rgba(175,142,93,.5); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,.5); font-family: 'Montserrat', sans-serif; margin-top: 4px; overflow: hidden; z-index: 99999 !important; }
+    .pac-item { padding: 10px 16px; color: rgba(255,255,255,.85); font-size: 14px; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; transition: background .15s; }
+    .pac-item:first-child { border-top: none; }
+    .pac-item:hover, .pac-item-selected { background: rgba(175,142,93,.18) !important; }
+    .pac-item-query { color: var(--gold); font-weight: 700; }
+    .pac-icon, .hdpi .pac-icon { display: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .m4-nav { grid-template-columns: 1fr auto; padding-top: 0; padding-bottom: 30px; }
+      .m4-nav__links, .m4-nav__trust { display: none; }
+      .m4-nav__logo { width: 130px; height: 40px; }
+      .m4-hero { grid-template-columns: 1fr; gap: 30px; }
+      .m4-truck-wrap { min-height: 350px; }
+      .m4-truck { position: static; height: 350px; width: 100%; background-position: center; transform: scale(1); }
+      .m4-h1 { font-size: 38px; }
+      .m4-sub { font-size: 15px; }
+      .m4-cta-group { flex-direction: column; width: 100%; gap: 10px; align-items: stretch; }
+      .m4-btn { width: 100%; height: 50px; font-size: 15px; border-radius: 12px; }
+      .m4-footer-grid { grid-template-columns: 1fr; gap: 34px; }
+      .m4-faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .m4-agent { border-radius: 18px; height: 85vh; }
+      .m4-agent__head { padding: 20px; }
+      #m4-chat { padding: 15px; }
+      #m4-controls { padding: 15px; gap: 10px; flex-direction: column; }
+      .m4-input { height: 50px; }
+      #m4-send { width: 100%; height: 50px; }
+      .m4-floating-call { bottom: 20px; right: 20px; width: 55px; height: 55px; }
+      .m4-floating-call svg { width: 26px; height: 26px; }
+      .m4-footer-wrap { padding: 0 18px; }
+      .m4-footer-brand { font-size: 28px; }
+      .m4-footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 760px) {
+      .m4-form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── NAVIGATION ─────────────────────────────────────────────── -->
+<nav style="background:var(--bg);">
+  <div class="m4-nav">
+    <a href="#top" aria-label="MOVING4 Home"><span class="m4-nav__logo"></span></a>
+    <div class="m4-nav__links">
+      <a class="m4-nav__link" href="#faq">Services</a>
+      <a class="m4-nav__link" href="#faq">Reviews</a>
+      <a class="m4-nav__link" href="#m4-agent-wrapper">How it works</a>
+      <a class="m4-nav__link" href="#contact">Contact</a>
+    </div>
+    <div class="m4-nav__trust">
+      <span class="m4-nav__stars">★★★★★</span>
+      <span style="font-size:14px;">Trusted by 200+ local moves</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────── -->
+<section id="top" style="background:var(--bg);">
+  <div class="m4-hero">
+    <div>
+      <div class="m4-ai-badge">
+        <span class="m4-ai-orb"></span>
+        <span class="m4-ai-badge__label">SMART AI QUOTE</span>
+        <span class="m4-ai-badge__sep">•</span>
+        <span class="m4-ai-badge__tag">INSTANT ESTIMATE</span>
+      </div>
+      <h1 class="m4-h1">Premium Moving &<br>Furniture Protection</h1>
+      <p class="m4-sub">White-glove execution, zero chaos. Fully insured, professional packing, and transparent pricing. Choose how you want to get your quote below.</p>
+      <div class="m4-cta-group">
+        <a class="m4-btn m4-btn--gold" href="#m4-agent-wrapper">
+          Instant AI Quote
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="m4-btn m4-btn--outline" href="#m4-classic-form">Classic Quote Form</a>
+      </div>
+      <div class="m4-meta">
+        <span>Licensed &amp; insured</span><span class="m4-meta__dot"></span>
+        <span>5-star rated</span><span class="m4-meta__dot"></span>
+        <span>Fast confirmation</span>
+      </div>
+      <div class="m4-meta__line"></div>
+      <div class="m4-points">
+        <div class="m4-point"><span class="m4-check">✓</span><span><b>Premium protection</b> — padded, secured, and treated like it's yours</span></div>
+        <div class="m4-point"><span class="m4-check">✓</span><span><b>Professional packing</b> — labeled, organized, room-by-room workflow</span></div>
+        <div class="m4-point"><span class="m4-check">✓</span><span><b>Clear plan</b> — confirmed window, fast updates, no surprises</span></div>
+      </div>
+      <div class="m4-slogan">
+        <span>Moving4</span><span class="m4-slogan__dash">—</span><span>We don't move things. We protect value.</span>
+      </div>
+    </div>
+    <div class="m4-truck-wrap"><div class="m4-truck"></div></div>
+  </div>
+</section>
+
+<!-- ── AI CHAT ─────────────────────────────────────────────────── -->
+<section class="m4-chat-section">
+  <div id="m4-agent-wrapper">
+    <div id="m4-agent" class="m4-agent">
+      <div class="m4-agent__head">
+        <div class="m4-agent__title">Alex — Moving4 Assistant</div>
+        <div class="m4-agent__subtitle">Fast estimate • LA Certified • No calls required</div>
+        <div class="m4-agent__start" id="m4-start-wrapper">
+          <button id="m4-start" class="m4-btn m4-btn--gold" type="button" style="height:48px;padding:0 28px;font-size:15px;width:auto;border-radius:50px;animation:m4btnPulse 2.5s infinite;">Start Quote</button>
+        </div>
+      </div>
+      <div id="m4-chat" aria-live="polite" aria-atomic="false"></div>
+      <div id="m4-typing" style="display:none;" aria-hidden="true">
+        <span class="m4-dot"></span><span class="m4-dot"></span><span class="m4-dot"></span>
+        <span class="m4-typing-text">Alex is analyzing...</span>
+      </div>
+      <div id="m4-controls" style="display:none;">
+        <div class="m4-input-wrap">
+          <input id="m4-input" class="m4-input" type="text" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
+        </div>
+        <button id="m4-send" class="m4-btn m4-btn--gold" type="button" style="height:48px;padding:0 24px;font-size:15px;border-radius:50px;animation:none;" aria-label="Send">Send</button>
+      </div>
+      <div class="m4-footnote">
+        <span>Cash is usually <strong>$20 off</strong> vs card.</span>
+        <span style="opacity:.35;">SYSTEM REF: AI-NEO-2.0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLASSIC FORM ────────────────────────────────────────────── -->
+<section id="m4-classic-form" class="m4-form-section" style="scroll-margin-top:110px;">
+  <div class="m4-form-wrap">
+    <div class="m4-form-head">
+      <h2>Manual Quote Form</h2>
+      <p>Prefer the classic form? Leave details — we'll confirm quickly.</p>
+      <small>No spam. Only move-related updates.</small>
+    </div>
+    <div class="m4-form-togglebar">
+      <button id="m4cf-open" class="m4-form-btn" type="button" aria-expanded="false" aria-controls="m4cf-panel">Open classic form</button>
+      <span class="m4-form-hint">If chat is not convenient — use the standard request.</span>
+    </div>
+    <div id="m4cf-panel" class="m4-form-panel" hidden>
+      <div class="m4-form-panel-top">
+        <span class="m4-form-panel-title">Classic Request</span>
+        <button id="m4cf-close" class="m4-form-close" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="m4-form-status" id="m4cf-status" style="display:none;"></div>
+      <form id="m4cf-form" autocomplete="on" novalidate>
+        <div class="m4-form-grid">
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-name">Name</label><input class="m4-form-input" id="m4cf-name" name="name" type="text" placeholder="Your first name" required></div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-phone">Phone</label><input class="m4-form-input" id="m4cf-phone" name="phone" type="tel" placeholder="(747) 737-3444" required></div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-email">Email</label><input class="m4-form-input" id="m4cf-email" name="email" type="email" placeholder="you@email.com" required></div>
+        </div>
+        <div class="m4-form-grid">
+          <div class="m4-form-field m4-form-field--wide"><label class="m4-form-label" for="m4cf-pickup">Pickup address</label><input class="m4-form-input" id="m4cf-pickup" name="pickup" type="text" placeholder="Full address" required></div>
+          <div class="m4-form-field m4-form-field--wide"><label class="m4-form-label" for="m4cf-dropoff">Drop-off address</label><input class="m4-form-input" id="m4cf-dropoff" name="dropoff" type="text" placeholder="Full address" required></div>
+        </div>
+        <div class="m4-form-grid">
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-date">Move date</label><input class="m4-form-input" id="m4cf-date" name="move_date" type="date" required></div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-time">Start time</label>
+            <select class="m4-form-select" id="m4cf-time" name="time_window" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Morning (8–11am)</option><option>Midday (11am–2pm)</option><option>Afternoon (2–5pm)</option><option>Flexible</option>
+            </select>
+          </div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-rooms">Size</label>
+            <select class="m4-form-select" id="m4cf-rooms" name="rooms" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Studio / Loft</option><option>1 Bedroom</option><option>2 Bedroom</option><option>3+ Bedroom</option>
+            </select>
+          </div>
+        </div>
+        <div class="m4-form-grid">
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-pf">Pickup floor</label>
+            <select class="m4-form-select" id="m4cf-pf" name="pickup_floor"><option value="" selected>—</option><option>Ground</option><option>2nd</option><option>3rd</option><option>4+</option></select>
+          </div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-df">Drop-off floor</label>
+            <select class="m4-form-select" id="m4cf-df" name="dropoff_floor"><option value="" selected>—</option><option>Ground</option><option>2nd</option><option>3rd</option><option>4+</option></select>
+          </div>
+          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-pay">Payment</label>
+            <select class="m4-form-select" id="m4cf-pay" name="payment_type"><option value="" selected>—</option><option>Cash</option><option>Card</option></select>
+          </div>
+        </div>
+        <div class="m4-form-field" style="margin-bottom:0;">
+          <label class="m4-form-label" for="m4cf-notes">Notes (optional)</label>
+          <textarea class="m4-form-textarea" id="m4cf-notes" name="notes" rows="4" placeholder="Stairs/elevator, parking, heavy items, packing needed, etc."></textarea>
+        </div>
+        <div class="m4-form-actions">
+          <button id="m4cf-submit" class="m4-form-btn" type="submit">Send request</button>
+          <span class="m4-form-fine">Cash is usually <strong>$20 off</strong> vs card. Tape + shrink wrap included.</span>
+        </div>
+      </form>
+    </div>
+    <div class="m4-form-contact">
+      <div><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
+      <div><span>Email:</span> <strong>Mail@Moving4.com</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────── -->
+<section class="m4-faq-section" id="faq">
+  <div class="m4-faq-wrap">
+    <div class="m4-faq-head"><h2>FAQ</h2><p>A few quick answers before you book.</p></div>
+    <div class="m4-faq-grid">
+      <div class="m4-faq-col">
+        <div id="m4-faq-acc">
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>How does pricing work?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>We charge hourly (crew + truck) plus a one-time truck fee. Your final total is based on the actual time worked. If your move requires confirmation (e.g., safe/piano, COI, storage, extra stops, outside LA), we confirm details first.</div>
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>Is packing material included?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>Tape + shrink wrap are included. If you need full packing or special packing (TV/art/glass), we'll confirm the scope and recommend the right materials.</div>
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>Do you protect furniture and floors?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>Yes. We use moving blankets, wrap, and careful loading. In tight spaces we slow down to protect walls, corners, and floors.</div>
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>What can change the estimate?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>Common factors: stairs, long carry distance, street parking vs loading zone, elevator availability, extra stops, storage, and very heavy items.</div>
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>Do you handle moves over 10 miles?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>Yes. For longer distances, "double-drive" may apply (California rule). We flag it early and confirm before the move.</div>
+          <button class="m4-faq-q" type="button" aria-expanded="false"><span>How do I confirm my time window?</span><i class="m4-faq-chev"></i></button>
+          <div class="m4-faq-a" hidden>After you submit details (chat or classic form), we contact you to confirm availability. You can call/text any time if you prefer quick confirmation.</div>
+        </div>
+        <div class="m4-faq-note">If you have a specific item list or building rules, send a quick message — we'll reply with what we need.</div>
+      </div>
+      <aside class="m4-rev">
+        <div class="m4-rev__title">Quick feedback</div>
+        <div class="m4-rev__sub">Recent short notes from clients</div>
+        <div class="m4-rev__list">
+          <div class="m4-rev__card"><div class="m4-rev__stars">★★★★★</div><div class="m4-rev__text">"Super careful with furniture. Everything wrapped and protected."</div><div class="m4-rev__meta">Local move • LA</div></div>
+          <div class="m4-rev__card"><div class="m4-rev__stars">★★★★★</div><div class="m4-rev__text">"On time, fast loading, no damage. Great communication."</div><div class="m4-rev__meta">1BR • Elevator building</div></div>
+          <div class="m4-rev__card"><div class="m4-rev__stars">★★★★★</div><div class="m4-rev__text">"They handled stairs + long carry without complaints. Very professional."</div><div class="m4-rev__meta">2BR • Stairs</div></div>
+        </div>
+        <div class="m4-rev__contact">
+          <div><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
+          <div style="margin-top:6px;"><span>Email:</span> <strong>Mail@Moving4.com</strong></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="m4-footer" id="contact">
+  <div class="m4-footer-wrap">
+    <div class="m4-footer-grid">
+      <section>
+        <div class="m4-footer-kicker">Contact</div>
+        <div class="m4-footer-brand">Moving4</div>
+        <div class="m4-footer-slogan">We don't move things. We protect value.</div>
+        <div class="m4-footer-links">
+          <a class="m4-footer-link" href="tel:+17477373444"><span class="m4-footer-lbl">Call / Text</span><span class="m4-footer-val">+1 (747) 737-3444</span></a>
+          <a class="m4-footer-link" href="mailto:Mail@Moving4.com"><span class="m4-footer-lbl">Email</span><span class="m4-footer-val">Mail@Moving4.com</span></a>
+          <div class="m4-footer-area">Los Angeles &amp; nearby areas</div>
+        </div>
+      </section>
+      <section>
+        <div class="m4-footer-kicker">Notes</div>
+        <div class="m4-footer-sub-title">What to know</div>
+        <div class="m4-footer-lead">Short, practical notes — so there are no surprises.</div>
+        <ul class="m4-footer-list">
+          <li>Final total is based on actual time worked.</li>
+          <li>Double drive may apply for routes over 10 miles (CA rule).</li>
+          <li>Overtime rate can apply after 8 hours.</li>
+          <li>Stairs, elevators, and parking distance affect timing.</li>
+          <li>COI and building requirements can be confirmed in advance.</li>
+        </ul>
+        <p class="m4-footer-fine">Cash is usually <strong>$20 off</strong> vs card. Tape + shrink wrap included.</p>
+        <div class="m4-footer-endline">Transparent • Calm process • Protected move day</div>
+      </section>
+    </div>
+    <div class="m4-footer-bottom">
+      <span>© <span id="m4-year"></span> Moving4. All rights reserved.</span>
+      <span>Built for clarity. Designed to reduce stress.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating call button -->
+<a href="tel:+17477373444" class="m4-floating-call" aria-label="Call Moving4">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.03 21c.73 0 .97-.66.97-1.19v-3.44c0-.54-.45-.99-.99-.99z" fill="#042529"/>
+  </svg>
+</a>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────────── -->
+<script>
+// Footer year
+document.getElementById('m4-year').textContent = new Date().getFullYear();
+
+// Smooth scroll
+(function(){
+  const OFFSET = 90;
+  function scrollTo(id){ const el=document.getElementById(id); if(!el)return; window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-OFFSET),behavior:'smooth'}); }
+  document.addEventListener('click',function(e){ const a=e.target.closest('a[href^="#"]'); if(!a)return; const id=a.getAttribute('href').slice(1); if(document.getElementById(id)){e.preventDefault();scrollTo(id);history.replaceState(null,'','#'+id);} });
+  if(location.hash) setTimeout(()=>scrollTo(location.hash.slice(1)),200);
+})();
+
+// FAQ accordion
+(function(){
+  const acc=document.getElementById('m4-faq-acc'); if(!acc)return;
+  acc.querySelectorAll('.m4-faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const open=btn.getAttribute('aria-expanded')==='true';
+      acc.querySelectorAll('.m4-faq-q').forEach(b=>{b.setAttribute('aria-expanded','false');const a=b.nextElementSibling;if(a)a.hidden=true;});
+      if(!open){btn.setAttribute('aria-expanded','true');const ans=btn.nextElementSibling;if(ans)ans.hidden=false;}
+    });
+  });
+})();
+
+// Classic form
+(function(){
+  const panel=document.getElementById('m4cf-panel'),openBtn=document.getElementById('m4cf-open'),closeBtn=document.getElementById('m4cf-close'),section=document.getElementById('m4-classic-form');
+  function openPanel(){panel.hidden=false;openBtn.setAttribute('aria-expanded','true');setTimeout(()=>section.scrollIntoView({behavior:'smooth',block:'start'}),60);}
+  function closePanel(){panel.hidden=true;openBtn.setAttribute('aria-expanded','false');}
+  openBtn.addEventListener('click',()=>panel.hidden?openPanel():closePanel());
+  closeBtn.addEventListener('click',closePanel);
+
+  const WEBHOOK='https://formspree.io/f/xojpakpr';
+  const form=document.getElementById('m4cf-form'),btn=document.getElementById('m4cf-submit'),statusEl=document.getElementById('m4cf-status');
+  function showStatus(type,msg){statusEl.style.display='block';statusEl.textContent=msg;statusEl.style.borderColor=type==='ok'?'rgba(175,142,93,.55)':'rgba(220,53,69,.5)';statusEl.style.background=type==='ok'?'rgba(175,142,93,.12)':'rgba(220,53,69,.1)';statusEl.style.color=type==='ok'?'rgba(255,255,255,.92)':'#ff6b6b';}
+  function normPhone(raw){const d=(raw||'').replace(/\D/g,'');if(d.length<10)return{ok:false,value:raw};let v=raw;if(d.length===10)v=`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;else if(d.length===11&&d[0]==='1')v=`+1 (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;return{ok:true,value:v};}
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const payload=Object.fromEntries(new FormData(form).entries());
+    const p=normPhone(payload.phone);if(!p.ok){showStatus('err','Please enter a valid phone number.');return;}
+    payload.phone=p.value;
+    for(const k of['name','phone','email','pickup','dropoff','move_date','time_window','rooms']){if(!String(payload[k]||'').trim()){showStatus('err','Please fill in all required fields.');return;}}
+    try{btn.disabled=true;btn.textContent='Sending…';const res=await fetch(WEBHOOK,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(payload)});if(!res.ok)throw new Error();showStatus('ok','Request sent. We\'ll contact you shortly.');form.reset();}
+    catch{showStatus('err','Something went wrong. Please try again.');}
+    finally{btn.disabled=false;btn.textContent='Send request';}
+  });
+})();
+
+// AI Chat
+(function(){
+  const WEBHOOK='https://hook.us2.make.com/gs9tue91htud3kd477o9gt8arzyu2kwr';
+  const chat=document.getElementById('m4-chat'),controls=document.getElementById('m4-controls'),inputEl=document.getElementById('m4-input'),sendBtn=document.getElementById('m4-send'),typingEl=document.getElementById('m4-typing'),typingTextEl=typingEl.querySelector('.m4-typing-text'),startBtn=document.getElementById('m4-start');
+
+  // Session — conv_ prefix, migrate old sess_
+  const ex=sessionStorage.getItem('m4_session_id');
+  if(ex&&ex.startsWith('sess_'))sessionStorage.removeItem('m4_session_id');
+  let sessionId=sessionStorage.getItem('m4_session_id');
+  if(!sessionId){sessionId='conv_'+Math.random().toString(36).substr(2,9);sessionStorage.setItem('m4_session_id',sessionId);}
+
+  let isAITyping=false, chatHistory='', currentAddressStep=null, autocompleteInstance=null;
+
+  // Google Places
+  function enableAutocomplete(){
+    if(!window.google?.maps?.places)return;
+    if(!autocompleteInstance){
+      autocompleteInstance=new google.maps.places.Autocomplete(inputEl,{types:['address'],componentRestrictions:{country:'us'},fields:['formatted_address']});
+      autocompleteInstance.addListener('place_changed',()=>{const p=autocompleteInstance.getPlace();if(p?.formatted_address)inputEl.value=p.formatted_address;});
+    }
+  }
+  function detectAddressStep(t){
+    const s=t.toLowerCase();
+    if(s.includes('pickup')&&(s.includes('address')||s.includes('location')||s.includes('moving from')||s.includes('where')))return'pickup';
+    if(s.includes('dropoff')||s.includes('drop-off')||s.includes('drop off')||s.includes('destination')||s.includes('moving to'))return'dropoff';
+    return null;
+  }
+
+  // 🔴 Red disclaimer parser
+  function formatBot(text){
+    let out=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    out=out.replace(/(🔴\s*IMPORTANT:[^\n]*)/g,'<span style="color:#ff4444;font-weight:700;display:block;margin-top:6px;line-height:1.5;">$1</span>');
+    return out;
+  }
+
+  // Typing animation
+  let typingInterval=null,typingDots=0;
+  function startTyping(){typingEl.style.display='flex';typingEl.style.opacity='0';typingEl.style.transition='opacity .25s ease';requestAnimationFrame(()=>requestAnimationFrame(()=>{typingEl.style.opacity='1';}));typingDots=0;clearInterval(typingInterval);typingInterval=setInterval(()=>{typingDots=(typingDots+1)%4;typingTextEl.textContent='Alex is analyzing'+'.'.repeat(typingDots);},400);}
+  function stopTyping(){clearInterval(typingInterval);typingEl.style.opacity='0';setTimeout(()=>{typingEl.style.display='none';typingEl.style.opacity='1';},250);}
+
+  function appendMsg(text,role){const row=document.createElement('div');row.className='m4-row '+role;row.innerHTML='<div class="m4-bubble">'+(role==='bot'?formatBot(text):text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'))+'</div>';chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
+  function showChoices(choices){const row=document.createElement('div');row.className='m4-row bot m4-active-choices';const wrap=document.createElement('div');wrap.className='m4-choice-container';choices.forEach(c=>{const b=document.createElement('button');b.className='m4-choice-btn';b.textContent=c;b.onclick=()=>{document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());handleSubmit(c);};wrap.appendChild(b);});row.appendChild(wrap);chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
+
+  async function sendToAI(message){
+    isAITyping=true;currentAddressStep=null;startTyping();controls.style.display='none';
+    chatHistory+='Client: '+message+'\n';
+    try{
+      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,message:chatHistory})});
+      if(!res.ok)throw new Error();
+      const raw=await res.text();
+      isAITyping=false;stopTyping();
+      let parsed;try{parsed=JSON.parse(raw);}catch{parsed=null;}
+      const botText=parsed?.text||raw;
+      appendMsg(botText,'bot');chatHistory+='Alex: '+botText+'\n';
+      currentAddressStep=detectAddressStep(botText);
+      if(parsed?.choices?.length){showChoices(parsed.choices);}
+      else{controls.style.display='flex';if(currentAddressStep){enableAutocomplete();inputEl.placeholder=currentAddressStep==='pickup'?'Start typing pickup address...':'Start typing drop-off address...';}else{inputEl.placeholder='Type your message...';}inputEl.focus();}
+    }catch(err){console.error(err);isAITyping=false;stopTyping();appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');controls.style.display='flex';}
+  }
+
+  function handleSubmit(override=null){if(isAITyping)return;const text=override||inputEl.value.trim();if(!text)return;document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());appendMsg(text,'user');inputEl.value='';sendToAI(text);}
+
+  startBtn.addEventListener('click',()=>{document.getElementById('m4-start-wrapper').style.display='none';chat.style.display='flex';sendToAI('SYSTEM_START_CONVERSATION');});
+  sendBtn.addEventListener('click',()=>handleSubmit());
+  inputEl.addEventListener('keypress',e=>{if(e.key==='Enter')handleSubmit();});
+})();
+</script>
+
+</body>
+</html>
