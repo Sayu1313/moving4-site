@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -554,61 +554,93 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   function startTyping(){typingEl.style.display='flex';typingEl.style.opacity='0';typingEl.style.transition='opacity .25s ease';requestAnimationFrame(()=>requestAnimationFrame(()=>{typingEl.style.opacity='1';}));typingDots=0;clearInterval(typingInterval);typingInterval=setInterval(()=>{typingDots=(typingDots+1)%4;typingTextEl.textContent='Alex is analyzing'+'.'.repeat(typingDots);},400);}
   function stopTyping(){clearInterval(typingInterval);typingEl.style.opacity='0';setTimeout(()=>{typingEl.style.display='none';typingEl.style.opacity='1';},250);}
  
-  function appendMsg(text,role){const row=document.createElement('div');row.className='m4-row '+role;row.innerHTML='<div class="m4-bubble">'+(role==='bot'?formatBot(text):text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'))+'</div>';chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
-  // Timeline keywords — при клике на эти choices открываем системный датапикер
+  function appendMsg(text, role) {
+    const row = document.createElement('div');
+    row.className = 'm4-row ' + role;
+    row.innerHTML = '<div class="m4-bubble">' + (role === 'bot' ? formatBot(text) : text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')) + '</div>';
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+ 
+  // Timeline keywords — при клике показываем inline date picker прямо в чате
   const TIMELINE_CHOICES = ['asap', 'this month', 'next month', 'this week', 'next week', 'flexible'];
+  function isTimelineChoice(label) { return TIMELINE_CHOICES.includes(label.toLowerCase().trim()); }
  
-  function isTimelineChoice(label) {
-    return TIMELINE_CHOICES.includes(label.toLowerCase().trim());
-  }
+  // БАГ 1 FIX: Встраиваем <input type="date"> прямо в пузырь чата — никакого скрытого инпута
+  function showInlineDatePicker(timelineLabel, choicesRow) {
+    // Убираем кнопки выбора
+    choicesRow.remove();
  
-  // Скрытый date-input для вызова системного календаря
-  let _dateInput = null;
-  function getDateInput() {
-    if (!_dateInput) {
-      _dateInput = document.createElement('input');
-      _dateInput.type = 'date';
-      _dateInput.style.cssText = 'position:fixed;opacity:0;pointer-events:none;top:0;left:0;width:0;height:0;';
-      // Минимальная дата — сегодня
-      _dateInput.min = new Date().toISOString().split('T')[0];
-      document.body.appendChild(_dateInput);
-    }
-    return _dateInput;
-  }
+    // Показываем сообщение-эхо пользователя с выбранным вариантом
+    appendMsg(timelineLabel, 'user');
  
-  function openDatePickerFor(timelineLabel) {
-    const dateInput = getDateInput();
-    dateInput.value = '';
+    // Создаём bubble с датапикером от имени бота
+    const row = document.createElement('div');
+    row.className = 'm4-row bot m4-active-choices';
  
-    // Предустановить дату в зависимости от выбора
-    const now = new Date();
-    if (timelineLabel.toLowerCase().includes('next month')) {
-      now.setMonth(now.getMonth() + 1);
-    } else if (timelineLabel.toLowerCase().includes('next week')) {
-      now.setDate(now.getDate() + 7);
-    }
-    dateInput.value = now.toISOString().split('T')[0];
+    // Предустановляем дату исходя из выбора
+    const today = new Date();
+    const presetDate = new Date(today);
+    if (timelineLabel.toLowerCase().includes('next month')) presetDate.setMonth(presetDate.getMonth() + 1);
+    else if (timelineLabel.toLowerCase().includes('next week')) presetDate.setDate(presetDate.getDate() + 7);
+    else if (timelineLabel.toLowerCase().includes('this month')) presetDate.setDate(presetDate.getDate() + 7);
+    const todayStr = today.toISOString().split('T')[0];
+    const presetStr = presetDate.toISOString().split('T')[0];
  
-    // Слушатель — срабатывает один раз при выборе даты
-    const onChange = () => {
-      dateInput.removeEventListener('change', onChange);
-      if (!dateInput.value) return;
-      // Форматируем дату в читаемый вид: "June 15, 2025"
-      const [y, m, d] = dateInput.value.split('-');
+    row.innerHTML = `
+      <div class="m4-bubble" style="display:flex;flex-direction:column;gap:12px;min-width:240px;">
+        <div style="font-size:13px;opacity:.75;">Pick your exact move date:</div>
+        <input
+          type="date"
+          min="${todayStr}"
+          value="${presetStr}"
+          style="
+            background:rgba(0,0,0,.4);
+            border:1px solid #AF8E5D;
+            color:#fff;
+            padding:10px 14px;
+            border-radius:10px;
+            font-size:15px;
+            font-family:inherit;
+            width:100%;
+            cursor:pointer;
+            outline:none;
+          "
+        />
+        <button style="
+          background:linear-gradient(180deg,#C7A26A,#AF8E5D);
+          color:#042529;
+          border:none;
+          border-radius:50px;
+          padding:10px 20px;
+          font-weight:800;
+          font-size:14px;
+          cursor:pointer;
+          font-family:inherit;
+        ">Confirm date</button>
+      </div>`;
+ 
+    const dateInput = row.querySelector('input[type="date"]');
+    const confirmBtn = row.querySelector('button');
+ 
+    // БАГ 2 FIX: Жёсткий формат сообщения для AI + полная история
+    function confirmDate() {
+      const val = dateInput.value;
+      if (!val) return;
+      const [y, m, d] = val.split('-');
       const formatted = new Date(+y, +m - 1, +d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-      document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
-      handleSubmit(timelineLabel + ' — ' + formatted);
-    };
-    dateInput.addEventListener('change', onChange);
- 
-    // Открываем системный датапикер
-    try {
-      dateInput.showPicker();
-    } catch (e) {
-      // Fallback для браузеров без showPicker — просто focus
-      dateInput.focus();
-      dateInput.click();
+      row.remove();
+      // Строго форматированное сообщение — AI не переспросит
+      const msg = `Timeline: ${timelineLabel}, Exact Date: ${formatted}`;
+      handleSubmit(msg);
     }
+ 
+    confirmBtn.addEventListener('click', confirmDate);
+    // Разрешаем подтверждение по Enter внутри инпута
+    dateInput.addEventListener('keypress', e => { if (e.key === 'Enter') confirmDate(); });
+ 
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
   }
  
   function showChoices(choices) {
@@ -622,8 +654,8 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       b.textContent = c;
       b.onclick = () => {
         if (isTimelineChoice(c)) {
-          // Открываем календарь — handleSubmit вызовется после выбора даты
-          openDatePickerFor(c);
+          // БАГ 1 FIX: inline picker, а не showPicker() на скрытом элементе
+          showInlineDatePicker(c, row);
         } else {
           document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
           handleSubmit(c);
