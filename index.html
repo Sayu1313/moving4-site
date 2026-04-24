@@ -6,21 +6,21 @@
   <title>MOVING4 — Premium Moving & Furniture Protection</title>
   <meta name="description" content="White-glove moving service with zero chaos. Fully insured, professional packing, and transparent pricing. Get your free estimate in under 60 seconds. We protect what you value." />
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
+ 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-
+ 
   <!-- Google Places Autocomplete -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXllfs9JIxWzO_98nG9FIbEvWGlWRLpJM&libraries=places" async defer></script>
-
+ 
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { background: #042529; color: #F4F7F7; font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
     a { text-decoration: none; color: inherit; }
-
+ 
     /* ── Variables ── */
     :root {
       --bg:       #042529;
@@ -34,7 +34,7 @@
       --logo-url: url("https://res.cloudinary.com/dx8ynsfnq/image/upload/f_auto,q_auto/v1767341339/Frame_42_tcvfp5.png");
       --truck-url:url("https://res.cloudinary.com/dx8ynsfnq/image/upload/f_auto,q_auto/v1767341989/ChatGPT_Image_Dec_26_2025_09_02_08_PM_st7wa9.png");
     }
-
+ 
     /* ── Navigation ── */
     .m4-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; max-width: 1320px; margin: 0 auto; padding: 30px 24px 50px; gap: 20px; }
     .m4-nav__logo { width: 170px; height: 55px; background: var(--logo-url) no-repeat left center / contain; display: block; }
@@ -43,7 +43,7 @@
     .m4-nav__link:hover { opacity: .7; }
     .m4-nav__trust { display: flex; align-items: center; gap: 8px; font-size: 14px; justify-content: flex-end; }
     .m4-nav__stars { color: var(--gold); }
-
+ 
     /* ── Hero ── */
     .m4-hero { max-width: 1320px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
     .m4-ai-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(175,142,93,.15); padding: 8px 18px; border-radius: 100px; margin-bottom: 30px; }
@@ -74,7 +74,7 @@
     .m4-truck { position: absolute; inset: 0; background: var(--truck-url) no-repeat right center / contain; transform: scale(1.15); transform-origin: center right; }
     .m4-truck::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 40%,rgba(175,142,93,.5) 50%,transparent 60%); background-size: 200% 100%; -webkit-mask-image: var(--truck-url); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: right center; mask-image: var(--truck-url); mask-size: contain; mask-repeat: no-repeat; mask-position: right center; animation: m4Shimmer 5s infinite linear; z-index: 2; pointer-events: none; }
     @keyframes m4Shimmer { 0%{background-position:200% 0} 20%{background-position:-100% 0} 100%{background-position:-100% 0} }
-
+ 
     /* ── AI Chat ── */
     .m4-chat-section { background: #031f20; }
     #m4-agent-wrapper { padding: 60px 20px; display: flex; justify-content: center; }
@@ -103,7 +103,7 @@
     .m4-choice-btn { background: rgba(175,142,93,.15); border: 1px solid var(--gold); color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 14px; transition: .2s; }
     .m4-choice-btn:hover { background: var(--gold); color: #000; }
     .m4-footnote { padding: 16px 30px; background: rgba(0,0,0,.3); border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: rgba(255,255,255,.5); display: flex; justify-content: space-between; }
-
+ 
     /* ── Classic Form ── */
     .m4-form-section { background: var(--bg2); padding: 48px 0; }
     .m4-form-wrap { max-width: 920px; margin: 0 auto; padding: 0 18px; }
@@ -132,7 +132,7 @@
     .m4-form-fine { font-size: 12px; color: rgba(255,255,255,.7); }
     .m4-form-contact { margin-top: 14px; padding: 0 6px; color: rgba(255,255,255,.72); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; }
     .m4-form-contact span { color: rgba(255,255,255,.62); margin-right: 6px; }
-
+ 
     /* ── FAQ ── */
     .m4-faq-section { background: var(--bg2); padding: 56px 0; }
     .m4-faq-wrap { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
@@ -157,7 +157,7 @@
     .m4-rev__meta { margin-top: 8px; color: rgba(255,255,255,.62); font-size: 12px; }
     .m4-rev__contact { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: rgba(255,255,255,.78); }
     .m4-rev__contact span { color: rgba(255,255,255,.62); margin-right: 6px; }
-
+ 
     /* ── Footer ── */
     .m4-footer { background: linear-gradient(180deg,var(--bg2) 0%,var(--bg) 45%,var(--bg2) 100%); padding: 90px 0 50px; }
     .m4-footer-wrap { max-width: 1860px; margin: 0 auto; padding: 0 48px; }
@@ -177,12 +177,12 @@
     .m4-footer-fine { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); font-size: 13px; line-height: 1.7; color: rgba(244,247,247,.72); }
     .m4-footer-endline { margin-top: 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(244,247,247,.55); }
     .m4-footer-bottom { margin-top: 34px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: rgba(244,247,247,.6); }
-
+ 
     /* ── Floating call btn ── */
     .m4-floating-call { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--gold-btn); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(175,142,93,.5); z-index: 9999; animation: m4pulse 2s infinite; transition: transform .3s ease; }
     .m4-floating-call:hover { transform: scale(1.1) translateY(-5px); }
     .m4-floating-call svg { width: 32px; height: 32px; }
-
+ 
     /* ── Google Places dropdown ── */
     .pac-container { background: var(--bg2); border: 1px solid rgba(175,142,93,.5); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,.5); font-family: 'Montserrat', sans-serif; margin-top: 4px; overflow: hidden; z-index: 99999 !important; }
     .pac-item { padding: 10px 16px; color: rgba(255,255,255,.85); font-size: 14px; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; transition: background .15s; }
@@ -190,7 +190,7 @@
     .pac-item:hover, .pac-item-selected { background: rgba(175,142,93,.18) !important; }
     .pac-item-query { color: var(--gold); font-weight: 700; }
     .pac-icon, .hdpi .pac-icon { display: none; }
-
+ 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
       .m4-nav { grid-template-columns: 1fr auto; padding-top: 0; padding-bottom: 30px; }
@@ -224,9 +224,9 @@
     }
   </style>
 </head>
-
+ 
 <body>
-
+ 
 <!-- ── NAVIGATION ─────────────────────────────────────────────── -->
 <nav style="background:var(--bg);">
   <div class="m4-nav">
@@ -243,7 +243,7 @@
     </div>
   </div>
 </nav>
-
+ 
 <!-- ── HERO ───────────────────────────────────────────────────── -->
 <section id="top" style="background:var(--bg);">
   <div class="m4-hero">
@@ -281,7 +281,7 @@
     <div class="m4-truck-wrap"><div class="m4-truck"></div></div>
   </div>
 </section>
-
+ 
 <!-- ── AI CHAT ─────────────────────────────────────────────────── -->
 <section class="m4-chat-section">
   <div id="m4-agent-wrapper">
@@ -311,7 +311,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ── CLASSIC FORM ────────────────────────────────────────────── -->
 <section id="m4-classic-form" class="m4-form-section" style="scroll-margin-top:110px;">
   <div class="m4-form-wrap">
@@ -382,7 +382,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ── FAQ ────────────────────────────────────────────────────── -->
 <section class="m4-faq-section" id="faq">
   <div class="m4-faq-wrap">
@@ -421,7 +421,7 @@
     </div>
   </div>
 </section>
-
+ 
 <!-- ── FOOTER ─────────────────────────────────────────────────── -->
 <footer class="m4-footer" id="contact">
   <div class="m4-footer-wrap">
@@ -457,19 +457,19 @@
     </div>
   </div>
 </footer>
-
+ 
 <!-- Floating call button -->
 <a href="tel:+17477373444" class="m4-floating-call" aria-label="Call Moving4">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.03 21c.73 0 .97-.66.97-1.19v-3.44c0-.54-.45-.99-.99-.99z" fill="#042529"/>
   </svg>
 </a>
-
+ 
 <!-- ── SCRIPTS ──────────────────────────────────────────────────── -->
 <script>
 // Footer year
 document.getElementById('m4-year').textContent = new Date().getFullYear();
-
+ 
 // Smooth scroll
 (function(){
   const OFFSET = 90;
@@ -477,7 +477,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   document.addEventListener('click',function(e){ const a=e.target.closest('a[href^="#"]'); if(!a)return; const id=a.getAttribute('href').slice(1); if(document.getElementById(id)){e.preventDefault();scrollTo(id);history.replaceState(null,'','#'+id);} });
   if(location.hash) setTimeout(()=>scrollTo(location.hash.slice(1)),200);
 })();
-
+ 
 // FAQ accordion
 (function(){
   const acc=document.getElementById('m4-faq-acc'); if(!acc)return;
@@ -489,7 +489,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     });
   });
 })();
-
+ 
 // Classic form
 (function(){
   const panel=document.getElementById('m4cf-panel'),openBtn=document.getElementById('m4cf-open'),closeBtn=document.getElementById('m4cf-close'),section=document.getElementById('m4-classic-form');
@@ -497,7 +497,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   function closePanel(){panel.hidden=true;openBtn.setAttribute('aria-expanded','false');}
   openBtn.addEventListener('click',()=>panel.hidden?openPanel():closePanel());
   closeBtn.addEventListener('click',closePanel);
-
+ 
   const WEBHOOK='https://formspree.io/f/xojpakpr';
   const form=document.getElementById('m4cf-form'),btn=document.getElementById('m4cf-submit'),statusEl=document.getElementById('m4cf-status');
   function showStatus(type,msg){statusEl.style.display='block';statusEl.textContent=msg;statusEl.style.borderColor=type==='ok'?'rgba(175,142,93,.55)':'rgba(220,53,69,.5)';statusEl.style.background=type==='ok'?'rgba(175,142,93,.12)':'rgba(220,53,69,.1)';statusEl.style.color=type==='ok'?'rgba(255,255,255,.92)':'#ff6b6b';}
@@ -513,20 +513,20 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     finally{btn.disabled=false;btn.textContent='Send request';}
   });
 })();
-
+ 
 // AI Chat
 (function(){
   const WEBHOOK='https://hook.us2.make.com/gs9tue91htud3kd477o9gt8arzyu2kwr';
   const chat=document.getElementById('m4-chat'),controls=document.getElementById('m4-controls'),inputEl=document.getElementById('m4-input'),sendBtn=document.getElementById('m4-send'),typingEl=document.getElementById('m4-typing'),typingTextEl=typingEl.querySelector('.m4-typing-text'),startBtn=document.getElementById('m4-start');
-
+ 
   // Session — conv_ prefix, migrate old sess_
   const ex=sessionStorage.getItem('m4_session_id');
   if(ex&&ex.startsWith('sess_'))sessionStorage.removeItem('m4_session_id');
   let sessionId=sessionStorage.getItem('m4_session_id');
   if(!sessionId){sessionId='conv_'+Math.random().toString(36).substr(2,9);sessionStorage.setItem('m4_session_id',sessionId);}
-
+ 
   let isAITyping=false, chatHistory='', currentAddressStep=null, autocompleteInstance=null;
-
+ 
   // Google Places
   function enableAutocomplete(){
     if(!window.google?.maps?.places)return;
@@ -541,22 +541,101 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     if(s.includes('dropoff')||s.includes('drop-off')||s.includes('drop off')||s.includes('destination')||s.includes('moving to'))return'dropoff';
     return null;
   }
-
+ 
   // 🔴 Red disclaimer parser
   function formatBot(text){
     let out=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
     out=out.replace(/(🔴\s*IMPORTANT:[^\n]*)/g,'<span style="color:#ff4444;font-weight:700;display:block;margin-top:6px;line-height:1.5;">$1</span>');
     return out;
   }
-
+ 
   // Typing animation
   let typingInterval=null,typingDots=0;
   function startTyping(){typingEl.style.display='flex';typingEl.style.opacity='0';typingEl.style.transition='opacity .25s ease';requestAnimationFrame(()=>requestAnimationFrame(()=>{typingEl.style.opacity='1';}));typingDots=0;clearInterval(typingInterval);typingInterval=setInterval(()=>{typingDots=(typingDots+1)%4;typingTextEl.textContent='Alex is analyzing'+'.'.repeat(typingDots);},400);}
   function stopTyping(){clearInterval(typingInterval);typingEl.style.opacity='0';setTimeout(()=>{typingEl.style.display='none';typingEl.style.opacity='1';},250);}
-
+ 
   function appendMsg(text,role){const row=document.createElement('div');row.className='m4-row '+role;row.innerHTML='<div class="m4-bubble">'+(role==='bot'?formatBot(text):text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'))+'</div>';chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
-  function showChoices(choices){const row=document.createElement('div');row.className='m4-row bot m4-active-choices';const wrap=document.createElement('div');wrap.className='m4-choice-container';choices.forEach(c=>{const b=document.createElement('button');b.className='m4-choice-btn';b.textContent=c;b.onclick=()=>{document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());handleSubmit(c);};wrap.appendChild(b);});row.appendChild(wrap);chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
-
+  // Timeline keywords — при клике на эти choices открываем системный датапикер
+  const TIMELINE_CHOICES = ['asap', 'this month', 'next month', 'this week', 'next week', 'flexible'];
+ 
+  function isTimelineChoice(label) {
+    return TIMELINE_CHOICES.includes(label.toLowerCase().trim());
+  }
+ 
+  // Скрытый date-input для вызова системного календаря
+  let _dateInput = null;
+  function getDateInput() {
+    if (!_dateInput) {
+      _dateInput = document.createElement('input');
+      _dateInput.type = 'date';
+      _dateInput.style.cssText = 'position:fixed;opacity:0;pointer-events:none;top:0;left:0;width:0;height:0;';
+      // Минимальная дата — сегодня
+      _dateInput.min = new Date().toISOString().split('T')[0];
+      document.body.appendChild(_dateInput);
+    }
+    return _dateInput;
+  }
+ 
+  function openDatePickerFor(timelineLabel) {
+    const dateInput = getDateInput();
+    dateInput.value = '';
+ 
+    // Предустановить дату в зависимости от выбора
+    const now = new Date();
+    if (timelineLabel.toLowerCase().includes('next month')) {
+      now.setMonth(now.getMonth() + 1);
+    } else if (timelineLabel.toLowerCase().includes('next week')) {
+      now.setDate(now.getDate() + 7);
+    }
+    dateInput.value = now.toISOString().split('T')[0];
+ 
+    // Слушатель — срабатывает один раз при выборе даты
+    const onChange = () => {
+      dateInput.removeEventListener('change', onChange);
+      if (!dateInput.value) return;
+      // Форматируем дату в читаемый вид: "June 15, 2025"
+      const [y, m, d] = dateInput.value.split('-');
+      const formatted = new Date(+y, +m - 1, +d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+      handleSubmit(timelineLabel + ' — ' + formatted);
+    };
+    dateInput.addEventListener('change', onChange);
+ 
+    // Открываем системный датапикер
+    try {
+      dateInput.showPicker();
+    } catch (e) {
+      // Fallback для браузеров без showPicker — просто focus
+      dateInput.focus();
+      dateInput.click();
+    }
+  }
+ 
+  function showChoices(choices) {
+    const row = document.createElement('div');
+    row.className = 'm4-row bot m4-active-choices';
+    const wrap = document.createElement('div');
+    wrap.className = 'm4-choice-container';
+    choices.forEach(c => {
+      const b = document.createElement('button');
+      b.className = 'm4-choice-btn';
+      b.textContent = c;
+      b.onclick = () => {
+        if (isTimelineChoice(c)) {
+          // Открываем календарь — handleSubmit вызовется после выбора даты
+          openDatePickerFor(c);
+        } else {
+          document.querySelectorAll('.m4-active-choices').forEach(e => e.remove());
+          handleSubmit(c);
+        }
+      };
+      wrap.appendChild(b);
+    });
+    row.appendChild(wrap);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+ 
   async function sendToAI(message){
     isAITyping=true;currentAddressStep=null;startTyping();controls.style.display='none';
     chatHistory+='Client: '+message+'\n';
@@ -573,14 +652,14 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       else{controls.style.display='flex';if(currentAddressStep){enableAutocomplete();inputEl.placeholder=currentAddressStep==='pickup'?'Start typing pickup address...':'Start typing drop-off address...';}else{inputEl.placeholder='Type your message...';}inputEl.focus();}
     }catch(err){console.error(err);isAITyping=false;stopTyping();appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');controls.style.display='flex';}
   }
-
+ 
   function handleSubmit(override=null){if(isAITyping)return;const text=override||inputEl.value.trim();if(!text)return;document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());appendMsg(text,'user');inputEl.value='';sendToAI(text);}
-
+ 
   startBtn.addEventListener('click',()=>{document.getElementById('m4-start-wrapper').style.display='none';chat.style.display='flex';sendToAI('SYSTEM_START_CONVERSATION');});
   sendBtn.addEventListener('click',()=>handleSubmit());
   inputEl.addEventListener('keypress',e=>{if(e.key==='Enter')handleSubmit();});
 })();
 </script>
-
+ 
 </body>
 </html>
