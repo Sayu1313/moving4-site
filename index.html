@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+  <!-- Google Places Autocomplete -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXllfs9JIxWzO_98nG9FIbEvWGlWRLpJM&libraries=places" async defer></script>
+
   <style>
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +104,24 @@
     .m4-input { background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 14px 20px; border-radius: 50px; font-size: 15px; outline: none; width: 100%; font-family: inherit; }
     .m4-input:focus { border-color: var(--gold); }
     .m4-choice-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .m4-choice-btn { background: rgba(175,142,93,.15); border: 1px solid var(--gold); color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 14px; transition: .2s; }
+    /* ── Choice buttons — адаптивные, не обрезают длинный текст ── */
+    .m4-choice-btn {
+      background: rgba(175,142,93,.15);
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+      font-size: 14px;
+      transition: .2s;
+      white-space: normal;        /* длинный текст переносится */
+      height: auto;               /* высота по контенту */
+      line-height: 1.4;
+      text-align: center;
+      word-break: break-word;
+    }
     .m4-choice-btn:hover { background: var(--gold); color: #000; }
     .m4-footnote { padding: 16px 30px; background: rgba(0,0,0,.3); border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: rgba(255,255,255,.5); display: flex; justify-content: space-between; }
 
@@ -197,6 +217,35 @@
     .flatpickr-day.selected, .flatpickr-day.selected:hover { background: linear-gradient(180deg,#C7A26A,#AF8E5D) !important; border-color: transparent !important; color: #042529 !important; font-weight: 800 !important; }
     .flatpickr-day.today { border-color: rgba(175,142,93,.5) !important; }
     .flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(255,255,255,.2) !important; }
+
+    /* ── Google Places pac-container — тёмная тема, без конфликтов ── */
+    .pac-container {
+      z-index: 99999 !important;
+      background-color: #031e20 !important;
+      border: 1px solid #AF8E5D !important;
+      border-radius: 10px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,.55) !important;
+      font-family: 'Montserrat', sans-serif !important;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+    .pac-container::after { display: none !important; }   /* убираем лого Google */
+    .pac-item {
+      color: #ffffff !important;
+      padding: 10px 16px !important;
+      font-size: 14px !important;
+      border-top: 1px solid rgba(255,255,255,.07) !important;
+      cursor: pointer !important;
+      transition: background .15s !important;
+      line-height: 1.5 !important;
+    }
+    .pac-item:first-child { border-top: none !important; }
+    .pac-item:hover, .pac-item-selected { background: rgba(175,142,93,.18) !important; }
+    .pac-item-query { color: #AF8E5D !important; font-weight: 700 !important; }
+    /* КРИТИЧНО: скрываем иконки — именно они блокировали клик по инпуту */
+    .pac-icon,
+    .pac-icon-marker,
+    .hdpi .pac-icon { display: none !important; width: 0 !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
@@ -532,7 +581,34 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   let sessionId=sessionStorage.getItem('m4_session_id');
   if(!sessionId){sessionId='conv_'+Math.random().toString(36).substr(2,9);sessionStorage.setItem('m4_session_id',sessionId);}
 
-  let isAITyping=false, chatHistory='';
+  let isAITyping=false, chatHistory='', currentAddressStep=null, autocompleteInstance=null;
+
+  // ── Google Places Autocomplete (безопасная инициализация) ──
+  function enableAutocomplete() {
+    if (!window.google?.maps?.places) return;
+    if (autocompleteInstance) return; // уже инициализирован
+    autocompleteInstance = new google.maps.places.Autocomplete(inputEl, {
+      types: ['address'],
+      componentRestrictions: { country: 'us' },
+      fields: ['formatted_address']
+    });
+    autocompleteInstance.addListener('place_changed', () => {
+      const place = autocompleteInstance.getPlace();
+      if (place?.formatted_address) inputEl.value = place.formatted_address;
+    });
+  }
+
+  function disableAutocomplete() {
+    currentAddressStep = null;
+    // pac-container скрывается сам при потере фокуса — ничего не ломаем
+  }
+
+  function detectAddressStep(text) {
+    const s = text.toLowerCase();
+    if (s.includes('pickup') && (s.includes('address') || s.includes('location') || s.includes('moving from') || s.includes('where'))) return 'pickup';
+    if (s.includes('dropoff') || s.includes('drop-off') || s.includes('drop off') || s.includes('destination') || s.includes('moving to') || s.includes('deliver')) return 'dropoff';
+    return null;
+  }
 
   // 🔴 Red disclaimer parser
   function formatBot(text){
@@ -658,8 +734,22 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       let parsed;try{parsed=JSON.parse(raw);}catch{parsed=null;}
       const botText=parsed?.text||raw;
       appendMsg(botText,'bot');chatHistory+='Alex: '+botText+'\n';
-      if(parsed?.choices?.length){showChoices(parsed.choices);}
-      else{controls.style.display='flex';inputEl.placeholder='Type your message...';inputEl.focus();}
+      currentAddressStep = detectAddressStep(botText);
+      if(parsed?.choices?.length){
+        disableAutocomplete();
+        showChoices(parsed.choices);
+      } else {
+        controls.style.display='flex';
+        if (currentAddressStep) {
+          enableAutocomplete();
+          inputEl.placeholder = currentAddressStep === 'pickup'
+            ? 'Start typing pickup address...'
+            : 'Start typing drop-off address...';
+        } else {
+          inputEl.placeholder='Type your message...';
+        }
+        inputEl.focus();
+      }
     }catch(err){console.error(err);isAITyping=false;stopTyping();appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');controls.style.display='flex';}
   }
 
