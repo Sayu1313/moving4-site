@@ -591,40 +591,46 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
 
   let isAITyping=false, chatHistory='', currentAddressStep=null, autocompleteInstance=null;
 
-  // ── Google Places Autocomplete — защита от дублей и утечек ──
+  // ── Google Places Autocomplete — singleton, не пересоздаётся при вводе ──
+
   function enableAutocomplete() {
     if (!window.google?.maps?.places) return;
-
-    // Убиваем старый инстанс и осиротевшие pac-container перед созданием нового
-    destroyAutocomplete();
+    if (autocompleteInstance) return; // singleton: уже живёт — не трогаем, фокус не сбрасываем
 
     autocompleteInstance = new google.maps.places.Autocomplete(inputEl, {
       types: ['address'],
       componentRestrictions: { country: 'us' },
       fields: ['formatted_address']
     });
+    // Не трогаем inputEl.value вручную — только читаем, когда юзер выбрал из списка
     autocompleteInstance.addListener('place_changed', () => {
       const place = autocompleteInstance.getPlace();
-      if (place?.formatted_address) inputEl.value = place.formatted_address;
+      if (place?.formatted_address) {
+        inputEl.value = place.formatted_address;
+        // После выбора адреса — фокус возвращаем явно
+        inputEl.focus();
+      }
     });
   }
 
   function destroyAutocomplete() {
+    // Вызывается ТОЛЬКО при отправке сообщения (смена шага), не при вводе текста
     if (autocompleteInstance) {
-      // Убиваем все слушатели текущего инстанса
-      google.maps.event.clearInstanceListeners(autocompleteInstance);
+      if (window.google?.maps?.event) {
+        google.maps.event.clearInstanceListeners(autocompleteInstance);
+      }
       autocompleteInstance = null;
     }
-    // Удаляем все осиротевшие pac-container из DOM — они не убираются сами
+    // Чистим осиротевшие дропдауны Google из DOM
     document.querySelectorAll('.pac-container').forEach(el => el.remove());
-    // Сбрасываем фоновую иконку Google, которую он инжектит в инпут
+    // Сбрасываем фоновую иконку Google (инжектится в style инпута)
     inputEl.style.backgroundImage = 'none';
-    inputEl.style.paddingRight = '20px';
+    inputEl.style.paddingRight = '';
   }
 
   function disableAutocomplete() {
     currentAddressStep = null;
-    destroyAutocomplete();
+    // НЕ вызываем destroyAutocomplete() здесь — он вызовется в handleSubmit
   }
 
   function detectAddressStep(text) {
@@ -777,7 +783,18 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     }catch(err){console.error(err);isAITyping=false;stopTyping();appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');controls.style.display='flex';}
   }
 
-  function handleSubmit(override=null){if(isAITyping)return;const text=override||inputEl.value.trim();if(!text)return;document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());appendMsg(text,'user');inputEl.value='';sendToAI(text);}
+  function handleSubmit(override=null){
+    if(isAITyping)return;
+    const text=override||inputEl.value.trim();
+    if(!text)return;
+    // Смена шага — теперь чистим autocomplete (единственное правильное место)
+    destroyAutocomplete();
+    currentAddressStep=null;
+    document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());
+    appendMsg(text,'user');
+    inputEl.value='';
+    sendToAI(text);
+  }
 
   startBtn.addEventListener('click',()=>{document.getElementById('m4-start-wrapper').style.display='none';chat.style.display='flex';sendToAI('SYSTEM_START_CONVERSATION');});
   sendBtn.addEventListener('click',()=>handleSubmit());
