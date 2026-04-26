@@ -82,7 +82,7 @@
     /* ── AI Chat ── */
     .m4-chat-section { background: #031f20; }
     #m4-agent-wrapper { padding: 60px 20px; display: flex; justify-content: center; }
-    .m4-agent { width: 100%; max-width: 850px; background: var(--bg2); border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.15); display: flex; flex-direction: column; height: 75vh; }
+    .m4-agent { width: 100%; max-width: 850px; background: var(--bg2); border-radius: 28px; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.15); display: flex; flex-direction: column; height: 75vh; }
     .m4-agent__head { padding: 40px 30px 30px; border-bottom: 1px solid rgba(255,255,255,.05); flex-shrink: 0; }
     .m4-agent__title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
     .m4-agent__subtitle { font-size: 14px; color: rgba(255,255,255,.6); }
@@ -218,33 +218,39 @@
     .flatpickr-day.today { border-color: rgba(175,142,93,.5) !important; }
     .flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(255,255,255,.2) !important; }
 
-    /* ── Custom Places Autocomplete (AutocompleteService — без нативного UI Гугла) ── */
-    .m4-places-wrap { position: relative; width: 100%; }
+    /* ── Custom Places Autocomplete — железобетонный CSS ── */
+    .m4-places-wrap {
+      position: relative;
+      width: 100%;
+    }
     .m4-places-list {
       position: absolute;
-      top: calc(100% + 4px);
-      left: 0; right: 0;
-      background: #031e20;
-      border: 1px solid #AF8E5D;
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.6);
-      overflow: hidden;
-      z-index: 99999;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #031e20 !important;
+      border: 1px solid #AF8E5D !important;
+      border-radius: 8px;
+      z-index: 999999 !important;
       list-style: none;
-      margin: 0; padding: 0;
+      padding: 0;
+      margin: 5px 0 0 0;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,.8);
       font-family: 'Montserrat', sans-serif;
     }
     .m4-places-list li {
-      padding: 11px 16px;
-      color: rgba(255,255,255,.9);
+      padding: 12px 15px;
+      color: #ffffff;
+      cursor: pointer;
       font-size: 14px;
       line-height: 1.4;
-      cursor: pointer;
-      border-top: 1px solid rgba(255,255,255,.06);
-      transition: background .15s;
+      border-bottom: 1px solid rgba(175,142,93,.2);
+      transition: background .2s ease;
     }
-    .m4-places-list li:first-child { border-top: none; }
-    .m4-places-list li:hover, .m4-places-list li.m4-places-active { background: rgba(175,142,93,.2); }
+    .m4-places-list li:last-child { border-bottom: none; }
+    .m4-places-list li:hover { background: rgba(175,142,93,.3) !important; }
     .m4-places-list li strong { color: #AF8E5D; font-weight: 700; }
 
     /* ── Responsive ── */
@@ -606,22 +612,28 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     removePlacesList();
     if (!predictions?.length) return;
 
-    const wrap = inputEl.closest('.m4-places-wrap');
-    if (!wrap) return;
+    // Ищем обёртку — если вдруг inputEl не внутри wrap, создаём обёртку динамически
+    let wrap = inputEl.closest('.m4-places-wrap');
+    if (!wrap) {
+      console.warn('[Places] .m4-places-wrap not found, wrapping inputEl dynamically');
+      wrap = document.createElement('div');
+      wrap.className = 'm4-places-wrap';
+      inputEl.parentNode.insertBefore(wrap, inputEl);
+      wrap.appendChild(inputEl);
+    }
 
     const ul = document.createElement('ul');
     ul.className = 'm4-places-list';
 
     predictions.forEach(pred => {
       const li = document.createElement('li');
-      // Выделяем совпадающие части золотом
       const main = pred.structured_formatting?.main_text || pred.description;
       const sec  = pred.structured_formatting?.secondary_text || '';
-      li.innerHTML = '<strong>' + escHtml(main) + '</strong>' + (sec ? '<span style="opacity:.6;font-size:12px;"> ' + escHtml(sec) + '</span>' : '');
+      li.innerHTML = '<strong>' + escHtml(main) + '</strong>'
+        + (sec ? '<span style="opacity:.6;font-size:12px;"> ' + escHtml(sec) + '</span>' : '');
 
-      // mousedown вместо click — срабатывает до blur, фокус НЕ теряется
       li.addEventListener('mousedown', e => {
-        e.preventDefault(); // ключевое: не даём инпуту потерять фокус
+        e.preventDefault();
         inputEl.value = pred.description;
         removePlacesList();
         inputEl.focus();
@@ -631,6 +643,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
 
     acList = ul;
     wrap.appendChild(ul);
+    console.log('[Places] rendered', predictions.length, 'predictions');
   }
 
   function escHtml(str) {
@@ -638,7 +651,6 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   }
 
   function enableAutocomplete() {
-    // Вешаем слушатель 'input' только один раз — проверяем по флагу
     if (inputEl._acEnabled) return;
     inputEl._acEnabled = true;
 
@@ -647,14 +659,14 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       const val = inputEl.value.trim();
       if (val.length < 3) { removePlacesList(); return; }
 
-      // Debounce 300ms — не спамим запросами при каждом символе
       clearTimeout(acDebounce);
       acDebounce = setTimeout(() => {
         const svc = getAcService();
-        if (!svc) return;
+        if (!svc) { console.warn('[Places] AutocompleteService not ready'); return; }
         svc.getPlacePredictions(
           { input: val, componentRestrictions: { country: 'us' }, types: ['address'] },
           (predictions, status) => {
+            console.log('[Places] API response:', status, predictions);
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               renderPlacesList(predictions);
             } else {
@@ -665,7 +677,6 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       }, 300);
     });
 
-    // Закрываем список при потере фокуса (но ПОСЛЕ mousedown на li)
     inputEl.addEventListener('blur', () => {
       setTimeout(removePlacesList, 150);
     });
