@@ -218,42 +218,34 @@
     .flatpickr-day.today { border-color: rgba(175,142,93,.5) !important; }
     .flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(255,255,255,.2) !important; }
 
-    /* ── Google Places pac-container — тёмная тема, без конфликтов ── */
-    .pac-container {
-      z-index: 99999 !important;
-      background-color: #031e20 !important;
-      border: 1px solid #AF8E5D !important;
-      border-radius: 10px !important;
-      box-shadow: 0 8px 32px rgba(0,0,0,.55) !important;
-      font-family: 'Montserrat', sans-serif !important;
-      margin-top: 4px;
+    /* ── Custom Places Autocomplete (AutocompleteService — без нативного UI Гугла) ── */
+    .m4-places-wrap { position: relative; width: 100%; }
+    .m4-places-list {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #031e20;
+      border: 1px solid #AF8E5D;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
       overflow: hidden;
+      z-index: 99999;
+      list-style: none;
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', sans-serif;
     }
-    .pac-container::after { display: none !important; }   /* убираем лого Google */
-    .pac-item {
-      color: #ffffff !important;
-      padding: 10px 16px !important;
-      font-size: 14px !important;
-      border-top: 1px solid rgba(255,255,255,.07) !important;
-      cursor: pointer !important;
-      transition: background .15s !important;
-      line-height: 1.5 !important;
+    .m4-places-list li {
+      padding: 11px 16px;
+      color: rgba(255,255,255,.9);
+      font-size: 14px;
+      line-height: 1.4;
+      cursor: pointer;
+      border-top: 1px solid rgba(255,255,255,.06);
+      transition: background .15s;
     }
-    .pac-item:first-child { border-top: none !important; }
-    .pac-item:hover, .pac-item-selected { background: rgba(175,142,93,.18) !important; }
-    .pac-item-query { color: #AF8E5D !important; font-weight: 700 !important; }
-    /* КРИТИЧНО: скрываем иконки — именно они блокировали клик по инпуту */
-    .pac-icon,
-    .pac-icon-marker,
-    .hdpi .pac-icon { display: none !important; width: 0 !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
-
-    /* ФИКС: Google принудительно инжектит background-image в инпут — убиваем намертво */
-    input.pac-target-input,
-    input[autocomplete="off"].pac-target-input {
-      background-image: none !important;
-      background: rgba(0,0,0,.5) !important; /* базовый цвет нашего инпута */
-      padding-right: 14px !important;        /* убираем правый отступ под иконку */
-    }
+    .m4-places-list li:first-child { border-top: none; }
+    .m4-places-list li:hover, .m4-places-list li.m4-places-active { background: rgba(175,142,93,.2); }
+    .m4-places-list li strong { color: #AF8E5D; font-weight: 700; }
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
@@ -364,7 +356,9 @@
       </div>
       <div id="m4-controls" style="display:none;">
         <div class="m4-input-wrap">
-          <input id="m4-input" class="m4-input" type="text" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
+          <div class="m4-places-wrap">
+            <input id="m4-input" class="m4-input" type="text" placeholder="Type your message..." autocomplete="off" aria-label="Chat input" />
+          </div>
         </div>
         <button id="m4-send" class="m4-btn m4-btn--gold" type="button" style="height:48px;padding:0 24px;font-size:15px;border-radius:50px;animation:none;" aria-label="Send">Send</button>
       </div>
@@ -589,48 +583,98 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   let sessionId=sessionStorage.getItem('m4_session_id');
   if(!sessionId){sessionId='conv_'+Math.random().toString(36).substr(2,9);sessionStorage.setItem('m4_session_id',sessionId);}
 
-  let isAITyping=false, chatHistory='', currentAddressStep=null, autocompleteInstance=null;
+  let isAITyping=false, chatHistory='', currentAddressStep=null;
 
-  // ── Google Places Autocomplete — singleton, не пересоздаётся при вводе ──
+  // ── Google AutocompleteService — кастомный UI, без нативного виджета ──
+  // Инстанс создаётся один раз после загрузки API
+  let acService = null;
+  let acDebounce = null;
+  let acList = null; // текущий <ul> дропдаун
 
-  function enableAutocomplete() {
-    if (!window.google?.maps?.places) return;
-    if (autocompleteInstance) return; // singleton: уже живёт — не трогаем, фокус не сбрасываем
-
-    autocompleteInstance = new google.maps.places.Autocomplete(inputEl, {
-      types: ['address'],
-      componentRestrictions: { country: 'us' },
-      fields: ['formatted_address']
-    });
-    // Не трогаем inputEl.value вручную — только читаем, когда юзер выбрал из списка
-    autocompleteInstance.addListener('place_changed', () => {
-      const place = autocompleteInstance.getPlace();
-      if (place?.formatted_address) {
-        inputEl.value = place.formatted_address;
-        // После выбора адреса — фокус возвращаем явно
-        inputEl.focus();
-      }
-    });
+  function getAcService() {
+    if (acService) return acService;
+    if (!window.google?.maps?.places) return null;
+    acService = new google.maps.places.AutocompleteService();
+    return acService;
   }
 
-  function destroyAutocomplete() {
-    // Вызывается ТОЛЬКО при отправке сообщения (смена шага), не при вводе текста
-    if (autocompleteInstance) {
-      if (window.google?.maps?.event) {
-        google.maps.event.clearInstanceListeners(autocompleteInstance);
-      }
-      autocompleteInstance = null;
-    }
-    // Чистим осиротевшие дропдауны Google из DOM
-    document.querySelectorAll('.pac-container').forEach(el => el.remove());
-    // Сбрасываем фоновую иконку Google (инжектится в style инпута)
-    inputEl.style.backgroundImage = 'none';
-    inputEl.style.paddingRight = '';
+  function removePlacesList() {
+    if (acList) { acList.remove(); acList = null; }
+  }
+
+  function renderPlacesList(predictions) {
+    removePlacesList();
+    if (!predictions?.length) return;
+
+    const wrap = inputEl.closest('.m4-places-wrap');
+    if (!wrap) return;
+
+    const ul = document.createElement('ul');
+    ul.className = 'm4-places-list';
+
+    predictions.forEach(pred => {
+      const li = document.createElement('li');
+      // Выделяем совпадающие части золотом
+      const main = pred.structured_formatting?.main_text || pred.description;
+      const sec  = pred.structured_formatting?.secondary_text || '';
+      li.innerHTML = '<strong>' + escHtml(main) + '</strong>' + (sec ? '<span style="opacity:.6;font-size:12px;"> ' + escHtml(sec) + '</span>' : '');
+
+      // mousedown вместо click — срабатывает до blur, фокус НЕ теряется
+      li.addEventListener('mousedown', e => {
+        e.preventDefault(); // ключевое: не даём инпуту потерять фокус
+        inputEl.value = pred.description;
+        removePlacesList();
+        inputEl.focus();
+      });
+      ul.appendChild(li);
+    });
+
+    acList = ul;
+    wrap.appendChild(ul);
+  }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function enableAutocomplete() {
+    // Вешаем слушатель 'input' только один раз — проверяем по флагу
+    if (inputEl._acEnabled) return;
+    inputEl._acEnabled = true;
+
+    inputEl.addEventListener('input', () => {
+      if (!currentAddressStep) { removePlacesList(); return; }
+      const val = inputEl.value.trim();
+      if (val.length < 3) { removePlacesList(); return; }
+
+      // Debounce 300ms — не спамим запросами при каждом символе
+      clearTimeout(acDebounce);
+      acDebounce = setTimeout(() => {
+        const svc = getAcService();
+        if (!svc) return;
+        svc.getPlacePredictions(
+          { input: val, componentRestrictions: { country: 'us' }, types: ['address'] },
+          (predictions, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              renderPlacesList(predictions);
+            } else {
+              removePlacesList();
+            }
+          }
+        );
+      }, 300);
+    });
+
+    // Закрываем список при потере фокуса (но ПОСЛЕ mousedown на li)
+    inputEl.addEventListener('blur', () => {
+      setTimeout(removePlacesList, 150);
+    });
   }
 
   function disableAutocomplete() {
     currentAddressStep = null;
-    // НЕ вызываем destroyAutocomplete() здесь — он вызовется в handleSubmit
+    removePlacesList();
+    clearTimeout(acDebounce);
   }
 
   function detectAddressStep(text) {
@@ -787,9 +831,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
     if(isAITyping)return;
     const text=override||inputEl.value.trim();
     if(!text)return;
-    // Смена шага — теперь чистим autocomplete (единственное правильное место)
-    destroyAutocomplete();
-    currentAddressStep=null;
+    disableAutocomplete();
     document.querySelectorAll('.m4-active-choices').forEach(e=>e.remove());
     appendMsg(text,'user');
     inputEl.value='';
