@@ -819,23 +819,36 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       let parsed;try{parsed=JSON.parse(raw);}catch{parsed=null;}
       const botText=parsed?.text||raw;
       appendMsg(botText,'bot');chatHistory+='Alex: '+botText+'\n';
-      currentAddressStep = detectAddressStep(botText);
+      currentAddressStep=detectAddressStep(botText);
+
+      // Инпут показываем ВСЕГДА — пользователь должен мочь написать в любой момент
+      controls.style.display='flex';
+
       if(parsed?.choices?.length){
+        // Есть кнопки — показываем их И инпут одновременно
         disableAutocomplete();
         showChoices(parsed.choices);
+        inputEl.placeholder='Choose an option or type a question...';
+        inputEl.focus();
       } else {
-        controls.style.display='flex';
-        if (currentAddressStep) {
+        // Нет кнопок — стандартная логика placeholder
+        if(currentAddressStep){
           enableAutocomplete();
-          inputEl.placeholder = currentAddressStep === 'pickup'
-            ? 'Start typing pickup address...'
-            : 'Start typing drop-off address...';
+          inputEl.placeholder=currentAddressStep==='pickup'
+            ?'Start typing pickup address...'
+            :'Start typing drop-off address...';
         } else {
           inputEl.placeholder='Type your message...';
         }
         inputEl.focus();
       }
-    }catch(err){console.error(err);isAITyping=false;stopTyping();appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');controls.style.display='flex';}
+    }catch(err){
+      console.error(err);
+      isAITyping=false;stopTyping();
+      appendMsg("Sorry, I'm having trouble connecting. Please try again.",'bot');
+      controls.style.display='flex';
+      inputEl.placeholder='Type your message...';
+    }
   }
 
   function handleSubmit(override=null){
