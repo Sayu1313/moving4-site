@@ -734,76 +734,116 @@
   </div>
 </section>
 
-<!-- ── CLASSIC FORM ────────────────────────────────────────────── -->
-<section id="m4-classic-form" class="m4-form-section" style="scroll-margin-top:110px;">
+<!-- ── QUOTE FORM ───────────────────────────────────────────────── -->
+<section id="m4-classic-form" class="m4-form-section" style="scroll-margin-top:80px;">
   <div class="m4-form-wrap">
     <div class="m4-form-head">
       <h2>Request Your Moving Quote</h2>
       <p>Tell us the basics. We'll confirm availability and pricing for your Santa Monica or Culver City move quickly.</p>
       <small>⚡ Fast quote response • Same-day availability</small>
     </div>
-    <div class="m4-form-togglebar">
-      <button id="m4cf-open" class="m4-form-btn" type="button" aria-expanded="false" aria-controls="m4cf-panel">Get My Quote</button>
-      <span class="m4-form-hint">If chat is not convenient — use the standard request.</span>
-    </div>
-    <div id="m4cf-panel" class="m4-form-panel" hidden>
-      <div class="m4-form-panel-top">
-        <span class="m4-form-panel-title">Classic Request</span>
-        <button id="m4cf-close" class="m4-form-close" type="button" aria-label="Close">✕</button>
+
+    <!-- Status message (success / error) -->
+    <div class="m4-form-status" id="m4cf-status" style="display:none;"></div>
+
+    <!-- FORM — submits to same Formspree endpoint: https://formspree.io/f/xojpakpr -->
+    <form id="m4cf-form" class="m4-qform" autocomplete="on" novalidate>
+
+      <!-- Row 1: Name + Phone -->
+      <div class="m4-qform__row">
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-name">Your Name <span class="m4-qform__req">*</span></label>
+          <input class="m4-form-input" id="m4cf-name" name="name" type="text" placeholder="First name" required autocomplete="given-name">
+        </div>
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-phone">Phone <span class="m4-qform__req">*</span></label>
+          <input class="m4-form-input" id="m4cf-phone" name="phone" type="tel" placeholder="(747) 737-3444" required autocomplete="tel">
+        </div>
       </div>
-      <div class="m4-form-status" id="m4cf-status" style="display:none;"></div>
-      <form id="m4cf-form" autocomplete="on" novalidate>
-        <div class="m4-form-grid">
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-name">Name</label><input class="m4-form-input" id="m4cf-name" name="name" type="text" placeholder="Your first name" required></div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-phone">Phone</label><input class="m4-form-input" id="m4cf-phone" name="phone" type="tel" placeholder="(747) 737-3444" required></div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-email">Email</label><input class="m4-form-input" id="m4cf-email" name="email" type="email" placeholder="you@email.com" required></div>
+
+      <!-- Row 2: Move Date + Property Type -->
+      <div class="m4-qform__row">
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-date">Move Date <span class="m4-qform__req">*</span></label>
+          <input class="m4-form-input" id="m4cf-date" name="move_date" type="date" required>
         </div>
-        <div class="m4-form-grid">
-          <div class="m4-form-field m4-form-field--wide"><label class="m4-form-label" for="m4cf-pickup">Pickup address</label><input class="m4-form-input" id="m4cf-pickup" name="pickup" type="text" placeholder="Full address" required></div>
-          <div class="m4-form-field m4-form-field--wide"><label class="m4-form-label" for="m4cf-dropoff">Drop-off address</label><input class="m4-form-input" id="m4cf-dropoff" name="dropoff" type="text" placeholder="Full address" required></div>
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-proptype">Property Type <span class="m4-qform__req">*</span></label>
+          <select class="m4-form-select" id="m4cf-proptype" name="property_type" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>Apartment</option>
+            <option>House</option>
+            <option>Condo</option>
+            <option>Office</option>
+            <option>Storage Unit</option>
+          </select>
         </div>
-        <div class="m4-form-grid">
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-date">Move date</label><input class="m4-form-input" id="m4cf-date" name="move_date" type="date" required></div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-time">Start time</label>
-            <select class="m4-form-select" id="m4cf-time" name="time_window" required>
-              <option value="" disabled selected>Choose…</option>
-              <option>Morning (8–11am)</option><option>Midday (11am–2pm)</option><option>Afternoon (2–5pm)</option><option>Flexible</option>
-            </select>
-          </div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-rooms">Size</label>
-            <select class="m4-form-select" id="m4cf-rooms" name="rooms" required>
-              <option value="" disabled selected>Choose…</option>
-              <option>Studio / Loft</option><option>1 Bedroom</option><option>2 Bedroom</option><option>3+ Bedroom</option>
-            </select>
-          </div>
+      </div>
+
+      <!-- Row 3: Pickup City + Drop-off City -->
+      <div class="m4-qform__row">
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-pickup">Pickup City / Address <span class="m4-qform__req">*</span></label>
+          <input class="m4-form-input" id="m4cf-pickup" name="pickup" type="text" placeholder="e.g. Santa Monica, CA" required>
         </div>
-        <div class="m4-form-grid">
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-pf">Pickup floor</label>
-            <select class="m4-form-select" id="m4cf-pf" name="pickup_floor"><option value="" selected>—</option><option>Ground</option><option>2nd</option><option>3rd</option><option>4+</option></select>
-          </div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-df">Drop-off floor</label>
-            <select class="m4-form-select" id="m4cf-df" name="dropoff_floor"><option value="" selected>—</option><option>Ground</option><option>2nd</option><option>3rd</option><option>4+</option></select>
-          </div>
-          <div class="m4-form-field"><label class="m4-form-label" for="m4cf-pay">Payment</label>
-            <select class="m4-form-select" id="m4cf-pay" name="payment_type"><option value="" selected>—</option><option>Cash</option><option>Card</option></select>
-          </div>
+        <div class="m4-qform__field">
+          <label class="m4-form-label" for="m4cf-dropoff">Drop-off City / Address <span class="m4-qform__req">*</span></label>
+          <input class="m4-form-input" id="m4cf-dropoff" name="dropoff" type="text" placeholder="e.g. Culver City, CA" required>
         </div>
-        <div class="m4-form-field" style="margin-bottom:0;">
-          <label class="m4-form-label" for="m4cf-notes">Notes (optional)</label>
-          <textarea class="m4-form-textarea" id="m4cf-notes" name="notes" rows="4" placeholder="Stairs/elevator, parking, heavy items, packing needed, etc."></textarea>
-        </div>
-        <div class="m4-form-actions">
-          <button id="m4cf-submit" class="m4-form-btn" type="submit">Send request</button>
-          <span class="m4-form-fine">Cash is usually <strong>$20 off</strong> vs card. Tape + shrink wrap included.</span>
-        </div>
-      </form>
-    </div>
-    <div class="m4-form-contact">
-      <div><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
-      <div><span>Email:</span> <strong>hello@moving4.co</strong></div>
+      </div>
+
+      <!-- Row 4: Notes -->
+      <div class="m4-qform__field m4-qform__field--full">
+        <label class="m4-form-label" for="m4cf-notes">Notes (optional)</label>
+        <textarea class="m4-form-textarea" id="m4cf-notes" name="notes" rows="3" placeholder="Stairs, elevator, heavy items, packing needed, etc."></textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="m4-qform__submit-row">
+        <button id="m4cf-submit" class="m4-qform__btn" type="submit">
+          Get My Moving Quote →
+        </button>
+        <span class="m4-form-fine">Cash usually <strong>$20 off</strong> vs card. Tape + wrap included.</span>
+      </div>
+
+    </form>
+
+    <div class="m4-form-contact" style="margin-top:20px;">
+      <div><span>Call/Text:</span> <strong><a href="tel:+17477373444" style="color:inherit;">+1 (747) 737-3444</a></strong></div>
+      <div><span>Email:</span> <strong><a href="mailto:hello@moving4.co" style="color:inherit;">hello@moving4.co</a></strong></div>
     </div>
   </div>
 </section>
+<style>
+  /* Quote form — open by default, no toggle */
+  .m4-qform { display: grid; gap: 14px; }
+  .m4-qform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .m4-qform__field { display: flex; flex-direction: column; gap: 6px; }
+  .m4-qform__field--full { grid-column: 1 / -1; }
+  .m4-qform__req { color: #AF8E5D; font-size: 12px; }
+  .m4-qform__submit-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding-top: 6px; }
+  .m4-qform__btn {
+    background: linear-gradient(180deg, #C7A26A, #AF8E5D);
+    color: #042529;
+    font-weight: 800;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 36px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 20px rgba(175,142,93,.3);
+    white-space: nowrap;
+  }
+  .m4-qform__btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(175,142,93,.45); }
+  .m4-qform__btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  @media(max-width:640px){
+    .m4-qform__row { grid-template-columns: 1fr; }
+    .m4-qform__submit-row { flex-direction: column; align-items: stretch; }
+    .m4-qform__btn { width: 100%; text-align: center; }
+  }
+</style>
 
 <!-- ── FAQ ────────────────────────────────────────────────────── -->
 <section class="m4-faq-section" id="faq">
@@ -912,27 +952,75 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   });
 })();
 
-// Classic form
+// Classic form — Formspree endpoint: https://formspree.io/f/xojpakpr (UNCHANGED)
 (function(){
-  const panel=document.getElementById('m4cf-panel'),openBtn=document.getElementById('m4cf-open'),closeBtn=document.getElementById('m4cf-close'),section=document.getElementById('m4-classic-form');
-  function openPanel(){panel.hidden=false;openBtn.setAttribute('aria-expanded','true');setTimeout(()=>section.scrollIntoView({behavior:'smooth',block:'start'}),60);}
-  function closePanel(){panel.hidden=true;openBtn.setAttribute('aria-expanded','false');}
-  openBtn.addEventListener('click',()=>panel.hidden?openPanel():closePanel());
-  closeBtn.addEventListener('click',closePanel);
+  // ── FORMSPREE ENDPOINT — DO NOT CHANGE ──────────────────────────────────
+  const WEBHOOK = 'https://formspree.io/f/xojpakpr';
+  // ────────────────────────────────────────────────────────────────────────
 
-  const WEBHOOK='https://formspree.io/f/xojpakpr';
-  const form=document.getElementById('m4cf-form'),btn=document.getElementById('m4cf-submit'),statusEl=document.getElementById('m4cf-status');
-  function showStatus(type,msg){statusEl.style.display='block';statusEl.textContent=msg;statusEl.style.borderColor=type==='ok'?'rgba(175,142,93,.55)':'rgba(220,53,69,.5)';statusEl.style.background=type==='ok'?'rgba(175,142,93,.12)':'rgba(220,53,69,.1)';statusEl.style.color=type==='ok'?'rgba(255,255,255,.92)':'#ff6b6b';}
-  function normPhone(raw){const d=(raw||'').replace(/\D/g,'');if(d.length<10)return{ok:false,value:raw};let v=raw;if(d.length===10)v=`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;else if(d.length===11&&d[0]==='1')v=`+1 (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;return{ok:true,value:v};}
-  form.addEventListener('submit',async e=>{
+  const form    = document.getElementById('m4cf-form');
+  const btn     = document.getElementById('m4cf-submit');
+  const statusEl= document.getElementById('m4cf-status');
+
+  if (!form) return;
+
+  // Success / error display
+  function showStatus(type, msg) {
+    statusEl.style.display = 'block';
+    statusEl.textContent = msg;
+    statusEl.style.borderColor = type === 'ok' ? 'rgba(175,142,93,.55)' : 'rgba(220,53,69,.5)';
+    statusEl.style.background   = type === 'ok' ? 'rgba(175,142,93,.12)' : 'rgba(220,53,69,.1)';
+    statusEl.style.color        = type === 'ok' ? 'rgba(255,255,255,.92)' : '#ff6b6b';
+    // Scroll status into view on mobile
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Phone normaliser (spam protection: rejects < 10 digits)
+  function normPhone(raw) {
+    const d = (raw || '').replace(/\D/g, '');
+    if (d.length < 10) return { ok: false, value: raw };
+    let v = raw;
+    if (d.length === 10) v = `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+    else if (d.length === 11 && d[0] === '1') v = `+1 (${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;
+    return { ok: true, value: v };
+  }
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const payload=Object.fromEntries(new FormData(form).entries());
-    const p=normPhone(payload.phone);if(!p.ok){showStatus('err','Please enter a valid phone number.');return;}
-    payload.phone=p.value;
-    for(const k of['name','phone','email','pickup','dropoff','move_date','time_window','rooms']){if(!String(payload[k]||'').trim()){showStatus('err','Please fill in all required fields.');return;}}
-    try{btn.disabled=true;btn.textContent='Sending…';const res=await fetch(WEBHOOK,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(payload)});if(!res.ok)throw new Error();showStatus('ok','Request sent. We\'ll contact you shortly.');form.reset();}
-    catch{showStatus('err','Something went wrong. Please try again.');}
-    finally{btn.disabled=false;btn.textContent='Send request';}
+    const payload = Object.fromEntries(new FormData(form).entries());
+
+    // Phone validation
+    const p = normPhone(payload.phone);
+    if (!p.ok) { showStatus('err', 'Please enter a valid phone number (at least 10 digits).'); return; }
+    payload.phone = p.value;
+
+    // Required field validation — matches simplified form fields
+    const required = ['name', 'phone', 'pickup', 'dropoff', 'move_date', 'property_type'];
+    for (const k of required) {
+      if (!String(payload[k] || '').trim()) {
+        showStatus('err', 'Please fill in all required fields.');
+        return;
+      }
+    }
+
+    // Submit to Formspree — identical fetch call, same headers, same JSON body
+    try {
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Network error');
+      showStatus('ok', '✅ Quote request sent! We\'ll respond within 15 minutes.');
+      form.reset();
+    } catch {
+      showStatus('err', 'Something went wrong. Please try again or call us directly.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Get My Moving Quote →';
+    }
   });
 })();
 
