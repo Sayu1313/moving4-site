@@ -702,6 +702,201 @@
 })();
 </script>
 
+<!-- ── FOUNDER / EXPERIENCE ───────────────────────────────────── -->
+<section class="m4-founder" id="about">
+  <div class="m4-founder__wrap">
+
+    <!-- Photo — left on desktop, top on mobile -->
+    <div class="m4-founder__photo-col">
+      <div class="m4-founder__photo-frame">
+        <img
+          src="founder.jpeg"
+          alt="Moving4 founder on a real job — furniture professionally wrapped and protected"
+          class="m4-founder__img"
+          loading="lazy"
+          decoding="async"
+          width="480"
+          height="600"
+        />
+        <div class="m4-founder__photo-badge">
+          <span class="m4-founder__badge-dot"></span>
+          Real job · Santa Monica
+        </div>
+      </div>
+    </div>
+
+    <!-- Text — right on desktop -->
+    <div class="m4-founder__text-col">
+      <div class="m4-founder__eyebrow">Built on Real Moving Experience</div>
+      <h2 class="m4-founder__title">Quality Control on Every Job</h2>
+      <p class="m4-founder__lead">Every move I take on personally represents Moving4's standard — not just a task completed, but a home protected with care.</p>
+
+      <div class="m4-founder__points">
+        <div class="m4-founder__point">
+          <span class="m4-founder__point-icon">🛡</span>
+          <div>
+            <strong>Protection-first process</strong>
+            <p>Every piece of furniture is wrapped, padded, and secured before it moves — no shortcuts.</p>
+          </div>
+        </div>
+        <div class="m4-founder__point">
+          <span class="m4-founder__point-icon">📋</span>
+          <div>
+            <strong>Clear communication</strong>
+            <p>You'll know the plan, the timing, and what to expect — before, during, and after the move.</p>
+          </div>
+        </div>
+        <div class="m4-founder__point">
+          <span class="m4-founder__point-icon">✅</span>
+          <div>
+            <strong>Local experience</strong>
+            <p>200+ moves completed in Santa Monica, Culver City, and West LA. We know the buildings, the streets, and the details that matter.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="#m4-classic-form" class="m4-btn m4-btn--gold" style="margin-top:32px;height:52px;padding:0 34px;font-size:15px;border-radius:50px;display:inline-flex;align-items:center;justify-content:center;">
+        Get My Moving Quote
+      </a>
+    </div>
+
+  </div>
+</section>
+<style>
+  .m4-founder {
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    padding: 96px 0 110px;
+    color: #F4F7F7;
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+  .m4-founder__wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  /* ── Photo column ── */
+  .m4-founder__photo-frame {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(175,142,93,.28);
+    box-shadow: 0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(175,142,93,.08);
+  }
+  .m4-founder__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center top; /* keeps face in frame */
+    border-radius: 28px;
+    filter: saturate(1.04) contrast(1.02);
+  }
+  .m4-founder__photo-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(3,30,32,.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(175,142,93,.35);
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(244,247,247,.88);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .m4-founder__badge-dot {
+    width: 7px;
+    height: 7px;
+    background: #AF8E5D;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #AF8E5D;
+    animation: m4pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  /* ── Text column ── */
+  .m4-founder__eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(175,142,93,.85);
+    margin-bottom: 14px;
+  }
+  .m4-founder__title {
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    line-height: 1.08;
+    margin: 0 0 18px;
+  }
+  .m4-founder__lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(244,247,247,.72);
+    margin: 0 0 32px;
+  }
+  .m4-founder__points {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .m4-founder__point {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .m4-founder__point-icon {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  .m4-founder__point strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #F4F7F7;
+  }
+  .m4-founder__point p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(244,247,247,.65);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .m4-founder__wrap {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .m4-founder__photo-col {
+      order: -1; /* photo on top on mobile */
+    }
+    .m4-founder__img {
+      max-height: 420px;
+      object-position: center 15%; /* show face + wrapped furniture */
+    }
+    .m4-founder__title { font-size: 30px; }
+    .m4-founder__lead { font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .m4-founder { padding: 72px 0 84px; }
+    .m4-founder__img { max-height: 360px; }
+    .m4-founder__title { font-size: 26px; }
+  }
+</style>
+
 <!-- ── PRICING ────────────────────────────────────────────────── -->
 <section class="m4-pricing" id="pricing">
   <div class="m4-pricing__wrap">
@@ -938,7 +1133,7 @@
         <button id="m4-send" class="m4-btn m4-btn--gold" type="button" style="height:48px;padding:0 24px;font-size:15px;border-radius:50px;animation:none;" aria-label="Send">Send</button>
       </div>
       <div class="m4-footnote">
-        <span>Cash is usually <strong>$20 off</strong> vs card.</span>
+        <span>Transparent pricing. Furniture protection included.</span>
         <span style="opacity:.35;">SYSTEM REF: AI-NEO-2.0</span>
       </div>
     </div>
@@ -1014,7 +1209,7 @@
         <button id="m4cf-submit" class="m4-qform__btn" type="submit">
           Get My Moving Quote →
         </button>
-        <span class="m4-form-fine">Cash usually <strong>$20 off</strong> vs card. Tape + wrap included.</span>
+        <span class="m4-form-fine">Transparent pricing. Furniture protection included.</span>
       </div>
 
     </form>
@@ -1064,9 +1259,9 @@
       <div class="m4-faq-col">
         <div id="m4-faq-acc">
           <button class="m4-faq-q" type="button" aria-expanded="false"><span>How does pricing work?</span><i class="m4-faq-chev"></i></button>
-          <div class="m4-faq-a" hidden>We charge hourly (crew + truck) plus a one-time truck fee. Your final total is based on the actual time worked. If your move requires confirmation (e.g., safe/piano, COI, storage, extra stops, outside LA), we confirm details first.</div>
+          <div class="m4-faq-a" hidden>We charge an hourly rate for the crew and truck. Your final total is based on actual time worked — no hidden charges. If your move has special requirements (piano, storage, extra stops), we confirm details and pricing in advance.</div>
           <button class="m4-faq-q" type="button" aria-expanded="false"><span>Is packing material included?</span><i class="m4-faq-chev"></i></button>
-          <div class="m4-faq-a" hidden>Tape + shrink wrap are included. If you need full packing or special packing (TV/art/glass), we'll confirm the scope and recommend the right materials.</div>
+          <div class="m4-faq-a" hidden>Furniture protection materials are included. If you need full packing or special packing (TV/art/glass), we'll confirm the scope and recommend the right materials.</div>
           <button class="m4-faq-q" type="button" aria-expanded="false"><span>Do you protect furniture and floors?</span><i class="m4-faq-chev"></i></button>
           <div class="m4-faq-a" hidden>Yes. We use moving blankets, wrap, and careful loading. In tight spaces we slow down to protect walls, corners, and floors.</div>
           <button class="m4-faq-q" type="button" aria-expanded="false"><span>What can change the estimate?</span><i class="m4-faq-chev"></i></button>
@@ -1120,7 +1315,7 @@
           <li>Stairs, elevators, and parking distance affect timing.</li>
           <li>COI and building requirements can be confirmed in advance.</li>
         </ul>
-        <p class="m4-footer-fine">Cash is usually <strong>$20 off</strong> vs card. Tape + shrink wrap included.</p>
+        <p class="m4-footer-fine">Transparent pricing. Furniture protection included with every move.</p>
         <div class="m4-footer-endline">Transparent • Calm process • Protected move day</div>
       </section>
     </div>
