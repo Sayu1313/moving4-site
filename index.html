@@ -529,35 +529,27 @@
       <p class="m4-reviews__sub">Feedback from local moves in Santa Monica, Culver City, and West LA.</p>
     </header>
 
-    <div class="m4-reviews__grid">
-
-      <article class="m4-reviews__card">
-        <div class="m4-reviews__card-stars">★★★★★</div>
-        <p class="m4-reviews__card-text">"Super careful with our furniture. Everything was wrapped and protected. The crew was professional from start to finish."</p>
-        <div class="m4-reviews__card-meta">
-          <span class="m4-reviews__card-name">Sarah M.</span>
-          <span class="m4-reviews__card-detail">2 Bedroom Move · Santa Monica</span>
-        </div>
-      </article>
-
-      <article class="m4-reviews__card">
-        <div class="m4-reviews__card-stars">★★★★★</div>
-        <p class="m4-reviews__card-text">"On time, fast loading, no damage. The communication throughout the move was excellent. Highly recommend."</p>
-        <div class="m4-reviews__card-meta">
-          <span class="m4-reviews__card-name">James K.</span>
-          <span class="m4-reviews__card-detail">1 Bedroom Move · Culver City</span>
-        </div>
-      </article>
-
-      <article class="m4-reviews__card">
-        <div class="m4-reviews__card-stars">★★★★★</div>
-        <p class="m4-reviews__card-text">"They handled stairs and a long carry without any issues. Very professional, careful with everything, and good value."</p>
-        <div class="m4-reviews__card-meta">
-          <span class="m4-reviews__card-name">Linda T.</span>
-          <span class="m4-reviews__card-detail">2 Bedroom Move · Venice</span>
-        </div>
-      </article>
-
+    <div class="m4-revshot__grid">
+      <figure class="m4-revshot__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412108/photo_2025-12-29_18.49.36_l8pqcl.jpg">
+        <div class="m4-revshot__img" role="img" aria-label="Google review"></div>
+        <button class="m4-revshot__click" type="button" aria-label="View full review"></button>
+      </figure>
+      <figure class="m4-revshot__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412108/photo_2026-01-02_19.42.21_zgksfz.jpg">
+        <div class="m4-revshot__img" role="img" aria-label="Google review"></div>
+        <button class="m4-revshot__click" type="button" aria-label="View full review"></button>
+      </figure>
+      <figure class="m4-revshot__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412108/photo_2025-12-29_18.49.39_xaq9hd.jpg">
+        <div class="m4-revshot__img" role="img" aria-label="Google review"></div>
+        <button class="m4-revshot__click" type="button" aria-label="View full review"></button>
+      </figure>
+      <figure class="m4-revshot__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412107/photo_2025-12-29_18.49.33_sn7kys.jpg">
+        <div class="m4-revshot__img" role="img" aria-label="Google review"></div>
+        <button class="m4-revshot__click" type="button" aria-label="View full review"></button>
+      </figure>
+      <figure class="m4-revshot__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412107/photo_2025-12-29_18.49.29_xhn7f4.jpg">
+        <div class="m4-revshot__img" role="img" aria-label="Google review"></div>
+        <button class="m4-revshot__click" type="button" aria-label="View full review"></button>
+      </figure>
     </div>
 
   </div>
@@ -613,6 +605,45 @@
     color: rgba(244,247,247,.6);
     margin: 0;
     line-height: 1.6;
+  }
+  .m4-revshot__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .m4-revshot__item {
+    position: relative;
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(175,142,93,.14);
+    background: rgba(6,49,51,.6);
+    transition: border-color .25s, transform .25s;
+  }
+  .m4-revshot__item:hover {
+    border-color: rgba(175,142,93,.32);
+    transform: translateY(-3px);
+  }
+  .m4-revshot__img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-size: cover;
+    background-position: top center;
+  }
+  .m4-revshot__click {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (max-width: 860px) {
+    .m4-revshot__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .m4-revshot__grid { grid-template-columns: repeat(2, 1fr); }
   }
   .m4-reviews__grid {
     display: grid;
@@ -712,6 +743,48 @@
         <div class="m4-gallery__img" role="img" aria-label="Professional moving crew at work"></div>
         <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
         <figcaption class="m4-gallery__cap">Storage Move – Culver City</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767411867/photo_2025-07-14_19.09.37_eh8lmi.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Professional packing in progress"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Packing Service – West Los Angeles</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767411867/photo_2025-07-14_19.10.33_i98qaq.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Furniture wrapped and secured"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Furniture Protection – Culver City</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767411866/photo_2026-01-02_19.29.47_m8uxbv.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Items secured and protected"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">2 Bedroom Move – Venice</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767411866/photo_2025-07-14_19.09.43_lf57w7.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Careful loading process"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Loading & Transport – Santa Monica</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767411866/photo_2025-07-14_19.09.55_oxpjjk.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Protected furniture pieces"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Furniture Protection – West Los Angeles</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412058/photo_2026-01-02_19.33.27_abnov1.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Moving4 crew on a real job"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Our Crew – On the Job</figcaption>
+      </figure>
+
+      <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412029/Instagram_story_-_10_yuj788.jpg">
+        <div class="m4-gallery__img" role="img" aria-label="Moving crew at work"></div>
+        <button class="m4-gallery__click" type="button" aria-label="View full size"></button>
+        <figcaption class="m4-gallery__cap">Professional Moving Team</figcaption>
       </figure>
 
       <figure class="m4-gallery__item" data-img="https://res.cloudinary.com/dx8ynsfnq/image/upload/v1767412029/photo_2026-01-02_19.30.08_evjros.jpg">
@@ -859,6 +932,7 @@
       cap: cap ? cap.textContent.trim() : ''
     };
   }).filter(function(x) { return !!x.url; });
+  var galleryData = lbItems; // stable reference for gallery
 
   var lb       = root.querySelector('.m4lb');
   var lbImg    = root.querySelector('.m4lb__img');
@@ -886,7 +960,7 @@
   function closeLB()  { lb.classList.remove('is-on'); lb.setAttribute('aria-hidden','true'); unlockScroll(); }
 
   Array.from(root.querySelectorAll('.m4-gallery__click')).forEach(function(btn, i) {
-    btn.addEventListener('click', function(e) { e.preventDefault(); openLB(i); });
+    btn.addEventListener('click', function(e) { e.preventDefault(); lbItems = galleryData; openLB(i); });
   });
   if (btnClose)  btnClose.addEventListener('click', closeLB);
   if (lbOverlay) lbOverlay.addEventListener('click', closeLB);
@@ -898,6 +972,27 @@
     if (e.key === 'ArrowLeft'  && lbIndex > 0)                  { lbIndex--; renderLB(); }
     if (e.key === 'ArrowRight' && lbIndex < lbItems.length - 1) { lbIndex++; renderLB(); }
   });
+
+  // ── Review screenshots: load images + open in same lightbox ──
+  var revRoot = document.getElementById('reviews');
+  if (revRoot) {
+    var revItems = Array.from(revRoot.querySelectorAll('.m4-revshot__item'));
+    var revData = revItems.map(function(item) {
+      var url = (item.getAttribute('data-img') || '').trim();
+      var img = item.querySelector('.m4-revshot__img');
+      if (img && url) img.style.backgroundImage = 'url("' + url + '")';
+      return { url: url, cap: 'Google Review' };
+    }).filter(function(x) { return !!x.url; });
+
+    function openRevLB(i) {
+      // Swap lightbox dataset to review screenshots
+      lbItems = revData;
+      openLB(i);
+    }
+    Array.from(revRoot.querySelectorAll('.m4-revshot__click')).forEach(function(btn, i) {
+      btn.addEventListener('click', function(e) { e.preventDefault(); openRevLB(i); });
+    });
+  }
 })();
 </script>
 
