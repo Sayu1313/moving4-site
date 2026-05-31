@@ -702,6 +702,217 @@
 })();
 </script>
 
+<!-- ── PRICING ────────────────────────────────────────────────── -->
+<section class="m4-pricing" id="pricing">
+  <div class="m4-pricing__wrap">
+
+    <header class="m4-pricing__head">
+      <h2 class="m4-pricing__title">Transparent Pricing</h2>
+      <p class="m4-pricing__sub">Professional moving service with clear estimates and no hidden surprises.</p>
+      <p class="m4-pricing__body">Our goal is simple: provide a smooth, stress-free moving experience with professional furniture protection and clear communication from start to finish.</p>
+    </header>
+
+    <div class="m4-pricing__grid">
+
+      <!-- Rate card -->
+      <div class="m4-pricing__card m4-pricing__card--main">
+        <div class="m4-pricing__card-label">Starting Rate</div>
+        <div class="m4-pricing__rate-row">
+          <span class="m4-pricing__rate">$129</span>
+          <span class="m4-pricing__rate-unit">/hr</span>
+        </div>
+        <ul class="m4-pricing__rate-details">
+          <li><span class="m4-pricing__detail-icon">👥</span> 2 Professional Movers</li>
+          <li><span class="m4-pricing__detail-icon">🚚</span> Truck Fee — $60 flat</li>
+          <li><span class="m4-pricing__detail-icon">⏱</span> 3-Hour Minimum</li>
+        </ul>
+      </div>
+
+      <!-- Included card -->
+      <div class="m4-pricing__card m4-pricing__card--included">
+        <div class="m4-pricing__card-label">Included With Every Move</div>
+        <ul class="m4-pricing__included">
+          <li><span class="m4-pricing__check">✓</span> Professional Furniture Protection</li>
+          <li><span class="m4-pricing__check">✓</span> Moving Equipment &amp; Supplies</li>
+          <li><span class="m4-pricing__check">✓</span> Careful Loading &amp; Unloading</li>
+          <li><span class="m4-pricing__check">✓</span> Licensed &amp; Insured Service</li>
+          <li><span class="m4-pricing__check">✓</span> Clear Communication Throughout</li>
+          <li><span class="m4-pricing__check">✓</span> Experienced Moving Crew</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- No-surprise note -->
+    <div class="m4-pricing__note">
+      <p class="m4-pricing__note-main">Every move is different.</p>
+      <p class="m4-pricing__note-sub">We provide a clear estimate before your move so you know exactly what to expect.<br>No hidden fees. No last-minute surprises.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="m4-pricing__cta">
+      <a href="#m4-classic-form" class="m4-btn m4-btn--gold" style="height:54px;padding:0 40px;font-size:16px;border-radius:50px;display:inline-flex;align-items:center;justify-content:center;">
+        Get My Moving Quote
+      </a>
+    </div>
+
+  </div>
+</section>
+<style>
+  .m4-pricing {
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+    padding: 96px 0 110px;
+    color: #F4F7F7;
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+  .m4-pricing__wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .m4-pricing__head {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+  .m4-pricing__title {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    margin: 0 0 14px;
+    line-height: 1.05;
+  }
+  .m4-pricing__sub {
+    font-size: 17px;
+    color: rgba(244,247,247,.75);
+    margin: 0 auto 16px;
+    max-width: 580px;
+    line-height: 1.6;
+  }
+  .m4-pricing__body {
+    font-size: 15px;
+    color: rgba(244,247,247,.6);
+    margin: 0 auto;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .m4-pricing__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 44px;
+  }
+  .m4-pricing__card {
+    border-radius: 24px;
+    padding: 36px 32px;
+    border: 1px solid rgba(175,142,93,.2);
+    background: linear-gradient(180deg, rgba(6,49,51,.95), rgba(5,44,46,.95));
+    box-shadow: 0 24px 64px rgba(0,0,0,.4), inset 0 1px 0 rgba(244,247,247,.06);
+  }
+  .m4-pricing__card-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(175,142,93,.85);
+    margin-bottom: 20px;
+  }
+  /* Rate card */
+  .m4-pricing__rate-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .m4-pricing__rate {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    color: #AF8E5D;
+    letter-spacing: -.03em;
+  }
+  .m4-pricing__rate-unit {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(244,247,247,.6);
+  }
+  .m4-pricing__rate-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid rgba(175,142,93,.15);
+    padding-top: 20px;
+  }
+  .m4-pricing__rate-details li {
+    font-size: 15px;
+    color: rgba(244,247,247,.82);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .m4-pricing__detail-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  /* Included card */
+  .m4-pricing__included {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .m4-pricing__included li {
+    font-size: 15px;
+    color: rgba(244,247,247,.85);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+  .m4-pricing__check {
+    color: #AF8E5D;
+    font-weight: 900;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  /* Note */
+  .m4-pricing__note {
+    text-align: center;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(175,142,93,.12);
+    border-bottom: 1px solid rgba(175,142,93,.12);
+    margin-bottom: 44px;
+  }
+  .m4-pricing__note-main {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: #F4F7F7;
+  }
+  .m4-pricing__note-sub {
+    font-size: 15px;
+    color: rgba(244,247,247,.65);
+    line-height: 1.7;
+    margin: 0;
+  }
+  /* CTA */
+  .m4-pricing__cta {
+    text-align: center;
+  }
+  /* Responsive */
+  @media (max-width: 720px) {
+    .m4-pricing__grid { grid-template-columns: 1fr; }
+    .m4-pricing__title { font-size: 34px; }
+    .m4-pricing__rate { font-size: 56px; }
+    .m4-pricing__card { padding: 28px 22px; }
+  }
+</style>
+
 <!-- AI Assistant temporarily hidden for Google Ads launch. Restore after lead flow testing. -->
 <section class="m4-chat-section" style="display:none;" aria-hidden="true">
   <div id="m4-agent-wrapper">
