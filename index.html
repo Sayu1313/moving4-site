@@ -74,6 +74,19 @@
     .m4-point b { color: #fff; }
     .m4-slogan { margin-top: 45px; display: flex; gap: 10px; font-weight: 800; padding-bottom: 12px; border-bottom: 1px solid rgba(175,142,93,.2); width: fit-content; opacity: .9; }
     .m4-slogan__dash { color: var(--gold); }
+
+    /* ── Google Ads CRO additions ── */
+    .m4-phone-hero { display: inline-flex; align-items: center; gap: 10px; background: rgba(175,142,93,.12); border: 1px solid rgba(175,142,93,.4); border-radius: 50px; padding: 10px 22px; margin-bottom: 18px; text-decoration: none; transition: background .2s; }
+    .m4-phone-hero:hover { background: rgba(175,142,93,.2); }
+    .m4-phone-hero__label { font-size: 12px; font-weight: 700; opacity: .7; text-transform: uppercase; letter-spacing: .06em; }
+    .m4-phone-hero__num { font-size: 18px; font-weight: 900; color: var(--gold); }
+    .m4-trust-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 10px; opacity: .88; }
+    .m4-trust-star { color: var(--gold); }
+    .m4-trust-sep { opacity: .3; }
+    .m4-trust-item { white-space: nowrap; }
+    .m4-response-note { font-size: 13px; color: rgba(175,142,93,.9); font-weight: 600; margin-bottom: 14px; }
+    .m4-nav__link--phone { color: var(--gold) !important; border: 1px solid rgba(175,142,93,.4); border-radius: 50px; padding: 4px 14px !important; }
+    .m4-nav__link--phone:hover { background: rgba(175,142,93,.1); opacity: 1 !important; }
     .m4-truck-wrap { min-height: 600px; position: relative; }
     .m4-truck { position: absolute; inset: 0; background: var(--truck-url) no-repeat right center / contain; transform: scale(1.15); transform-origin: center right; }
     .m4-truck::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 40%,rgba(175,142,93,.5) 50%,transparent 60%); background-size: 200% 100%; -webkit-mask-image: var(--truck-url); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: right center; mask-image: var(--truck-url); mask-size: contain; mask-repeat: no-repeat; mask-position: right center; animation: m4Shimmer 5s infinite linear; z-index: 2; pointer-events: none; }
@@ -294,10 +307,11 @@
   <div class="m4-nav">
     <a href="#top" aria-label="MOVING4 Home"><span class="m4-nav__logo"></span></a>
     <div class="m4-nav__links">
-      <a class="m4-nav__link" href="#faq">Services</a>
-      <a class="m4-nav__link" href="#faq">Reviews</a>
-      <a class="m4-nav__link" href="#m4-agent-wrapper">How it works</a>
+      <a class="m4-nav__link" href="#why">Services</a>
+      <a class="m4-nav__link" href="#reviews">Reviews</a>
+      <a class="m4-nav__link" href="#how">How It Works</a>
       <a class="m4-nav__link" href="#contact">Contact</a>
+      <a class="m4-nav__link m4-nav__link--phone" href="tel:+17477373444">📞 (747) 737-3444</a>
     </div>
     <div class="m4-nav__trust">
       <span class="m4-nav__stars">★★★★★</span>
@@ -310,26 +324,30 @@
 <section id="top" style="background:var(--bg);">
   <div class="m4-hero">
     <div>
-      <div class="m4-ai-badge">
-        <span class="m4-ai-orb"></span>
-        <span class="m4-ai-badge__label">SMART AI QUOTE</span>
-        <span class="m4-ai-badge__sep">•</span>
-        <span class="m4-ai-badge__tag">INSTANT ESTIMATE</span>
-      </div>
-      <h1 class="m4-h1">Premium Moving &<br>Furniture Protection</h1>
-      <p class="m4-sub">White-glove execution, zero chaos. Fully insured, professional packing, and transparent pricing. Choose how you want to get your quote below.</p>
+
+      <h1 class="m4-h1">Professional Movers in<br>Santa Monica &amp; Culver City</h1>
+      <p class="m4-sub">Licensed &amp; insured local movers with careful furniture protection, professional packing, and clear pricing. Get a fast quote for your move in Santa Monica, Culver City, or nearby West LA today.</p>
       <div class="m4-cta-group">
-        <a class="m4-btn m4-btn--gold" href="#m4-agent-wrapper">
-          Instant AI Quote
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a class="m4-btn m4-btn--outline" href="#m4-classic-form">Classic Quote Form</a>
+        <a class="m4-btn m4-btn--gold" href="#m4-classic-form">Get My Moving Quote</a>
+        <a class="m4-btn m4-btn--outline" href="tel:+17477373444">Call Now</a>
       </div>
-      <div class="m4-meta">
-        <span>Licensed &amp; insured</span><span class="m4-meta__dot"></span>
-        <span>5-star rated</span><span class="m4-meta__dot"></span>
-        <span>Fast confirmation</span>
+      <!-- Phone above the fold -->
+      <a href="tel:+17477373444" class="m4-phone-hero">
+        <span class="m4-phone-hero__label">Call / Text:</span>
+        <span class="m4-phone-hero__num">+1 (747) 737-3444</span>
+      </a>
+      <!-- Trust signals -->
+      <div class="m4-trust-row">
+        <span class="m4-trust-item"><span class="m4-trust-star">★★★★★</span> Google Rated</span>
+        <span class="m4-trust-sep">·</span>
+        <span class="m4-trust-item">200+ Local Moves</span>
+        <span class="m4-trust-sep">·</span>
+        <span class="m4-trust-item">Licensed &amp; Insured</span>
+        <span class="m4-trust-sep">·</span>
+        <span class="m4-trust-item">Furniture Protection Included</span>
       </div>
+      <!-- Response time -->
+      <p class="m4-response-note">⚡ Average response time under 15 minutes</p>
       <div class="m4-meta__line"></div>
       <div class="m4-points">
         <div class="m4-point"><span class="m4-check">✓</span><span><b>Premium protection</b> — padded, secured, and treated like it's yours</span></div>
@@ -343,6 +361,31 @@
     <div class="m4-truck-wrap"><div class="m4-truck"></div></div>
   </div>
 </section>
+
+<!-- ── SERVICE AREA ──────────────────────────────────────────── -->
+<section class="m4-service-area">
+  <div class="m4-service-area__wrap">
+    <h2 class="m4-service-area__title">Serving Santa Monica &amp; Culver City</h2>
+    <p class="m4-service-area__sub">Focused local moving service for Santa Monica, Culver City, and nearby West LA neighborhoods. Professional movers ready for your local move.</p>
+    <div class="m4-service-area__grid">
+      <span class="m4-service-area__tag">Santa Monica</span>
+      <span class="m4-service-area__tag">Culver City</span>
+      <span class="m4-service-area__tag">Marina Del Rey</span>
+      <span class="m4-service-area__tag">Venice</span>
+      <span class="m4-service-area__tag">West Los Angeles</span>
+      <span class="m4-service-area__tag">Beverly Hills &amp; Nearby</span>
+    </div>
+  </div>
+</section>
+<style>
+  .m4-service-area { background: var(--bg2); border-top: 1px solid rgba(175,142,93,.12); border-bottom: 1px solid rgba(175,142,93,.12); padding: 40px 0; }
+  .m4-service-area__wrap { max-width: 1320px; margin: 0 auto; padding: 0 24px; text-align: center; }
+  .m4-service-area__title { font-size: 26px; font-weight: 900; margin-bottom: 10px; color: #F4F7F7; }
+  .m4-service-area__sub { font-size: 15px; color: rgba(244,247,247,.72); max-width: 640px; margin: 0 auto 24px; line-height: 1.6; }
+  .m4-service-area__grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .m4-service-area__tag { background: rgba(175,142,93,.1); border: 1px solid rgba(175,142,93,.35); color: #F4F7F7; padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+  @media(max-width:640px){ .m4-service-area__title{font-size:20px;} }
+</style>
 
 <!-- ── WHY MOVING4 ────────────────────────────────────────────── -->
 <section class="m4why" id="why">
@@ -512,7 +555,7 @@
     <div class="m4-photos__dots" data-dots="client"></div>
 
     <div id="reviews" style="height:1px;"></div>
-    <header class="m4-photos__top m4-photos__top--spacer" data-reveal><h2 class="m4-photos__title">Reviews</h2><p class="m4-photos__sub">What people say after the job is done.</p></header>
+    <header class="m4-photos__top m4-photos__top--spacer" data-reveal><h2 class="m4-photos__title">Real Google Reviews From Local Moving Jobs</h2><p class="m4-photos__sub">What Santa Monica and Culver City clients say after the job is done.</p></header>
     <div class="m4-photos__slider" data-reveal data-kind="reviews">
       <button class="m4-photos__nav m4-photos__nav--prev" type="button" aria-label="Previous"></button>
       <div class="m4-photos__viewport">
@@ -527,6 +570,9 @@
       <button class="m4-photos__nav m4-photos__nav--next" type="button" aria-label="Next"></button>
     </div>
     <div class="m4-photos__dots" data-dots="reviews"></div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="#m4-classic-form" class="m4-btn m4-btn--gold" style="display:inline-flex;height:54px;padding:0 36px;font-size:16px;border-radius:50px;">Get My Moving Quote</a>
+    </div>
   </div>
 
   <!-- Lightbox -->
@@ -656,8 +702,8 @@
 })();
 </script>
 
-<!-- ── AI CHAT ─────────────────────────────────────────────────── -->
-<section class="m4-chat-section">
+<!-- AI Assistant temporarily hidden for Google Ads launch. Restore after lead flow testing. -->
+<section class="m4-chat-section" style="display:none;" aria-hidden="true">
   <div id="m4-agent-wrapper">
     <div id="m4-agent" class="m4-agent">
       <div class="m4-agent__head">
@@ -692,12 +738,12 @@
 <section id="m4-classic-form" class="m4-form-section" style="scroll-margin-top:110px;">
   <div class="m4-form-wrap">
     <div class="m4-form-head">
-      <h2>Manual Quote Form</h2>
-      <p>Prefer the classic form? Leave details — we'll confirm quickly.</p>
-      <small>No spam. Only move-related updates.</small>
+      <h2>Request Your Moving Quote</h2>
+      <p>Tell us the basics. We'll confirm availability and pricing for your Santa Monica or Culver City move quickly.</p>
+      <small>⚡ Fast quote response • Same-day availability</small>
     </div>
     <div class="m4-form-togglebar">
-      <button id="m4cf-open" class="m4-form-btn" type="button" aria-expanded="false" aria-controls="m4cf-panel">Open classic form</button>
+      <button id="m4cf-open" class="m4-form-btn" type="button" aria-expanded="false" aria-controls="m4cf-panel">Get My Quote</button>
       <span class="m4-form-hint">If chat is not convenient — use the standard request.</span>
     </div>
     <div id="m4cf-panel" class="m4-form-panel" hidden>
@@ -754,7 +800,7 @@
     </div>
     <div class="m4-form-contact">
       <div><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
-      <div><span>Email:</span> <strong>Mail@Moving4.com</strong></div>
+      <div><span>Email:</span> <strong>hello@moving4.co</strong></div>
     </div>
   </div>
 </section>
@@ -791,7 +837,7 @@
         </div>
         <div class="m4-rev__contact">
           <div><span>Call/Text:</span> <strong>+1 (747) 737-3444</strong></div>
-          <div style="margin-top:6px;"><span>Email:</span> <strong>Mail@Moving4.com</strong></div>
+          <div style="margin-top:6px;"><span>Email:</span> <strong>hello@moving4.co</strong></div>
         </div>
       </aside>
     </div>
@@ -808,7 +854,7 @@
         <div class="m4-footer-slogan">We don't move things. We protect value.</div>
         <div class="m4-footer-links">
           <a class="m4-footer-link" href="tel:+17477373444"><span class="m4-footer-lbl">Call / Text</span><span class="m4-footer-val">+1 (747) 737-3444</span></a>
-          <a class="m4-footer-link" href="mailto:Mail@Moving4.com"><span class="m4-footer-lbl">Email</span><span class="m4-footer-val">Mail@Moving4.com</span></a>
+          <a class="m4-footer-link" href="mailto:hello@moving4.co"><span class="m4-footer-lbl">Email</span><span class="m4-footer-val">hello@moving4.co</span></a>
           <div class="m4-footer-area">Los Angeles &amp; nearby areas</div>
         </div>
       </section>
