@@ -298,6 +298,15 @@
       .m4-form-grid { grid-template-columns: 1fr; }
     }
   </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17792226103"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17792226103');
+  </script>
 </head>
 
 <body>
@@ -1702,20 +1711,40 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       }
     }
 
-    // Submit to Formspree — identical fetch call, same headers, same JSON body
+    // Add a clear subject line so the email notification is descriptive
+    payload._subject = `New Moving Quote — ${payload.name} (${payload.move_date})`;
+
+    // Submit to Formspree
     try {
       btn.disabled = true;
       btn.textContent = 'Sending…';
+
       const res = await fetch(WEBHOOK, {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if (!res.ok) throw new Error('Network error');
-      showStatus('ok', '✅ Quote request sent! We\'ll respond within 15 minutes.');
-      form.reset();
-    } catch {
-      showStatus('err', 'Something went wrong. Please try again or call us directly.');
+
+      // Read the response body to detect Formspree-level errors
+      let data = null;
+      try { data = await res.json(); } catch (_) { data = null; }
+
+      if (res.ok && (!data || !data.errors)) {
+        // Genuine success
+        showStatus('ok', '✅ Quote request sent! We\'ll respond shortly.');
+        form.reset();
+      } else {
+        // Formspree returned an error — surface the real reason
+        const reason = (data && data.errors && data.errors.length)
+          ? data.errors.map(er => er.message).join('; ')
+          : `Server responded with status ${res.status}`;
+        console.error('[Formspree] submission failed:', res.status, data);
+        showStatus('err', 'Could not send: ' + reason + '. Please call us at (747) 737-3444.');
+      }
+    } catch (err) {
+      // True network / CORS / fetch failure
+      console.error('[Formspree] network error:', err);
+      showStatus('err', 'Network error — please check your connection or call (747) 737-3444.');
     } finally {
       btn.disabled = false;
       btn.textContent = 'Get My Moving Quote →';
