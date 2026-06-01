@@ -1456,6 +1456,16 @@
     <!-- Status message (success / error) -->
     <div class="m4-form-status" id="m4cf-status" style="display:none;"></div>
 
+    <!-- Premium success banner — shown only after successful submission -->
+    <div class="m4-success" id="m4cf-success" role="status" aria-live="polite">
+      <div class="m4-success__check">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h3 class="m4-success__headline">Your quote request has been received.</h3>
+      <p class="m4-success__sub">We'll contact you within 5 minutes.</p>
+      <p class="m4-success__trust">Moving4 — We don't move things. We protect value.</p>
+    </div>
+
     <!-- FORM — submits to same Formspree endpoint: https://formspree.io/f/xojpakpr -->
     <form id="m4cf-form" class="m4-qform" autocomplete="on" novalidate>
 
@@ -1548,6 +1558,55 @@
   }
   .m4-qform__btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(175,142,93,.45); }
   .m4-qform__btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  /* Premium success banner */
+  .m4-success {
+    display: none;
+    text-align: center;
+    padding: 44px 32px;
+    border-radius: 20px;
+    background: linear-gradient(160deg, rgba(6,49,51,.96), rgba(4,37,40,.96));
+    border: 1px solid rgba(175,142,93,.4);
+    box-shadow: 0 24px 64px rgba(0,0,0,.45), inset 0 1px 0 rgba(244,247,247,.06);
+    animation: m4SuccessIn .5s cubic-bezier(.2,.9,.2,1);
+  }
+  .m4-success.is-on { display: block; }
+  @keyframes m4SuccessIn { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform: none; } }
+  .m4-success__check {
+    width: 64px; height: 64px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #C7A26A, #AF8E5D);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(175,142,93,.4);
+  }
+  .m4-success__check svg { width: 30px; height: 30px; stroke: #042529; }
+  .m4-success__headline {
+    font-size: 26px;
+    font-weight: 600;
+    color: #F4F7F7;
+    margin: 0 0 12px;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+  }
+  .m4-success__sub {
+    font-size: 17px;
+    color: #AF8E5D;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+  .m4-success__trust {
+    font-size: 14px;
+    color: rgba(244,247,247,.6);
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(175,142,93,.18);
+    font-style: italic;
+  }
+  @media (max-width: 560px) {
+    .m4-success { padding: 36px 22px; }
+    .m4-success__headline { font-size: 22px; }
+    .m4-success__sub { font-size: 15px; }
+  }
   @media(max-width:640px){
     .m4-qform__row { grid-template-columns: 1fr; }
     .m4-qform__submit-row { flex-direction: column; align-items: stretch; }
@@ -1669,6 +1728,7 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   const form    = document.getElementById('m4cf-form');
   const btn     = document.getElementById('m4cf-submit');
   const statusEl= document.getElementById('m4cf-status');
+  const successEl = document.getElementById('m4cf-success');
 
   if (!form) return;
 
@@ -1730,9 +1790,20 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       try { data = await res.json(); } catch (_) { data = null; }
 
       if (res.ok && (!data || !data.errors)) {
-        // Genuine success
-        showStatus('ok', '✅ Quote request sent! We\'ll respond shortly.');
+        // ── Genuine success ──
         form.reset();
+        // Hide the form + any prior status, show the premium banner
+        form.style.display = 'none';
+        statusEl.style.display = 'none';
+        successEl.classList.add('is-on');
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // ── Google Ads conversion — fires ONLY on successful submission ──
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-17792226103/REPLACE_WITH_CONVERSION_LABEL'
+          });
+        }
       } else {
         // Formspree returned an error — surface the real reason
         const reason = (data && data.errors && data.errors.length)
