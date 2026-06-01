@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOVING4 — Premium Moving & Furniture Protection</title>
   <meta name="description" content="White-glove moving service with zero chaos. Fully insured, professional packing, and transparent pricing. Get your free estimate in under 60 seconds. We protect what you value." />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/favicon-180.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1456,14 +1459,17 @@
     <!-- Status message (success / error) -->
     <div class="m4-form-status" id="m4cf-status" style="display:none;"></div>
 
-    <!-- Premium success banner — shown only after successful submission -->
-    <div class="m4-success" id="m4cf-success" role="status" aria-live="polite">
-      <div class="m4-success__check">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <!-- Premium full-screen success overlay — shown only after successful submission -->
+    <div class="m4-success-overlay" id="m4cf-success" role="dialog" aria-modal="true" aria-live="polite">
+      <div class="m4-success-modal">
+        <div class="m4-success__check">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 class="m4-success__headline">Thank you for choosing Moving4.</h3>
+        <p class="m4-success__sub">We'll call you back within 5 minutes.</p>
+        <p class="m4-success__trust">Moving4 — We don't move things. We protect value.</p>
+        <button type="button" class="m4-success__close" id="m4cf-success-close">Close</button>
       </div>
-      <h3 class="m4-success__headline">Your quote request has been received.</h3>
-      <p class="m4-success__sub">We'll contact you within 5 minutes.</p>
-      <p class="m4-success__trust">Moving4 — We don't move things. We protect value.</p>
     </div>
 
     <!-- FORM — submits to same Formspree endpoint: https://formspree.io/f/xojpakpr -->
@@ -1558,54 +1564,92 @@
   }
   .m4-qform__btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(175,142,93,.45); }
   .m4-qform__btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-  /* Premium success banner */
-  .m4-success {
+  /* Premium full-screen success overlay */
+  .m4-success-overlay {
     display: none;
-    text-align: center;
-    padding: 44px 32px;
-    border-radius: 20px;
-    background: linear-gradient(160deg, rgba(6,49,51,.96), rgba(4,37,40,.96));
-    border: 1px solid rgba(175,142,93,.4);
-    box-shadow: 0 24px 64px rgba(0,0,0,.45), inset 0 1px 0 rgba(244,247,247,.06);
-    animation: m4SuccessIn .5s cubic-bezier(.2,.9,.2,1);
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(2,18,20,.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: m4OverlayIn .35s ease;
   }
-  .m4-success.is-on { display: block; }
-  @keyframes m4SuccessIn { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform: none; } }
+  .m4-success-overlay.is-on { display: flex; }
+  @keyframes m4OverlayIn { from { opacity: 0; } to { opacity: 1; } }
+  .m4-success-modal {
+    text-align: center;
+    width: 100%;
+    max-width: 560px;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 40px;
+    border-radius: 28px;
+    background: linear-gradient(160deg, rgba(6,49,51,.98), rgba(4,37,40,.98));
+    border: 1px solid rgba(175,142,93,.4);
+    box-shadow: 0 40px 100px rgba(0,0,0,.6), inset 0 1px 0 rgba(244,247,247,.06);
+    animation: m4ModalIn .5s cubic-bezier(.2,.9,.2,1);
+  }
+  @keyframes m4ModalIn { from { opacity:0; transform: translateY(24px) scale(.97); } to { opacity:1; transform: none; } }
   .m4-success__check {
-    width: 64px; height: 64px;
-    margin: 0 auto 22px;
+    width: 80px; height: 80px;
+    margin: 0 auto 28px;
     border-radius: 50%;
     background: linear-gradient(180deg, #C7A26A, #AF8E5D);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(175,142,93,.4);
+    box-shadow: 0 10px 30px rgba(175,142,93,.45);
+    animation: m4CheckPop .6s cubic-bezier(.2,1.4,.4,1) .15s both;
   }
-  .m4-success__check svg { width: 30px; height: 30px; stroke: #042529; }
+  @keyframes m4CheckPop { from { transform: scale(0); } to { transform: scale(1); } }
+  .m4-success__check svg { width: 38px; height: 38px; stroke: #042529; }
   .m4-success__headline {
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 600;
     color: #F4F7F7;
-    margin: 0 0 12px;
+    margin: 0 0 16px;
     letter-spacing: -.01em;
     line-height: 1.2;
   }
   .m4-success__sub {
-    font-size: 17px;
+    font-size: 19px;
     color: #AF8E5D;
     font-weight: 600;
-    margin: 0 0 24px;
+    margin: 0 0 28px;
   }
   .m4-success__trust {
     font-size: 14px;
     color: rgba(244,247,247,.6);
-    margin: 0;
-    padding-top: 20px;
+    margin: 0 0 32px;
+    padding-top: 24px;
     border-top: 1px solid rgba(175,142,93,.18);
     font-style: italic;
+    width: 100%;
   }
+  .m4-success__close {
+    background: transparent;
+    border: 1px solid rgba(175,142,93,.5);
+    color: #AF8E5D;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .m4-success__close:hover { background: #AF8E5D; color: #042529; }
   @media (max-width: 560px) {
-    .m4-success { padding: 36px 22px; }
-    .m4-success__headline { font-size: 22px; }
-    .m4-success__sub { font-size: 15px; }
+    .m4-success-modal { padding: 44px 26px; min-height: 56vh; border-radius: 22px; }
+    .m4-success__headline { font-size: 25px; }
+    .m4-success__sub { font-size: 16px; }
+    .m4-success__check { width: 68px; height: 68px; }
+    .m4-success__check svg { width: 32px; height: 32px; }
   }
   @media(max-width:640px){
     .m4-qform__row { grid-template-columns: 1fr; }
@@ -1729,6 +1773,16 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
   const btn     = document.getElementById('m4cf-submit');
   const statusEl= document.getElementById('m4cf-status');
   const successEl = document.getElementById('m4cf-success');
+  // Close success overlay
+  const successCloseBtn = document.getElementById('m4cf-success-close');
+  function closeSuccess() {
+    successEl.classList.remove('is-on');
+    document.body.style.overflow = '';
+  }
+  if (successCloseBtn) successCloseBtn.addEventListener('click', closeSuccess);
+  if (successEl) successEl.addEventListener('click', function(e) {
+    if (e.target === successEl) closeSuccess(); // click on backdrop closes
+  });
 
   if (!form) return;
 
@@ -1792,11 +1846,10 @@ document.getElementById('m4-year').textContent = new Date().getFullYear();
       if (res.ok && (!data || !data.errors)) {
         // ── Genuine success ──
         form.reset();
-        // Hide the form + any prior status, show the premium banner
-        form.style.display = 'none';
         statusEl.style.display = 'none';
+        // Show full-screen overlay
         successEl.classList.add('is-on');
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.body.style.overflow = 'hidden';
 
         // ── Google Ads conversion — fires ONLY on successful submission ──
         if (typeof gtag === 'function') {
